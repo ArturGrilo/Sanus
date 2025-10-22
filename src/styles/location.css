@@ -1,0 +1,139 @@
+.sanus-location {
+    background: var(--color-primary-dark);  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 9;
+    position: relative;
+    margin-top: 10px;
+    height: auto;
+    padding: 100px 0 400px 0;
+    overflow: hidden;
+}
+
+.sanus-location-info{
+    z-index: 2;
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.sanus-location-container{
+    display: flex;
+    max-width: 1800px;
+    padding: 150px 40px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 220px;
+    z-index: 2;
+}
+
+.sanus-location-sub-container{
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    z-index: 2;
+    order: 0;
+}
+
+.sanus-location-map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.sanus-location-map .sanus-location-img-map{
+    height: 100%;
+    opacity: 0.15;
+}
+
+.sanus-location-img-clinica{
+    margin-top: 20px;
+    z-index: 2;
+    border-radius: 3px 30px;
+    opacity: 1;
+    order: 1;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    width: 400px;
+    height: auto;
+    object-fit: cover;
+}
+.sanus-location-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sanus-location-list h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.sanus-location-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sanus-location-list li {
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.sanus-location-list li.active,
+.sanus-location-list li:hover {
+  background: #f5fdfb;
+  border-left: 4px solid var(--color-primary);
+}
+
+.sanus-location-list h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.sanus-location-list p {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.sanus-location-list .btn {
+  margin-top: 20px;
+  align-self: flex-start;
+}
+
+.sanus-location-waves{
+  position: absolute;
+  bottom: -200px;
+  z-index: 2;
+}
+
+.sanus-location-details-column{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.sanus-location-details-column-item{
+  display: flex;
+  gap: 15px;
+}
+
+.sanus-location-details-column-item-container{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sanus-location-details-column-item-container h2{
+  margin-bottom: 15px;
+}
+
+.sanus-location-main-text{
+  color: var(--color-bg);
+}

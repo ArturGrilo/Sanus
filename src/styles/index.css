@@ -1,0 +1,275 @@
+/*--------------------------------------------*/
+/* 1 - Main Properties                        */
+/* 2 - Buttons                                */
+/* 3 - Title and Text                         */
+/* 4 - Section                                */
+/* 5 - Popup                                  */
+/* 6 - Grid                                   */
+/* 7 - Card                                   */
+/*--------------------------------------------*/
+
+/*--------------------------------------------*/
+/* 1 - Main Properties                        */
+/*--------------------------------------------*/
+
+:root {
+  /* Tipografia */
+  --font-title: 'Libre Baskerville', serif;
+  --font-body: 'Almarai', sans-serif;
+
+  /* Cores principais Artur*/
+  --color-primary: #4BCAAD;
+  --color-header: rgba(46, 92, 110, 0.97);
+  --color-primary-alt: rgba(75, 202, 173, 0.3);
+  --color-primary-dark: #2E5C6E;
+  --color-muted: #7a8b94;
+  --color-danger: #d64545;
+  --color-danger-hover: #b02f2f;
+  
+  /* Cores gerais */
+  --color-text: #333333;
+  --color-bg: #fafafa;
+  --color-primary-hover: rgba(75, 202, 173, 0.05);
+  --color-other: #F28C82;
+  --color-image: rgba(46, 92, 110, 0.2);
+
+  /* Cores principais Cláudia
+  --color-primary: #bdd82a;
+  --color-primary-dark: #2f6238;
+  --color-primary-alt: rgba(193, 226, 68,0.3);
+  --color-header: rgba(62, 111, 69, 0.97);*/
+  
+  text-align: center;
+  width: 100%;
+  height: 100vh;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  background-color: white;
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*--------------------------------------------*/
+/* 2 - Buttons                                */
+/*--------------------------------------------*/
+
+button, .btn {
+  display: inline-block;
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: 20px;
+  padding: 0.75em 1.5em;
+  border-radius: 3px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  border: 1px solid var(--color-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  color: var(--color-bg);
+  border: 1px solid var(--color-primary-dark);
+}
+
+.btn-secundary {
+  background-color: var(--color-primary-dark);
+  color: var(--color-bg);
+  border: 1px solid var(--color-primary-dark);
+}
+
+.btn-secundary:hover {
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary-dark);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary-dark);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+/*--------------------------------------------*/
+/* 2 - Title and text                         */
+/*--------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  line-height: 1.2;
+}
+
+a {
+  color: var(--color-primary-dark);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-primary);
+}
+
+.sanus-general-title{
+  font-family: var(--font-title);
+  color: var(--color-primary-dark);
+  font-size: 2rem;
+  text-align: left;
+}
+
+.sanus-general-title.alt h2,
+.sanus-general-title.alt h3,
+.sanus-general-title.alt h4{
+  color: var(--color-bg);
+}
+
+.sanus-general-text{
+  font-family: var(--font-body);
+  color: var(--color-text);
+  font-size: 20px;
+  text-align: start;
+}
+
+.sanus-general-text.alt{
+  color: var(--color-bg);
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.sanus-pattern{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 67%;
+    width: 40%;
+    -webkit-mask-image: linear-gradient(to top left, rgba(0,0,0,1), rgba(0,0,0,0));
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+    mask-image: linear-gradient(to top left, rgba(0,0,0,1), rgba(0,0,0,0));
+    mask-repeat: no-repeat;
+    mask-size: cover;
+}
+
+.sanus-pattern.alt{ 
+    height: 90%;
+    width: 45%;
+    -webkit-mask-image: linear-gradient(to top left, rgba(0,0,0,1), rgba(0,0,0,0));
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+    mask-image: linear-gradient(to top left, rgba(0,0,0,1), rgba(0,0,0,0));
+    mask-repeat: no-repeat;
+    mask-size: cover;
+}
+
+.sanus-general-title p{
+  text-transform: uppercase;
+    position: relative;
+    margin-left: 10px;
+    color: var(--color-primary-dark);
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.sanus-general-title p::before{
+    position: absolute;
+    content: "";
+    left: -10px;
+    height: 100%;
+    top: 0;
+    width: 3px;
+    background: var(--color-other);
+}
+
+.sanus-card-profile-pic{
+    object-fit: cover;
+    margin-top: -100px;
+    width: 100%;
+    height: 200px; 
+    border-bottom: 1px solid var(--color-primary-dark);
+}
+
+.sanus-card-profile-pic.alt{
+    border-bottom: 1px solid var(--color-bg);
+}
+
+.sanus-general-card{
+    height: fit-content;
+    border-radius: 4px 20px;
+    text-decoration: none;
+    background: linear-gradient(
+      to top,               /* direção: de baixo/direita para cima/esquerda */
+      rgba(255, 255, 255, 1) 65%,   /* opaco no canto inferior direito */
+      rgba(46, 92, 110, .7) 100%  /* transparente no canto superior esquerdo */
+    );
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    -webkit-box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.sanus-general-card .sanus-general-title{
+    align-items: start;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.sanus-general-card .btn{
+    width: fit-content;
+}
+
+.sanus-general-card:hover{
+    background: linear-gradient(
+      to top,               /* direção: de baixo/direita para cima/esquerda */
+      rgba(46, 92, 110, .9) 65%,   /* opaco no canto inferior direito */
+      rgba(46, 92, 110, .7) 100%  /* transparente no canto superior esquerdo */
+    );
+}
+
+.sanus-general-card:hover .sanus-general-title h3,
+.sanus-general-card:hover .sanus-general-title p{
+    color: var(--color-bg);
+}
+
+.sanus-general-card.alt{
+    background: linear-gradient(
+      to top,
+      rgba(46, 92, 110, .9) 70%,   /* em baixo, 100% opaco */
+      rgba(46, 92, 110, 0) 100%  /* em cima, 100% transparente */
+    );
+}
+
+.sanus-general-card.alt2{
+    background: var(--color-primary);
+} 

@@ -1,0 +1,42 @@
+.sanus-photobook {
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+  bottom: -100px;
+  z-index: 2;
+}
+
+.sanus-photobook-mask {
+  height: 400px;
+  width: 100vw;
+  overflow: hidden;
+
+  /* aplica máscara da onda */
+  -webkit-mask-image: url('/waves.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%; /* estica para ocupar */
+  -webkit-mask-position: bottom;
+
+  mask-image: url('/waves.svg');
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  mask-position: bottom;
+
+  background: white; /* cor de fundo por trás */
+}
+
+.sanus-photobook-carousel {
+  height: 400px;
+}
+
+.photobook-slide {
+  width: 400px !important; /* todas quadradas */
+  height: 400px;
+  flex-shrink: 0;
+}
+
+.photobook-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* mantém proporção sem deformar */
+}

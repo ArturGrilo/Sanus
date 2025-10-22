@@ -1,0 +1,6 @@
+.feedback-source-admin {
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-top: 6px;
+}

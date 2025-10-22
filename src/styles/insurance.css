@@ -1,0 +1,160 @@
+.sanus-insurance {   
+    background: var(--color-primary-alt);   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    padding-bottom: 50px;
+    position: relative;
+}
+
+.sanus-insurance-container {
+    display: flex;
+    max-width: 1800px;
+    padding: 0 40px;
+    justify-content: center;
+    width: 100%;
+    gap: 60px;
+    z-index: 2;
+}
+
+.sanus-insurance-sub-container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    order: 1;
+}
+
+.sanus-insurance-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    order: 1;
+    width: 100%;
+}
+
+.sanus-insurance-grid-item {
+    border-radius: 3px 20px;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    object-fit: cover;
+    background-color: white;
+}
+
+.sanus-insurance-item {
+    display: flex;
+    gap: 60px;
+}
+
+.sanus-insurance-item-icon{
+    color: var(--color-primary-dark);
+    height: 150px;
+    width: 150px;
+    padding-left: 20px;
+    position: relative;
+    border-radius: 3px 25px;
+    border-top: 14px solid var(--color-primary-dark);
+    border-left: 13px solid var(--color-primary);
+}
+
+.sanus-insurance-item-details{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.sanus-insurance-item-details h2 {
+    font-family: var(--font-title);
+    color: var(--color-primary-dark);
+    font-size: 2.5rem;
+}
+
+/* Ícone topo do card */
+.sanus-insurance-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  border-radius: 10px;
+  background: #e8f3e3;            
+  color: var(--color-primary-dark);
+}
+
+/* Lista de logos (opcional) */
+.sanus-insurance-logos {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin: 14px 0 0;
+  padding-left: 0px;
+}
+
+.sanus-insurance-logos li{
+    display: flex;
+    align-items: center;
+    font-family: var(--font-text);
+    font-size: 20px;
+    gap: 10px;
+}
+
+.sanus-insurance-item-details p{
+    font-family: var(--font-text);
+    font-size: 20px;
+    text-align: left;
+}
+
+/* Card "nota" com destaque suave */
+.sanus-insurance-note {
+  background: #fbfdf9;
+  border: 1px solid #e1f0da;
+}
+
+.sanus-insurance-cta {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background .2s ease;
+}
+
+.sanus-insurance-cta:hover {
+  background: var(--color-primary-dark);
+}
+
+.sanus-insurance-wave{
+  position: absolute;
+  top: calc(100% - 150px);
+  left: 0;
+  width: 100%;
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+  .sanus-insurance-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .sanus-insurance-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sanus-insurance-header h2 {
+    font-size: 1.6rem;
+  }
+}

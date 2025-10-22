@@ -1,0 +1,167 @@
+/* Container principal */
+.sanus-hero {
+    position: relative;
+    width: 100%;
+    height: 130vh; /* quase a altura do ecrã */
+    background: url('/Images/HeroImage.webp') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    color: white;
+    overflow: hidden;
+    margin-top: -114px;
+}
+
+/* Overlay para escurecer a imagem */
+.sanus-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 30%),
+                /*linear-gradient(90deg, var(--color-primary-dark) 0%, rgba(0,0,0,0) 10%),
+                linear-gradient(90deg, rgba(0,0,0,0) 95%, var(--color-primary-dark) 100%),*/
+                linear-gradient(180deg, rgba(0,0,0,0) 50%, var(--color-primary-dark) 100%);
+}
+
+/* Conteúdo */
+.sanus-hero-content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+    max-width: 1800px;
+    width: 100%;
+    padding: 0 40px;
+    gap: 10px;
+}
+
+/* Título */
+.sanus-hero-title {
+    font-family: var(--font-title);
+    font-size: 5rem;
+    margin-bottom: 0px;
+    line-height: 1.2;
+    color: var(--color-bg);
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.65);
+    max-width: 40%;
+}
+
+/* Subtítulo */
+.sanus-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.75rem;
+    margin-bottom: 0px;
+    color: var(--color-bg);
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.65);
+    position: relative;
+    display: none;
+}
+
+.sanus-hero-content a{
+    width: fit-content;
+}
+
+.sanus-hero-search-more{
+    position: absolute;
+    top: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.sanus-hero-search-more .second-arrow{
+  margin-top: -20px;
+}
+
+.sanus-hero-search-more .third-arrow{
+  margin-top: -20px;
+}
+
+@keyframes elegantPulse {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.9);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateY(8px) scale(1.05);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(15px) scale(0.9);
+  }
+}
+
+.sanus-hero-search-more .arrow {
+  animation: elegantPulse 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.sanus-hero-search-more .second-arrow {
+  animation-delay: 0.25s;
+  margin-top: -20px;
+}
+
+.sanus-hero-search-more .third-arrow {
+  animation-delay: 0.5s;
+  margin-top: -20px;
+}
+
+.sanus-hero-waves{
+  position: absolute;
+  bottom: -110px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .sanus-hero-title {
+    font-size: 2rem;
+  }
+
+  .sanus-hero-subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* Transição suave da palavra dinâmica */
+.sanus-hero-dynamic {
+  color: var(--color-primary-dark);
+  display: inline-block;
+  position: relative;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.75);
+}
+
+.sanus-hero-subtitle {
+  margin-top: 1.2rem;
+  font-size: 1.4rem;
+  opacity: 0.85;
+  max-width: 600px;
+}
+
+/* Pequeno zoom na imagem de fundo — efeito “cinemagraph” */
+.sanus-hero {
+  animation: slowZoom 20s ease-in-out infinite alternate;
+}
+
+@keyframes slowZoom {
+  from {
+    background-size: 100%;
+  }
+  to {
+    background-size: 107%;
+  }
+}

@@ -1,0 +1,110 @@
+.sanus-splash-premium{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display:flex; align-items:center; justify-content:center;
+  background: #ffffff;
+  opacity: 1; visibility: visible;
+  transition: opacity .65s ease, visibility .65s ease;
+  overflow:hidden;
+}
+.sanus-splash-premium.fade-out{ opacity:0; visibility:hidden; }
+
+/* Dark mode automático */
+@media (prefers-color-scheme: dark){
+  .sanus-splash-premium{ background: #000f10; }
+}
+
+/* halo de cor Sanus muito subtil nas bordas */
+.sanus-splash-premium .halo{
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(900px 520px at top left, rgba(46,86,206,.18), transparent 70%),
+    radial-gradient(900px 520px at top right, rgba(75,202,173,.18), transparent 70%);
+  mix-blend-mode: screen;
+  filter: blur(26px);
+  animation: haloPulse 6s ease-in-out infinite alternate;
+}
+@keyframes haloPulse{
+  from{ opacity:.55; transform: scale(1); }
+  to  { opacity:.85; transform: scale(1.04); }
+}
+
+/* conteúdo */
+.sanus-splash-premium .inner{
+  text-align:center;
+  display:flex; flex-direction:column; align-items:center;
+  transform: translateY(12px);
+  animation: contentIn .8s cubic-bezier(.2,.7,.2,1) forwards;
+}
+@keyframes contentIn{
+  from{ opacity:0; transform:translateY(24px); }
+  to  { opacity:1; transform:translateY(0); }
+}
+
+/* logótipo com “respiração” super discreta */
+.logo-wrap{ position:relative; display:inline-block; }
+.logo{
+  width: 150px; height:auto; opacity:.96;
+  animation: breathe 3.8s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes breathe{
+  0%,100%{ transform: scale(1); }
+  50%    { transform: scale(1.012); }
+}
+
+/* brilho “shine” a varrer o logo (bem subtil) */
+.shine{
+  position:absolute; inset:0; pointer-events:none;
+  background: linear-gradient(75deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%);
+  transform: translateX(-120%);
+  mix-blend-mode: screen;
+  animation: shineSweep 1.8s ease-out .35s forwards;
+}
+@keyframes shineSweep{
+  to{ transform: translateX(140%); opacity:0; }
+}
+
+/* tagline com gradiente de marca, sem estridência */
+.tagline{
+  margin-top: .9rem;
+  font-size: 1.05rem;
+  letter-spacing: .3px;
+  color: #1b2f2d;
+  opacity:.8;
+}
+@media (prefers-color-scheme: dark){
+  .tagline{ color: #cfe7e1; opacity:.85; }
+}
+
+.gradient-word{
+  background-image: linear-gradient(90deg, #2EE5C6 0%, #4BCAAD 35%, #2E56CE 100%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  background-size: 200% 100%;
+  animation: sanusGradient 6s ease-in-out infinite alternate;
+}
+@keyframes sanusGradient{
+  0% { background-position: 0% 50%; }
+  100%{ background-position: 100% 50%; }
+}
+@media (prefers-reduced-motion: reduce){
+  .gradient-word{ animation:none; }
+}
+
+/* linha de assinatura (finíssima) */
+.signature-line{
+  margin-top: .8rem;
+  width: 120px; height: 2px; border-radius: 2px; display:block;
+  background: linear-gradient(90deg, rgba(46,86,206,.0), rgba(46,86,206,.35), rgba(75,202,173,.0));
+  filter: saturate(110%);
+  opacity:.65;
+}
+
+/* reduced motion: tudo mais calmo */
+@media (prefers-reduced-motion: reduce){
+  .sanus-splash-premium .halo,
+  .logo,
+  .shine{ animation:none; }
+}

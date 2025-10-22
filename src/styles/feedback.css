@@ -1,0 +1,92 @@
+.sanus-feedback {   
+    background: white;   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    position: relative;
+    padding: 60px 0 260px 0;
+    overflow: hidden;
+    margin-top: -1px;
+}
+
+.sanus-feedback-container {
+    display: flex;
+    max-width: 100%;
+    padding: 0 40px;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 60px;
+}
+
+.sanus-feedback-carousel {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    max-width: 100%;
+    width: 100%;
+    overflow: visible;
+}
+
+.sanus-feedback .swiper-wrapper {
+    align-items: center;
+}
+
+.sanus-feedback .swiper {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.sanus-feedback .swiper.swiper-initialized.swiper-horizontal.swiper-backface-hidden {
+  overflow: visible;
+}
+
+.sanus-feedback .swiper-button-prev,
+.sanus-feedback .swiper-button-next{
+    height: 30px !important;
+    color: var(--color-primary-dark) !important;
+}
+
+.feedback-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 40px;
+    padding: 0 100px;
+}
+
+.feedback-sub-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+    text-align: left;
+}
+
+.feedback-comment-list{
+    display: flex;
+}
+
+.feedback-name {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+}
+
+.feedback-comment {
+    font-size: 2.5rem;
+    color: var(--color-primary-dark);
+}
+
+.feedback-source{
+    color: rgba(46, 92, 110, 0.4) !important;
+}
+
+.other-color{
+    color: var(--color-other) !important;
+}

@@ -1,0 +1,62 @@
+.sanus-mission {   
+    background: var(--color-primary-alt);   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    padding-bottom: 100px;
+    position: relative;
+}
+
+.sanus-mission-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1800px;
+    padding: 0 40px;
+    justify-content: center;
+    width: 100%;
+    gap: 60px;
+    z-index: 2;
+}
+
+.sanus-mission-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
+    width: 100%;
+}
+
+.sanus-mission-grid-item {
+    flex-direction: column;
+    display: flex;
+    gap: 30px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    object-fit: cover;
+}
+
+.sanus-mission-text{
+    font-size: 20px;
+    color: var(--color-primary-dark);
+    opacity: 0.65;
+    margin-top: -30px;
+}
+
+.sanus-mission-button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.sanus-mission a{
+    width: fit-content;
+}
+
+.sanus-mission-wave{
+  position: absolute;
+  bottom: -2px;
+  width: 100%;
+  left: 0;
+}

@@ -1,0 +1,84 @@
+.sanus-team {   
+    background: white;   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    margin-top: 60px;
+}
+
+.sanus-team-container {
+    display: flex;
+    max-width: 1800px;
+    padding: 0 40px;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 60px;
+}
+
+.sanus-team-container-grid {
+    display: flex;
+    max-width: 1800px;
+    padding: 0 40px;
+    gap: 120px 60px;
+    position: relative;
+}
+
+.sanus-team-container-grid-pattern{
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    bottom: 0;
+    right: 0%;
+}
+
+
+
+
+
+
+.sanus-team-carousel {
+  width: 100%;
+  overflow: hidden;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.sanus-team-carousel {
+  padding: 60px 20px;
+  background: var(--color-light);
+}
+
+.team-card {
+  background: var(--color-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  text-align: center;
+  padding: 20px;
+}
+
+.team-img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.team-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.team-role {
+  font-size: 1rem;
+  color: var(--color-primary);
+}
