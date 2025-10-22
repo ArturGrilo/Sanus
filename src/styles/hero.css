@@ -152,7 +152,7 @@
   max-width: 600px;
 }
 
-/* Pequeno zoom na imagem de fundo — efeito “cinemagraph” */
+/* Pequeno zoom na imagem de fundo — efeito “cinemagraph” 
 .sanus-hero {
   animation: slowZoom 20s ease-in-out infinite alternate;
 }
@@ -164,4 +164,4 @@
   to {
     background-size: 107%;
   }
-}
+}*/
