@@ -7,10 +7,15 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependências
 node_modules
 dist
 dist-ssr
 *.local
+
+# Ficheiros sensíveis do backend
+Sanus_BackEnd/.env
+Sanus_BackEnd/serviceAccountKey.json
 
 # Editor directories and files
 .vscode/*
@@ -22,5 +27,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-.env.env

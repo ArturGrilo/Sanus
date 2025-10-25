@@ -1,7 +1,4 @@
-// src/components/Services.jsx
 import { useEffect, useState } from "react";
-import { db } from "../lib/firebase";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import "../styles/services.css";
 import ServiceCard from "./service_card";
 
@@ -9,12 +6,16 @@ export default function Services() {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    async function loadServices() {
-      const q = query(collection(db, "services"), orderBy("createdAt", "asc"));
-      const snap = await getDocs(q);
-      setServices(snap.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+    async function fetchServices() {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/services`);
+        const data = await res.json();
+        setServices(data);
+      } catch (error) {
+        console.error("Erro ao carregar serviços:", error);
+      }
     }
-    loadServices();
+    fetchServices();
   }, []);
 
   return (
@@ -38,7 +39,7 @@ export default function Services() {
               ctaText={service.ctaText}
               alt={service.alt}
               btnStyle={service.btnStyle}
-              slug={service.slug} // 🔹 novo campo
+              slug={service.slug}
             />
           ))
         )}

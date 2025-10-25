@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/header";
 import Hero from "./components/hero";
 import Services from "./components/services";
-import Mission from "./components/mission";
+{/*import Mission from "./components/mission";
 import Insurance from "./components/insurance";
 import Recrutamento from "./components/recrutamento";
 import Footer from "./components/footer";
@@ -26,7 +26,7 @@ import RequireAuth from "./admin/RequireAuth";
 import ServicesList from "./admin/ServiceList";
 import ServiceForm from "./admin/ServiceForm";
 import TagsList from "./admin/TagsList";
-import TagForm from "./admin/TagForm";
+import TagForm from "./admin/TagForm";*/}
 
 export default function App() {
   return (
@@ -39,7 +39,7 @@ export default function App() {
             <Header />
             <Hero />
             <Services />
-            <Mission />
+            {/*<Mission />
             <Team />
             <Recrutamento />
             <Feedback />
@@ -47,12 +47,12 @@ export default function App() {
             <Location />
             <BlogSection />  
             <Footer />
-            <WhatsappButton />
+            <WhatsappButton />*/}
           </>
         }
       />
 
-      {/* 🔐 Back Office */}
+      {/* 🔐 Back Office 
       <Route path="/login" element={<Login />} />
       <Route element={<RequireAuth />}>
         <Route path="/admin" element={<Dashboard />} />
@@ -71,7 +71,7 @@ export default function App() {
       </Route>
       <Route path="/servicos/:id" element={<ServicoDetalhe />} />
       <Route path="/admin/*" element={<Login />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />*/}
     </Routes>
   );
 }

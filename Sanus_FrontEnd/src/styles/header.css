@@ -61,12 +61,6 @@
   color: var(--color-primary);
 }
 
-/* === CTA === */
-.btn.btn-primary {
-  padding: 10px 16px;
-  font-size: 1rem;
-}
-
 /* === HAMBURGER BUTTON === */
 .sanus-header-hamburger {
   display: none;
