@@ -79,4 +79,7 @@
     .sanus-mission-grid-item {
         justify-content:flex-start;
     }
+    .sanus-mission a{
+        width: 100%;
+    }
 }

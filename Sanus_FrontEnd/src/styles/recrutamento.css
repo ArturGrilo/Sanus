@@ -1,7 +1,7 @@
 .sanus-recrutamento {
     background: #fff;
     position: relative;    
-    margin-top: -260px;
+    margin-top: -220px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -56,4 +56,35 @@
   position: absolute;
   inset: 0;
   background: var(--color-image);
+}
+
+@media (max-width: 550px) {
+    .sanus-recrutamento {    
+        margin-top: -60px;
+        gap: 0;
+    }
+    .sanus-recrutamento-container{
+        padding: 40px 20px;
+        flex-direction: column;
+    }
+    .sanus-recrutamento-text-column{
+        padding-bottom: 0;
+    }
+    .sanus-recrutamento-img-column {
+        width: 100%;
+    }
+    .sanus-recrutamento-text-column .btn{
+        width: 100%;
+        text-align: center;
+    }
+    .sanus-recrutamento .sanus-pattern {
+        height: 50%;
+        width: 90%;
+        -webkit-mask-image: linear-gradient(to top left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-size: cover;
+        mask-image: linear-gradient(to top left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+        mask-repeat: no-repeat;
+        mask-size: cover;
+    }
 }

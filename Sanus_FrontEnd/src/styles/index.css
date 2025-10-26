@@ -282,8 +282,11 @@ a:hover {
     background: var(--color-primary);
 } 
 
-@media (max-width: 480px) {
+@media (max-width: 550px) {
     .sanus-general-title{
       font-size: 30px;
+    }
+    .btn{
+      padding: 18px 25px;
     }
 }

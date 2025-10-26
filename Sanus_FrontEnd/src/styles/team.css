@@ -94,9 +94,6 @@
 
 
 @media (max-width: 1880px) {
-  .sanus-team {
-      align-items: flex-start;
-  }
   .sanus-team-container{
     width: 100%;
   }

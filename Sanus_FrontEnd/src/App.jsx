@@ -6,8 +6,8 @@ import Hero from "./components/hero";
 import Services from "./components/services";
 import Mission from "./components/mission";
 import Team from "./components/team";
-{/*import Insurance from "./components/insurance";
 import Recrutamento from "./components/recrutamento";
+{/*import Insurance from "./components/insurance";
 import Footer from "./components/footer";
 import Feedback from "./components/feedback";
 import Location from "./components/location";
@@ -41,8 +41,8 @@ export default function App() {
             <Services />
             <Mission />
             <Team />
-            {/*<Recrutamento />
-            <Feedback />
+            <Recrutamento />
+            {/*<Feedback />
             <Insurance />
             <Location />
             <BlogSection />  
