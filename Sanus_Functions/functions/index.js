@@ -38,14 +38,19 @@ app.get("/feedbacks", async (req, res) => {
 
 app.get("/blogs", async (req, res) => {
   try {
-    const blogSnap = await db.collection("blog").orderBy("createdAt", "desc").get();
+    const blogSnap = await db.collection("blog").
+        orderBy("createdAt", "desc").get();
     const blogs = blogSnap.docs.map((doc) => {
       const data = doc.data();
       return {
         id: doc.id,
         ...data,
-        createdAt: data.createdAt?.toDate?.() || null,
-        updatedAt: data.updatedAt?.toDate?.() || null,
+        createdAt: data.createdAt &&
+            data.createdAt.toDate ?
+            data.createdAt.toDate() : null,
+        updatedAt: data.updatedAt &&
+            data.updatedAt.toDate ?
+            data.updatedAt.toDate() : null,
       };
     });
 
@@ -57,15 +62,34 @@ app.get("/blogs", async (req, res) => {
 
     const blogsWithTags = blogs.map((article) => {
       const fullTags = (article.tags || [])
-        .map((tagId) => allTags.find((t) => t.id === tagId))
-        .filter(Boolean);
-      return { ...article, tags: fullTags };
+          .map((tagId) => allTags.find((t) => t.id === tagId))
+          .filter(Boolean);
+      return {...article, tags: fullTags};
     });
 
     res.json(blogsWithTags);
   } catch (err) {
     console.error("Erro ao carregar blogs:", err);
     res.status(500).send("Erro ao carregar blogs");
+  }
+});
+
+app.get("/servico/:slug", async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const snapshot = await db.
+        collection("services").
+        where("slug", "==", slug).limit(1).get();
+
+    if (snapshot.empty) {
+      return res.status(404).send("Serviço não encontrado");
+    }
+
+    const data = snapshot.docs[0].data();
+    res.json({id: snapshot.docs[0].id, ...data});
+  } catch (err) {
+    console.error("Erro ao buscar serviço:", err);
+    res.status(500).send("Erro ao buscar serviço");
   }
 });
 

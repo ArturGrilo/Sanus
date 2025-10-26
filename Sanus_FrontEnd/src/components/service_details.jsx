@@ -1,7 +1,5 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../lib/firebase";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import ReactMarkdown from "react-markdown"; // 👈 IMPORTANTE
@@ -20,25 +18,17 @@ export default function ServicoDetalhe() {
       const startTime = Date.now();
 
       try {
-        const q = query(collection(db, "services"), where("slug", "==", id));
-        const querySnapshot = await getDocs(q);
-
-        // garantir tempo mínimo de splash (~1.8s)
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/servico/${id}`);
         const elapsed = Date.now() - startTime;
         const remaining = Math.max(0, 1800 - elapsed);
 
-        if (!querySnapshot.empty) {
-          const data = querySnapshot.docs[0].data();
-          setTimeout(() => {
-            setServico(data);
-            setLoading(false);
-          }, remaining);
-        } else {
-          setTimeout(() => {
-            setError("Serviço não encontrado.");
-            setLoading(false);
-          }, remaining);
-        }
+        if (!res.ok) throw new Error("Serviço não encontrado");
+
+        const data = await res.json();
+        setTimeout(() => {
+          setServico(data);
+          setLoading(false);
+        }, remaining);
       } catch (err) {
         console.error("Erro ao carregar serviço:", err);
         const elapsed = Date.now() - startTime;

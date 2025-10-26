@@ -48,7 +48,7 @@ export default function Hero() {
     const hero = document.querySelector(".sanus-hero");
     const nextSection = hero?.nextElementSibling;
     if (nextSection) {
-      gsap.to(window, { duration: 0.6, scrollTo: { y: nextSection }, ease: "power2.inOut" });
+      gsap.to(window, { duration: 0.3, scrollTo: { y: nextSection }, ease: "power2.inOut" });
     }
   };
 

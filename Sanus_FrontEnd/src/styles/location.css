@@ -151,6 +151,7 @@
   .sanus-location-sub-container {
     flex-direction: column;
     gap: 80px;
+    width: -webkit-fill-available;
   }
   .sanus-location-info{
     display: block;

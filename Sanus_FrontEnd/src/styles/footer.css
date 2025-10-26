@@ -5,6 +5,10 @@
     z-index: 1;
 }
 
+.sanus-footer .sanus-header-logo{
+    height: 50px;
+}
+
 .sanus-footer-2{
     background-color: var(--color-header);
     margin-top: -9px;

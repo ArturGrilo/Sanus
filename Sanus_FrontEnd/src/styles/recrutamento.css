@@ -66,11 +66,13 @@
     .sanus-recrutamento-container{
         padding: 40px 20px;
         flex-direction: column;
+        gap: 30px;
     }
     .sanus-recrutamento-text-column{
         padding-bottom: 0;
     }
     .sanus-recrutamento-img-column {
+        bottom: 0;
         width: 100%;
     }
     .sanus-recrutamento-text-column .btn{

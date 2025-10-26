@@ -13,10 +13,10 @@ import Location from "./components/location";
 import Footer from "./components/footer";
 import WhatsappButton from "./components/whatsapp_button";
 import BlogSection from "./components/blog_section";
-{/*import ServicoDetalhe from "./components/service_details";
+import ServicoDetalhe from "./components/service_details";
 
 // Páginas do back office
-import Login from "./admin/Login";
+{/*import Login from "./admin/Login";
 import Dashboard from "./admin/Dashboard";
 import BlogList from "./admin/BlogList";
 import BlogForm from "./admin/BlogForm";
@@ -68,10 +68,10 @@ export default function App() {
         <Route path="/admin/tags" element={<TagsList />} />
         <Route path="/admin/tags/new" element={<TagForm />} />
         <Route path="/admin/tags/edit/:id" element={<TagForm />} />
-      </Route>
+      </Route>*/}
       <Route path="/servicos/:id" element={<ServicoDetalhe />} />
-      <Route path="/admin/*" element={<Login />} />
-      <Route path="*" element={<Navigate to="/" replace />} />*/}
+      {/*<Route path="/admin/*" element={<Login />} />*/}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
