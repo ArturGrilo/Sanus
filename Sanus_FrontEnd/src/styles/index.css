@@ -81,7 +81,7 @@ button, .btn {
   font-family: var(--font-title);
   font-weight: 600;
   font-size: 20px;
-  padding: 0.75em 1.5em;
+  padding: 12px 25px;
   border-radius: 3px 20px;
   border: none;
   cursor: pointer;
@@ -281,3 +281,9 @@ a:hover {
 .sanus-general-card.alt2{
     background: var(--color-primary);
 } 
+
+@media (max-width: 480px) {
+    .sanus-general-title{
+      font-size: 30px;
+    }
+}
