@@ -45,7 +45,7 @@ export default function Mission() {
           <div className="sanus-mission-grid-item">
             <SmileyIcon size={120} weight="duotone" color="var(--color-primary-dark)" ></SmileyIcon>
             <header className="sanus-general-title alt2">
-              <h3>Alegria & Bem-estar</h3>
+              <h3>Simpatia</h3>
             </header> 
             <p className="sanus-mission-text">Leveza e motivação</p>
           </div>

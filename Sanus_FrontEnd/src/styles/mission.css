@@ -60,3 +60,23 @@
   width: 100%;
   left: 0;
 }
+
+@media (max-width: 550px) {
+    .sanus-mission-container {
+        padding: 0 20px;
+    }
+    .sanus-mission-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        width: 100%;
+    }
+    .sanus-mission-grid .sanus-general-title{
+        font-size: 16px;
+    }
+    .sanus-mission-text{
+        font-size: 15px;
+    }
+    .sanus-mission-grid-item {
+        justify-content:flex-start;
+    }
+}

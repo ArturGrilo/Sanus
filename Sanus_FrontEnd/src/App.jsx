@@ -4,11 +4,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/header";
 import Hero from "./components/hero";
 import Services from "./components/services";
-{/*import Mission from "./components/mission";
-import Insurance from "./components/insurance";
+import Mission from "./components/mission";
+import Team from "./components/team";
+{/*import Insurance from "./components/insurance";
 import Recrutamento from "./components/recrutamento";
 import Footer from "./components/footer";
-import Team from "./components/team";
 import Feedback from "./components/feedback";
 import Location from "./components/location";
 import WhatsappButton from "./components/whatsapp_button";
@@ -39,9 +39,9 @@ export default function App() {
             <Header />
             <Hero />
             <Services />
-            {/*<Mission />
+            <Mission />
             <Team />
-            <Recrutamento />
+            {/*<Recrutamento />
             <Feedback />
             <Insurance />
             <Location />
