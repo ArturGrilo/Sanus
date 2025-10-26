@@ -93,4 +93,9 @@
   .sanus-servico-overlay h1 {
     font-size: 40px;
   }
+  .sanus-servico-content {
+    margin: -1px auto;
+    background: white;
+    padding: 40px 20px;
+  }
 }

@@ -16,8 +16,8 @@ import BlogSection from "./components/blog_section";
 import ServicoDetalhe from "./components/service_details";
 
 // Páginas do back office
-{/*import Login from "./admin/Login";
-import Dashboard from "./admin/Dashboard";
+import Login from "./admin/Login";
+{/*import Dashboard from "./admin/Dashboard";
 import BlogList from "./admin/BlogList";
 import BlogForm from "./admin/BlogForm";
 import FeedbackForm from "./admin/FeedbackForm";
@@ -52,9 +52,9 @@ export default function App() {
         }
       />
 
-      {/* 🔐 Back Office 
+      {/* 🔐 Back Office */}
       <Route path="/login" element={<Login />} />
-      <Route element={<RequireAuth />}>
+      {/*<Route element={<RequireAuth />}>
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/admin/blog" element={<BlogList />} />
         <Route path="/admin/blog/new" element={<BlogForm />} />
@@ -70,7 +70,7 @@ export default function App() {
         <Route path="/admin/tags/edit/:id" element={<TagForm />} />
       </Route>*/}
       <Route path="/servicos/:id" element={<ServicoDetalhe />} />
-      {/*<Route path="/admin/*" element={<Login />} />*/}
+      <Route path="/admin/*" element={<Login />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
