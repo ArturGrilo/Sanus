@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { db } from "../lib/firebase";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -12,12 +10,17 @@ export default function FeedbackCarousel() {
 
   useEffect(() => {
     async function loadFeedbacks() {
-      const q = query(collection(db, "feedback"), orderBy("createdAt", "desc"));
-      const snap = await getDocs(q);
-      setFeedbacks(snap.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      try {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/feedbacks`);
+        const data = await res.json();
+        setFeedbacks(data);
+      } catch (error) {
+        console.error("Erro ao carregar feedbacks:", error);
+      }
     }
     loadFeedbacks();
   }, []);
+
 
   if (feedbacks.length === 0) return null;
 

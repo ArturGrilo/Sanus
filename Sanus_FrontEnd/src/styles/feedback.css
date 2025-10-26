@@ -90,3 +90,19 @@
 .other-color{
     color: var(--color-other) !important;
 }
+
+@media (max-width: 550px) {
+    .sanus-feedback {   
+        padding: 0 0 60px 0;
+    }
+
+    .sanus-feedback-container{
+        padding: 0;
+    }
+    .feedback-card {
+        padding: 0 20px;
+    }
+    .feedback-comment {
+        font-size: 30px;
+    }
+}

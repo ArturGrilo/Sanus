@@ -8,7 +8,7 @@ export default function Services() {
   useEffect(() => {
     async function fetchServices() {
       try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/services`);
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/services`);
         const data = await res.json();
         setServices(data);
       } catch (error) {

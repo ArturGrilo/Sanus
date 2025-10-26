@@ -96,6 +96,7 @@
 @media (max-width: 1880px) {
   .sanus-team-container{
     width: 100%;
+    padding: 0 20px;
   }
   .sanus-team .swiper-button-next {
     left: calc(50% + 138px) !important;
