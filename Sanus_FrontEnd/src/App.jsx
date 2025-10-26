@@ -8,8 +8,8 @@ import Mission from "./components/mission";
 import Team from "./components/team";
 import Recrutamento from "./components/recrutamento";
 import Feedback from "./components/feedback";
-{/*import Insurance from "./components/insurance";
-import Footer from "./components/footer";
+import Insurance from "./components/insurance";
+{/*import Footer from "./components/footer";
 import Location from "./components/location";
 import WhatsappButton from "./components/whatsapp_button";
 import BlogSection from "./components/blog_section";
@@ -43,8 +43,8 @@ export default function App() {
             <Team />
             <Recrutamento />
             <Feedback />
-            {/*<Insurance />
-            <Location />
+            <Insurance />
+            {/*<Location />
             <BlogSection />  
             <Footer />
             <WhatsappButton />*/}

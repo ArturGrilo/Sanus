@@ -151,10 +151,28 @@
 
 @media (max-width: 680px) {
   .sanus-insurance-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
-
+  .sanus-insurance-grid-item {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    object-fit: contain;
+  }
   .sanus-insurance-header h2 {
     font-size: 1.6rem;
+  }
+  .sanus-insurance {
+    background: var(--color-primary-alt);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    padding: 50px 0;
+    position: relative;
+  }
+  .sanus-insurance-container {
+    flex-direction: column;
+    gap: 30px;
+    padding: 0 20px;
   }
 }
