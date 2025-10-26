@@ -163,7 +163,7 @@
   }
   .sanus-location-map {
     top: unset;
-    bottom: -270px;
+    bottom: 50px;
     height: auto;
     width: 100%;
   }
@@ -177,5 +177,10 @@
     height: auto;
     width: 100%;
     opacity: 0.15;
+  }
+  .sanus-location-waves {
+    position: absolute;
+    bottom: -50px;
+    z-index: 2;
   }
 }

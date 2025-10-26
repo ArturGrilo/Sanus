@@ -10,10 +10,10 @@ import Recrutamento from "./components/recrutamento";
 import Feedback from "./components/feedback";
 import Insurance from "./components/insurance";
 import Location from "./components/location";
-{/*import Footer from "./components/footer";
+import Footer from "./components/footer";
 import WhatsappButton from "./components/whatsapp_button";
 import BlogSection from "./components/blog_section";
-import ServicoDetalhe from "./components/service_details";
+{/*import ServicoDetalhe from "./components/service_details";
 
 // Páginas do back office
 import Login from "./admin/Login";
@@ -45,9 +45,9 @@ export default function App() {
             <Feedback />
             <Insurance />
             <Location />
-            {/*<BlogSection />  
+            <BlogSection />  
             <Footer />
-            <WhatsappButton />*/}
+            <WhatsappButton />
           </>
         }
       />

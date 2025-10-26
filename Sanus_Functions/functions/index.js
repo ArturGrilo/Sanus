@@ -36,5 +36,38 @@ app.get("/feedbacks", async (req, res) => {
   }
 });
 
+app.get("/blogs", async (req, res) => {
+  try {
+    const blogSnap = await db.collection("blog").orderBy("createdAt", "desc").get();
+    const blogs = blogSnap.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        createdAt: data.createdAt?.toDate?.() || null,
+        updatedAt: data.updatedAt?.toDate?.() || null,
+      };
+    });
+
+    const tagsSnap = await db.collection("tags").get();
+    const allTags = tagsSnap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    const blogsWithTags = blogs.map((article) => {
+      const fullTags = (article.tags || [])
+        .map((tagId) => allTags.find((t) => t.id === tagId))
+        .filter(Boolean);
+      return { ...article, tags: fullTags };
+    });
+
+    res.json(blogsWithTags);
+  } catch (err) {
+    console.error("Erro ao carregar blogs:", err);
+    res.status(500).send("Erro ao carregar blogs");
+  }
+});
+
 // ✅ EXPORTAR A FUNÇÃO COMO /api
 exports.api = functions.https.onRequest(app);

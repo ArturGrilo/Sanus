@@ -156,3 +156,21 @@
   flex-shrink: 0;
   opacity: 0.8;
 }
+
+@media (max-width: 550px) {
+  .sanus-blog {
+    margin: -1px 0 0 0;
+    background-color: white;
+    padding: 40px 0;
+    gap: 30px;
+  }
+  .sanus-blog-title.sanus-general-title {
+    padding: 0 20px;
+  }
+  .sanus-blog-container {
+    padding: 0 20px;
+  }
+  .sanus-blog-card {
+    width: 100%;
+  }
+}

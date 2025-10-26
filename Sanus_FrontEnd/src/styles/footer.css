@@ -163,4 +163,21 @@
   .sanus-location-map {
     height: 300px;
   }
+
+  .sanus-footer-columns {
+    flex-direction: column;
+  }
+  .sanus-footer-info {
+    width: auto;
+  }
+  .sanus-footer-container {
+    padding: 40px 20px;
+  }
+  .sanus-footer-columns {
+    gap: 20px;
+  }
+  .sanus-footer-more-info {
+    flex-direction: column;
+    gap: 20px;
+  }
 }
