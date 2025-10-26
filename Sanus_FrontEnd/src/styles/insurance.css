@@ -175,4 +175,13 @@
     gap: 30px;
     padding: 0 20px;
   }
+  .sanus-insurance-wave {
+    top: calc(100%);
+  }
+  .sanus-insurance .sanus-pattern{
+    bottom: -35px;
+    z-index: 2;
+    width: 75% !important;
+    height: 50% !important;
+  }
 }

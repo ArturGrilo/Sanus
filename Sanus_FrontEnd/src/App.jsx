@@ -9,8 +9,8 @@ import Team from "./components/team";
 import Recrutamento from "./components/recrutamento";
 import Feedback from "./components/feedback";
 import Insurance from "./components/insurance";
-{/*import Footer from "./components/footer";
 import Location from "./components/location";
+{/*import Footer from "./components/footer";
 import WhatsappButton from "./components/whatsapp_button";
 import BlogSection from "./components/blog_section";
 import ServicoDetalhe from "./components/service_details";
@@ -44,8 +44,8 @@ export default function App() {
             <Recrutamento />
             <Feedback />
             <Insurance />
-            {/*<Location />
-            <BlogSection />  
+            <Location />
+            {/*<BlogSection />  
             <Footer />
             <WhatsappButton />*/}
           </>

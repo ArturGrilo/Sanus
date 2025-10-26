@@ -137,3 +137,45 @@
 .sanus-location-main-text{
   color: var(--color-bg);
 }
+
+@media (max-width: 680px) {
+  .sanus-location {
+    padding-bottom: 200px;
+  }
+  .sanus-location-container {
+    position: relative;
+    flex-direction: column;
+    padding: 20px 20px;
+    gap: 20px;
+  }
+  .sanus-location-sub-container {
+    flex-direction: column;
+    gap: 80px;
+  }
+  .sanus-location-info{
+    display: block;
+  }
+  .mobile{
+    display: block;
+  }
+  .desktop{
+    display: none;
+  }
+  .sanus-location-map {
+    top: unset;
+    bottom: -270px;
+    height: auto;
+    width: 100%;
+  }
+  .sanus-location .btn{
+    width: 100%;
+  }
+  .sanus-location-img-clinica {
+    width: 100%;
+  }
+  .sanus-location-map .sanus-location-img-map {
+    height: auto;
+    width: 100%;
+    opacity: 0.15;
+  }
+}

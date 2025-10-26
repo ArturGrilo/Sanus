@@ -1,5 +1,6 @@
 import "../styles/location.css";
 import locationimage from '../images/Location/location.png';
+import locationimage_mobile from '../images/Location/location_mobile.png';
 import clinicaimage from '../images/Clinica/SanusVitae.jpeg';
 import { Clock, MapPin } from "phosphor-react"
 
@@ -10,7 +11,8 @@ export default function Location() {
         
         {/* Mapa */}
         <div className="sanus-location-map">
-          <img className="sanus-location-img-map" src={locationimage} alt="Sanus Vitae Barreiro fisioterapia pilates domicílio clinica" />
+          <img className="sanus-location-img-map desktop" src={locationimage} alt="Sanus Vitae Barreiro fisioterapia pilates domicílio clinica" />
+          <img className="sanus-location-img-map mobile" src={locationimage_mobile} alt="Sanus Vitae Barreiro fisioterapia pilates domicílio clinica" />
         </div>
         <img className="sanus-location-img-clinica" src={clinicaimage} alt="Sanus Vitae Barreiro fisioterapia pilates domicílio clinica" />
         <div className="sanus-location-sub-container">
@@ -40,7 +42,7 @@ export default function Location() {
                     <p className="sanus-services-text alt bold">Encerrado</p>
                 </div>
               </div>
-              <button className="btn btn-primary">Conheça a nossa história →</button>
+              <button className="btn btn-primary">Conheça a nossa história</button>
             </div>
           </div>
         </div>
