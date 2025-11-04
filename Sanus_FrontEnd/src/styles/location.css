@@ -144,8 +144,14 @@
   }
 }
 
-@media (max-width: 1650px) {
-  
+@media (max-width: 1680px) {
+  .sanus-blog {
+    margin-top: -12% !important;
+    margin-bottom: -2% !important;
+  }
+  .sanus-location-waves {
+    bottom: -100px;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -193,5 +199,11 @@
     position: absolute;
     bottom: -50px;
     z-index: 2;
+  }
+}
+
+@media (max-width: 550px) {
+  .sanus-location-waves{
+    bottom: 0;
   }
 }
