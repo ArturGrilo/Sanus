@@ -9,7 +9,7 @@
     justify-content: center;
     text-align: left;
     color: white;
-    overflow: hidden;
+    overflow: visible;
     margin-top: -114px;
 }
 
@@ -126,9 +126,9 @@
 }
 
 /* Responsivo */
-@media (max-width: 768px) {
+@media (max-width: 690px) {
   .sanus-hero {
-    height: 100vh;
+    height: 105vh;
   }
 
   .sanus-hero-search-more{

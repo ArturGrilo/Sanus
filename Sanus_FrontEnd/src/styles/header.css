@@ -159,7 +159,7 @@
   display: flex;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1117px) {
   .sanus-header-nav,
   .sanus-header-links-container .btn {
     display: none;

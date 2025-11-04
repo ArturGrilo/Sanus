@@ -111,3 +111,7 @@
     background-color: var(--color-primary-dark) !important;
   }
 }
+
+@media (max-width: 1450px) {
+  
+}

@@ -138,7 +138,17 @@
   color: var(--color-bg);
 }
 
-@media (max-width: 680px) {
+@media (max-width: 1800px) {
+  .sanus-location{
+    margin-top: -5%;
+  }
+}
+
+@media (max-width: 1650px) {
+  
+}
+
+@media (max-width: 1000px) {
   .sanus-location {
     padding-bottom: 200px;
   }

@@ -143,17 +143,53 @@
 }
 
 /* Responsivo */
+@media (max-width: 1650px) {
+  .sanus-insurance-wave {
+    top: calc(100% - 100px);
+  }
+}
+
+@media (max-width: 1543px) {
+  .sanus-insurance-grid-item {
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 1253px) {
+  .sanus-insurance-grid-item {
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 1200px) {
+  .sanus-insurance-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
+  .sanus-insurance-grid-item {
+    height: 130px;
+    object-fit: contain;
+  }
+  .sanus-insurance-wave {
+    top: calc(100% - 70px);
+  }
+}
+
 @media (max-width: 1024px) {
   .sanus-insurance-grid {
     grid-template-columns: 1fr 1fr;
   }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 840px) {
   .sanus-insurance-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .sanus-insurance-grid-item {
+    height: 200px;
     aspect-ratio: 1 / 1;
     width: 100%;
     object-fit: contain;
@@ -176,12 +212,27 @@
     padding: 0 20px;
   }
   .sanus-insurance-wave {
-    top: calc(100%);
+    top: calc(100% - 40px);
   }
   .sanus-insurance .sanus-pattern{
-    bottom: -35px;
+    bottom: -25px;
     z-index: 2;
     width: 85% !important;
     height: 50% !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .sanus-insurance .sanus-pattern{
+    bottom: 80px;
+    z-index: 2;
+    width: 85% !important;
+    height: 50% !important;
+  }
+}
+
+@media (max-width: 450px) {
+  .sanus-insurance-wave {
+    top: calc(100% - 30px);
   }
 }

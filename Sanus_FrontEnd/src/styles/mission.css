@@ -61,7 +61,31 @@
   left: 0;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 1300px){
+    .sanus-mission-grid-item svg{
+        width: 100px;
+    }
+    .sanus-mission-grid .sanus-general-title{
+        font-size: 24px;
+    }
+    .sanus-mission-text{
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 1300px){
+    .sanus-mission-grid-item svg{
+        width: 100px;
+    }
+    .sanus-mission-grid .sanus-general-title{
+        font-size: 20px;
+    }
+    .sanus-mission-text{
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 690px) {
     .sanus-mission-container {
         padding: 0 20px;
     }

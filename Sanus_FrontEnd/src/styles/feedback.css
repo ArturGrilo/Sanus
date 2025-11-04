@@ -91,9 +91,9 @@
     color: var(--color-other) !important;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 1000px) {
     .sanus-feedback {   
-        padding: 0 0 60px 0;
+        padding: 0 0 120px 0;
     }
 
     .sanus-feedback-container{

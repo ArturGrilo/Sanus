@@ -58,11 +58,28 @@
   background: var(--color-image);
 }
 
-@media (max-width: 550px) {
+@media (max-width: 1450px) {
     .sanus-recrutamento {    
-        margin-top: -60px;
+        margin-top: -200px;
         gap: 0;
     }
+}
+
+@media (max-width: 1250px) {
+    .sanus-recrutamento {    
+        margin-top: -150px;
+        gap: 0;
+    }
+    .sanus-recrutamento-container {
+        gap: 30px;
+    }
+    .sanus-recrutamento-img-column {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1000px) {
+    
     .sanus-recrutamento-container{
         padding: 40px 20px;
         flex-direction: column;
@@ -75,10 +92,6 @@
         bottom: 0;
         width: 100%;
     }
-    .sanus-recrutamento-text-column .btn{
-        width: 100%;
-        text-align: center;
-    }
     .sanus-recrutamento .sanus-pattern {
         height: 50%;
         width: 90%;
@@ -88,5 +101,24 @@
         mask-image: linear-gradient(to top left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
         mask-repeat: no-repeat;
         mask-size: cover;
+    }
+}
+
+@media (max-width: 850px) {
+    .sanus-recrutamento {    
+        margin-top: -100px;
+        gap: 0;
+    }
+
+    .sanus-recrutamento-text-column .btn{
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 550px) {
+    .sanus-recrutamento {    
+        margin-top: -60px;
+        gap: 0;
     }
 }

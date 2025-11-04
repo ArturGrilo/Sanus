@@ -9,7 +9,7 @@
     text-align: left;
     color: white;
     overflow: visible;
-    margin-top: -15%;
+    margin-top: -340px;
     padding: 200px 0 50px 0;
     gap: 60px;
 }
@@ -142,39 +142,6 @@
     left: 0;
     width: 100%;
     z-index: 1;
-}
-
-@media (max-width: 1235px) {
-    .sanus-services-card{
-        padding: 60px 40px;
-        max-width: 330px;
-    }
-}
-
-@media (max-width: 1110px) {
-    .sanus-services-card{
-        padding: 50px 30px;
-        max-width: 310px;
-    }
-}
-
-@media (max-width: 1050px) {
-    .sanus-services-card{
-        padding: 40px 30px;
-        max-width: 290px;
-    }
-    .sanus-services-card-sub-container .sanus-general-title{
-        font-size: 25px;
-    }
-}
-
-@media (max-width: 990px) {
-    .sanus-services-card{
-        max-width: 372px;
-        min-height: 550px;
-        border-radius: 4px 20px;
-        padding: 3.125rem;
-    }
 }
 
 @media (max-width: 550px) {
