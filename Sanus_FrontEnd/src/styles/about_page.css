@@ -62,7 +62,7 @@
     display: flex;
     flex-direction: column;
     max-width: 1800px;
-    padding: 40px;
+    padding: 20px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
@@ -141,9 +141,19 @@
   fill-opacity: 1;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1500px) {
+    .about-overlay h1 {
+        font-size: 3.5rem;
+    }
+    .feedback-comment {
+        font-size: 2rem;
+    }
     .sanus-about-us-footer{
         margin-top: -100px;
+    }
+
+    .about-hero {
+        height: 400px;
     }
 }
 
@@ -154,6 +164,12 @@
 }
 
 @media (max-width: 550px) {
+    .feedback-comment {
+        font-size: 1.7rem;
+    }
+    .about-overlay h1 {
+        font-size: 2.5rem;
+    }
     .sanus-about-us-values-grid-item-value {
         font-size: 2rem;
     }
@@ -168,6 +184,15 @@
         top: 60%;
     }
     .sanus-about-us-container{
-        padding: 80px 20px;
+        padding: 40px 20px;
+    }
+    .sanus-about-us-cards .sanus-services-card {  
+        padding: 30px 20px;
+    }
+    .sanus-about-us-mission {
+        padding-top: 0px;
+    }
+    .sanus-about-us-mission .sanus-mission-grid {
+        padding-bottom: 0px;
     }
 }

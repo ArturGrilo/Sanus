@@ -13,10 +13,12 @@
 .sanus-contact-cta .sanus-general-title{
     color: var(--color-bg);
     z-index: 11;
+    font-size: 2rem;
 }
 
 .sanus-contact-cta .btn{
     z-index: 11;
+    width: 100%;
 }
 
 .sanus-contact-cta .sanus-pattern{
