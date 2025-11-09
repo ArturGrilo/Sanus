@@ -14,6 +14,7 @@ import Footer from "./components/footer";
 import WhatsappButton from "./components/whatsapp_button";
 import BlogSection from "./components/blog_section";
 import ServicoDetalhe from "./components/service_details";
+import AboutPage from "./components/about_page";
 
 // Páginas do back office
 import Login from "./admin/Login";
@@ -51,6 +52,7 @@ export default function App() {
           </>
         }
       />
+      <Route path="/sobre-nos" element={<AboutPage />} />
 
       {/* 🔐 Back Office */}
       <Route path="/login" element={<Login />} />

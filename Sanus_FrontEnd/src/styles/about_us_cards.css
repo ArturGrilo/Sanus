@@ -1,0 +1,164 @@
+.sanus-about-us-cards {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    color: white;
+    overflow: visible;
+    padding: 0px 0 50px 0;
+    gap: 60px;
+}
+
+.sanus-about-us-cards-title.sanus-general-title{
+    width: 100%;
+    max-width: 1800px;
+    padding: 0 40px;
+}
+
+.sanus-about-us-cards .sanus-services-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+    max-width: 1800px;
+    padding: 0 40px;
+    gap: 20px;
+}
+
+.sanus-about-us-cards .sanus-services-card{
+    max-width: 100%;
+    width: 100%;
+    min-height: auto;
+    height: auto;
+    border-radius: 4px 20px;
+}
+
+.sanus-about-us-cards .sanus-services-card-sub-container{
+    margin-bottom: 0;
+}
+
+.sanus-about-us-cards-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-primary-hover); /* cor primária com baixa opacidade */
+  transition: background 0.3s ease;
+  pointer-events: none;
+}
+
+.sanus-about-us-cards-card:hover::after {
+  background: rgba(75, 202, 173, 0.12);
+}
+
+.sanus-about-us-cards-card-sub-container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 30px;
+    z-index: 10;
+}
+
+.sanus-about-us-cards-card .btn{
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
+
+.sanus-about-us-cards-card .btn:hover{ 
+    background-color: transparent;
+    color: var(--color-primary-dark);
+}
+
+.sanus-about-us-cards-card.alt{
+    border: 1px solid var(--color-primary-dark);
+    background: var(--color-primary-dark);
+}
+
+.sanus-about-us-cards-card.alt2{
+    background: var(--color-primary);
+}
+
+.sanus-about-us-cards-icon{
+    position: absolute;
+    bottom: 0;
+    display: none;
+    height: 50px;
+}
+
+.sanus-about-us-cards-title{
+    font-family: var(--font-title);
+    color: var(--color-primary-dark);
+    font-size: 35px;
+}
+
+.sanus-about-us-cards-title.alt{
+    color: var(--color-primary);
+}
+
+.sanus-about-us-cards-title.alt2{
+    color: var(--color-primary-dark);
+}
+
+.sanus-about-us-cards-text{
+    font-family: var(--font-text);
+    color: var(--color-text);
+    font-size: 18px;
+}
+
+.sanus-about-us-cards-text.little{
+    font-size: 12px;
+    margin-bottom: 30px;
+}
+
+.sanus-about-us-cards-text.alt{
+    color: var(--color-bg);
+}
+
+.sanus-about-us-cards-image {
+    top: 0;
+    left: 0;
+    position: absolute;    
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.15;
+}
+
+.sanus-about-us-cards-waves{
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+@media (max-width: 990px){
+    .sanus-about-us-cards .sanus-services-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 550px) {
+    .sanus-about-us-cards{
+        overflow: hidden;
+    }
+    .sanus-about-us-cards-container{
+        padding: 0 20px;
+    }
+    .sanus-about-us-cards-title.sanus-general-title{
+        padding: 0 20px;
+    }
+    .sanus-about-us-cards-waves {
+        width: 200%;
+    }
+    .sanus-about-us-cards-card {  
+        padding: 40px 30px;
+    }
+    .sanus-about-us-cards .sanus-services-container {
+        grid-template-columns: repeat(1, 1fr);
+        padding: 0 20px;
+    }
+}

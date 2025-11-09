@@ -45,7 +45,7 @@ export default function Header() {
         <div className="sanus-header-links-container desktop-only">
           <nav className="sanus-header-nav">
             <ul>
-              <li><a href="#quem-somos">Quem Somos</a></li>
+              <li><a onClick={() => navigate("/sobre-nos")}>Quem Somos</a></li>
               <li><a href="#servicos">Serviços</a></li>
               <li><a href="#blog">Blog</a></li>
               <li><a href="#recrutamento">Recrutamento</a></li>

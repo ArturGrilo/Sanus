@@ -1,0 +1,30 @@
+.sanus-contact-cta {
+  width: 100%;
+  padding: 40px 24px 140px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-primary-dark);
+  gap: 40px;
+  position: relative;
+}
+
+.sanus-contact-cta .sanus-general-title{
+    color: var(--color-bg);
+    z-index: 11;
+}
+
+.sanus-contact-cta .btn{
+    z-index: 11;
+}
+
+.sanus-contact-cta .sanus-pattern{
+    display: none;
+}
+
+@media (max-width: 768px) {
+  .sanus-contact-cta {
+    padding: 60px 16px;
+  }
+}
