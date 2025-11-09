@@ -163,4 +163,11 @@
     .sanus-about-us-footer{
         margin-top: -50px;
     }
+
+    .about-overlay{
+        top: 60%;
+    }
+    .sanus-about-us-container{
+        padding: 80px 20px;
+    }
 }
