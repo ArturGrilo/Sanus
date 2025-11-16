@@ -48,7 +48,7 @@ export default function App() {
             <Feedback />
             <Insurance />
             <Location />
-            <BlogSection />  
+            <BlogSection variant="home" limit={3} />  
             <Footer />
             <WhatsappButton />
           </>

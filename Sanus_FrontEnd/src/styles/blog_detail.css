@@ -54,14 +54,14 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  padding: 60px 20px;
+  padding: 60px 40px;
   background: #fff;
   margin-top: -2px;
   z-index: 1;
 }
 
 .sanus-blog-detail-container {
-  max-width: 820px;
+  max-width: 1200px;
   width: 100%;
   z-index: 2;
   position: relative;
@@ -154,8 +154,11 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 550px) {
     .sanus-blog-detail-hero-overlay{
         top: 60%;
+    }
+    .sanus-blog-detail-content {
+      padding: 60px 20px;
     }
 }

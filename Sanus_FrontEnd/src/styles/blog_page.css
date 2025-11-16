@@ -127,16 +127,26 @@
 
 
 @media (max-width: 1500px) {
-    .sanus-blog-hero-overlay h1 {
-        font-size: 3.5rem;
-    }
+  .sanus-blog-hero-overlay h1 {
+      font-size: 3.5rem;
+  }
 }
 
 @media (max-width: 550px) {
-    .sanus-blog-hero-overlay h1 {
-        font-size: 2.5rem;
-    }
-    .sanus-blog-hero-overlay{
-        top: 60%;
-    }
+  .sanus-blog-hero-overlay h1 {
+      font-size: 2.5rem;
+  }
+  .sanus-blog-hero-overlay{
+      top: 60%;
+  }
+  .featured .sanus-blog-card {
+    min-height: unset;
+    max-width: 800px;
+  }
+  .featured .sanus-blog-card-content {
+    flex-direction: column;
+  }
+  .featured .sanus-blog-image-wrapper{
+    width: 100%;
+  }
 }

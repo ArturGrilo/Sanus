@@ -34,7 +34,7 @@ export default function BlogPage() {
       {/* HERO SECTION */}
       <section className="sanus-blog-hero">
         <div className="sanus-blog-hero-overlay">
-          <h1>Blog Sanus Vitae</h1>
+          <h1>Blog</h1>
           <p>Notícias, evidência e inspiração clínica</p>
         </div>
 

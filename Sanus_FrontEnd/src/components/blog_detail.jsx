@@ -4,6 +4,7 @@ import Header from "./header";
 import Footer from "./footer";
 import WhatsappButton from "./whatsapp_button";
 import "../styles/blog_detail.css";
+import BlogSection from "./blog_section";
 
 export default function BlogDetail() {
   const { id } = useParams();
@@ -106,8 +107,8 @@ export default function BlogDetail() {
         </div>
       </section>
 
+      <BlogSection variant="detail" excludeId={article.id} limit={3} />
       <WhatsappButton />
-
       <div className="sanus-about-us-footer">
         <Footer />
       </div>
