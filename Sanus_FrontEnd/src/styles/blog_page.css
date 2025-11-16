@@ -2,7 +2,7 @@
   margin-top: -114px;
   position: relative;
   height: 460px;
-  background-image: url("/Clinica/foto4.jpeg");
+  background-image: url("/Services/fisioterapia.webp");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -54,10 +54,10 @@
     flex-direction: column;
     align-items: center;
     z-index: 10;
-    padding-bottom: 50px;
+    margin-bottom: 50px;
     position: relative;
     margin-top: -2px;
-    z-index: 0;
+    z-index: 10;
     background-color: #fff;
 }
 
