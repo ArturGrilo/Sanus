@@ -44,7 +44,7 @@
 
 .sanus-blog-hero-wave {
   position: absolute;
-  bottom: 0px;
+  bottom: -1px;
   width: 100%;
   z-index: 2;
 }
@@ -56,6 +56,9 @@
     z-index: 10;
     padding-bottom: 50px;
     position: relative;
+    margin-top: -2px;
+    z-index: 0;
+    background-color: #fff;
 }
 
 .sanus-blog-page-container {

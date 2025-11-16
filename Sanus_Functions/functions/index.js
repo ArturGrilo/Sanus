@@ -7,11 +7,11 @@ require("dotenv").config();
 
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const { FieldValue } = require("firebase-admin/firestore"); // ✅ CORREÇÃO AQUI
+const {FieldValue} = require("firebase-admin/firestore"); // ✅ CORREÇÃO AQUI
 const express = require("express");
 const cors = require("cors");
 const crypto = require("crypto");
-const { createClient } = require("@supabase/supabase-js");
+const {createClient} = require("@supabase/supabase-js");
 
 // ============================================================
 // Inicializações
@@ -31,7 +31,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 // 🔹 Express + CORS
 const app = express();
-app.use(cors({ origin: true }));
+app.use(cors({origin: true}));
 app.use(express.json());
 
 // ============================================================
@@ -41,24 +41,20 @@ app.use(express.json());
 // --- Gerar URL assinado para upload de imagem ---
 app.post("/storage/blog-upload-url", async (req, res) => {
   try {
-    const { fileName, contentType, articleId } = req.body || {};
+    const {fileName, contentType, articleId} = req.body || {};
     if (!fileName || !contentType) {
       return res.status(400).send("fileName e contentType são obrigatórios");
     }
 
-    const ext = (fileName.split(".").pop() || "jpg")
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, "");
+    const ext = (fileName.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
     const objectName = `article-${articleId || crypto.randomUUID()}.${ext}`;
     const bucket = "blog-images";
 
-    const { data, error } = await supabase.storage
-      .from(bucket)
-      .createSignedUploadUrl(objectName, 60); // válido 60s
+    const {data, error} = await supabase.storage.from(bucket).createSignedUploadUrl(objectName, 60); // válido 60s
 
     if (error) throw error;
 
-    const { data: pub } = supabase.storage.from(bucket).getPublicUrl(objectName);
+    const {data: pub} = supabase.storage.from(bucket).getPublicUrl(objectName);
     return res.json({
       uploadUrl: data.signedUrl,
       publicUrl: pub.publicUrl,
@@ -77,7 +73,7 @@ app.post("/storage/blog-upload-url", async (req, res) => {
 app.get("/services", async (req, res) => {
   try {
     const snapshot = await db.collection("services").orderBy("createdAt").get();
-    const services = snapshot.docs.map((doc) => ({ _id: doc.id, ...doc.data() }));
+    const services = snapshot.docs.map((doc) => ({_id: doc.id, ...doc.data()}));
     res.json(services);
   } catch (err) {
     console.error(err);
@@ -89,7 +85,7 @@ app.get("/services", async (req, res) => {
 app.get("/feedbacks", async (req, res) => {
   try {
     const snapshot = await db.collection("feedback").orderBy("createdAt", "desc").get();
-    const feedbacks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const feedbacks = snapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
     res.json(feedbacks);
   } catch (err) {
     console.error("Erro ao buscar feedbacks:", err);
@@ -112,13 +108,11 @@ app.get("/blogs", async (req, res) => {
     });
 
     const tagsSnap = await db.collection("tags").get();
-    const allTags = tagsSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const allTags = tagsSnap.docs.map((doc) => ({id: doc.id, ...doc.data()}));
 
     const blogsWithTags = blogs.map((article) => {
-      const fullTags = (article.tags || [])
-        .map((tagId) => allTags.find((t) => t.id === tagId))
-        .filter(Boolean);
-      return { ...article, tags: fullTags };
+      const fullTags = (article.tags || []).map((tagId) => allTags.find((t) => t.id === tagId)).filter(Boolean);
+      return {...article, tags: fullTags};
     });
 
     res.json(blogsWithTags);
@@ -139,11 +133,9 @@ app.get("/blogs/:id", async (req, res) => {
     const data = snap.data();
 
     const tagsSnap = await db.collection("tags").get();
-    const allTags = tagsSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    const allTags = tagsSnap.docs.map((d) => ({id: d.id, ...d.data()}));
 
-    const fullTags = (data.tags || [])
-      .map((tagId) => allTags.find((t) => t.id === tagId))
-      .filter(Boolean);
+    const fullTags = (data.tags || []).map((tagId) => allTags.find((t) => t.id === tagId)).filter(Boolean);
 
     res.json({
       id: snap.id,
@@ -162,7 +154,7 @@ app.get("/blogs/:id", async (req, res) => {
 app.get("/tags", async (req, res) => {
   try {
     const tagsSnap = await db.collection("tags").get();
-    const tags = tagsSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    const tags = tagsSnap.docs.map((d) => ({id: d.id, ...d.data()}));
     res.json(tags);
   } catch (err) {
     console.error("Erro ao carregar tags:", err);
@@ -173,7 +165,7 @@ app.get("/tags", async (req, res) => {
 // --- Criar artigo ---
 app.post("/blogs", async (req, res) => {
   try {
-    const { title, author, content, imageUrl, tags = [] } = req.body;
+    const {title, author, content, imageUrl, tags = []} = req.body;
     if (!title || !author || !content) {
       return res.status(400).send("Campos obrigatórios em falta");
     }
@@ -188,7 +180,7 @@ app.post("/blogs", async (req, res) => {
       updatedAt: FieldValue.serverTimestamp(),
     });
 
-    res.status(201).json({ id: docRef.id });
+    res.status(201).json({id: docRef.id});
   } catch (err) {
     console.error("🔥 Erro ao criar artigo:", err);
     res.status(500).send("Erro ao criar artigo");
@@ -198,22 +190,13 @@ app.post("/blogs", async (req, res) => {
 // --- Atualizar artigo ---
 app.put("/blogs/:id", async (req, res) => {
   try {
-    const { title, author, content, imageUrl, tags = [] } = req.body;
+    const {title, author, content, imageUrl, tags = []} = req.body;
     const docRef = db.collection("blog").doc(req.params.id);
 
     await docRef.set(
-      {
-        title,
-        author,
-        content,
-        imageUrl: imageUrl || "",
-        tags,
-        updatedAt: FieldValue.serverTimestamp(),
-      },
-      { merge: true }
-    );
+        {title, author, content, imageUrl: imageUrl || "", tags, updatedAt: FieldValue.serverTimestamp()}, {merge: true});
 
-    res.json({ success: true });
+    res.json({success: true});
   } catch (err) {
     console.error("🔥 Erro ao atualizar artigo:", err);
     res.status(500).send("Erro ao atualizar artigo");
@@ -223,6 +206,4 @@ app.put("/blogs/:id", async (req, res) => {
 // ============================================================
 // Export Firebase Function (sem multer, simples e estável)
 // ============================================================
-exports.api = functions
-  .runWith({ timeoutSeconds: 120, memory: "512MB" })
-  .https.onRequest(app);
+exports.api = functions.https.onRequest(app);
