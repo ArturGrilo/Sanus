@@ -47,7 +47,7 @@ export default function Header() {
             <ul>
               <li><a onClick={() => navigate("/sobre-nos")}>Quem Somos</a></li>
               <li><a href="#servicos">Serviços</a></li>
-              <li><a href="#blog">Blog</a></li>
+              <li><a onClick={() => navigate("/blog")}>Blog</a></li>
               <li><a href="#recrutamento">Recrutamento</a></li>
               <li><a href="#contato">Contatos</a></li>
             </ul>

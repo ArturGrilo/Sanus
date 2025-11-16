@@ -1,0 +1,139 @@
+.sanus-blog-hero {
+  margin-top: -114px;
+  position: relative;
+  height: 460px;
+  background-image: url("/Clinica/foto4.jpeg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+}
+
+.sanus-blog-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,32,40,0.8), rgba(0,32,40,0.0));
+  background: linear-gradient(to bottom, rgba(0,32,40,0.8), rgba(0,0,0,0.25));
+  z-index: 1;
+}
+
+.sanus-blog-hero-overlay {
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.sanus-blog-hero-overlay h1 {
+  font-size: 4.2rem;
+  font-weight: 700;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  color: var(--color-bg);
+}
+
+.sanus-blog-hero-overlay p {
+  margin-top: 10px;
+  font-size: 1.4rem;
+  opacity: 0.85;
+}
+
+.sanus-blog-hero-wave {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  z-index: 2;
+}
+
+.sanus-blog-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    padding-bottom: 50px;
+    position: relative;
+}
+
+.sanus-blog-page-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    padding: 20px;
+    width: 100%;
+    z-index: 2;
+    position: relative;
+}
+
+.sanus-blog-page-grid {
+  display: grid;
+  gap: 32px;
+  width: 100%;
+  grid-template-columns: 1fr;
+}
+
+.featured .sanus-blog-card{
+    min-height: auto;
+    width: 100%;
+    max-width: 800px;
+}
+
+.featured .sanus-blog-card-content{
+    display: flex;
+}
+
+.featured .sanus-blog-image-wrapper{
+    width: 50%;
+}
+
+.featured .sanus-blog-image-wrapper img{
+    width: 100%;
+}
+
+.featured .sanus-blog-card-header{
+    width: 100%;
+}
+
+/* Desktop (≥ 1024px): duas colunas a partir da terceira linha */
+@media (min-width: 1024px) {
+  .sanus-blog-page-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sanus-post.featured {
+    grid-column: 1 / -1; /* Ocupa as duas colunas */
+  }
+
+  /* Garante que apenas os dois primeiros posts ocupam linha inteira */
+  .sanus-post:nth-child(1),
+  .sanus-post:nth-child(2) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Tablet (≥ 768px e < 1024px): sempre uma coluna (para foco no conteúdo) */
+@media (max-width: 1023px) {
+  .sanus-blog-page-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+@media (max-width: 1500px) {
+    .sanus-blog-hero-overlay h1 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 550px) {
+    .sanus-blog-hero-overlay h1 {
+        font-size: 2.5rem;
+    }
+    .sanus-blog-hero-overlay{
+        top: 60%;
+    }
+}

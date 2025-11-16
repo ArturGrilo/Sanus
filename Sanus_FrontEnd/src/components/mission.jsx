@@ -1,8 +1,10 @@
 import "../styles/mission.css"
 import { HandHeartIcon, MicroscopeIcon, CertificateIcon, CheckFatIcon, SmileyIcon } from "@phosphor-icons/react";
 import { Handshake } from "phosphor-react"
+import { useNavigate } from "react-router-dom";
 
 export default function Mission() {
+  const navigate = useNavigate();
   return (
     <section className="sanus-mission">
       <div className="sanus-mission-container">
@@ -51,7 +53,7 @@ export default function Mission() {
           </div>
         </div>
         <div className="sanus-mission-button">
-          <a href="#quemsomos" className="btn btn-secundary">Saiba mais</a>
+          <a onClick={() => navigate("/sobre-nos")} className="btn btn-secundary">Saiba mais</a>
         </div>
         <svg className="sanus-mission-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffffff" fillOpacity="1" d="M0,256L120,261.3C240,267,480,277,720,277.3C960,277,1200,267,1320,261.3L1440,256L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>
       </div>

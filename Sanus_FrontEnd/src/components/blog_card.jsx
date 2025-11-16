@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function BlogCard({ image, title, author, date, id, tags = [] }) {
+  const navigate = useNavigate();
   // 🗓️ Função para formatar a data
   const formatDate = (dateObj) => {
     if (!dateObj) return "";
@@ -30,7 +31,7 @@ export default function BlogCard({ image, title, author, date, id, tags = [] }) 
   const formattedDate = formatDate(date);
 
   return (
-    <Link to={`/blog/${id}`} className="sanus-blog-card">
+    <div className="sanus-blog-card" onClick={() => navigate(`/blog/${id}`)}>
       <div className="sanus-blog-card-content">
         {image && (
           <div className="sanus-blog-image-wrapper">
@@ -86,6 +87,6 @@ export default function BlogCard({ image, title, author, date, id, tags = [] }) 
           )}
         </header>
       </div>
-    </Link>
+    </div>
   );
 }

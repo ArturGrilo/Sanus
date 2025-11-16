@@ -1,134 +1,183 @@
-import { useEffect, useState } from "react";
-import { db } from "../lib/firebase";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  doc,
-  getDoc,
-  setDoc,
-  addDoc,
-  collection,
-  getDocs,
-  serverTimestamp,
-} from "firebase/firestore";
 import Header from "./Header";
 import ImageUpload from "./ImageUpload";
-import { supabase } from "../lib/supabaseClient";
 import "./BlogForm.css";
+
+// 🔹 Tiptap (Rich Text Editor)
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Heading from "@tiptap/extension-heading";
+import Link from "@tiptap/extension-link";
+import Underline from "@tiptap/extension-underline";
 
 export default function BlogForm() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const API = import.meta.env.VITE_BACKEND_URL;
 
+  // 🔹 Campos principais
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(""); // HTML do editor
   const [imageUrl, setImageUrl] = useState("");
-  const [loading, setLoading] = useState(Boolean(id));
+  const [imageFile, setImageFile] = useState(null);
+  const [loading, setLoading] = useState(!!id);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  // 🔹 TAGS
-  const [allTags, setAllTags] = useState([]);         // [{id, name, color}]
-  const [selectedTags, setSelectedTags] = useState([]); // ["tagId1", "tagId2"]
+  // 🔹 Tags
+  const [allTags, setAllTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
-  // Carregar lista de tags
+  // 🔸 Util para preview: texto sem HTML
+  const plainText = useMemo(() => {
+    const tmp = document.createElement("div");
+    tmp.innerHTML = content || "";
+    return tmp.textContent || tmp.innerText || "";
+  }, [content]);
+
+  // 🔸 Carregar tags
   useEffect(() => {
-    async function fetchTags() {
-      const snap = await getDocs(collection(db, "tags"));
-      setAllTags(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+    fetch(`${API}/tags`)
+      .then((r) => r.json())
+      .then(setAllTags)
+      .catch((err) => console.error("Erro a carregar tags:", err));
+  }, [API]);
+
+  // 🔸 Carregar artigo existente (edição)
+  useEffect(() => {
+    if (!id) {
+      setLoading(false);
+      return;
     }
-    fetchTags();
-  }, []);
-
-  // Carregar artigo (edição)
-  useEffect(() => {
-    let ignore = false;
-    async function fetchPost() {
+    (async () => {
       try {
-        if (!id) return;
-        const snap = await getDoc(doc(db, "blog", id));
-        if (!ignore && snap.exists()) {
-          const data = snap.data();
-          setTitle(data.title || "");
-          setAuthor(data.author || "");
-          setContent(data.content || "");
-          setImageUrl(data.imageUrl || "");
-          setSelectedTags(Array.isArray(data.tags) ? data.tags : []); // ← tags (array de IDs)
-        }
-      } catch {
+        const res = await fetch(`${API}/blogs/${id}`);
+        if (!res.ok) throw new Error("Erro ao carregar artigo");
+        const data = await res.json();
+        setTitle(data.title || "");
+        setAuthor(data.author || "");
+        setContent(data.content || ""); // HTML
+        setImageUrl(data.imageUrl || "");
+        setSelectedTags(data.tags?.map((t) => t.id || t) || []);
+      } catch (err) {
+        console.error(err);
         setError("Não foi possível carregar o artigo.");
       } finally {
-        if (!ignore) setLoading(false);
+        setLoading(false);
       }
+    })();
+  }, [id, API]);
+
+  // 🔸 Editor Tiptap
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        heading: false, // usamos extensão abaixo com níveis permitidos
+      }),
+      Heading.configure({ levels: [2, 3] }),
+      Link.configure({
+        openOnClick: true,
+        HTMLAttributes: { rel: "noopener noreferrer", target: "_blank" },
+      }),
+      Underline,
+    ],
+    content: "<p>Escreve o conteúdo do artigo…</p>",
+    autofocus: false,
+    onUpdate: ({ editor }) => {
+      setContent(editor.getHTML());
+    },
+  });
+
+  // Quando terminamos de carregar (edição), colocamos o conteúdo no editor
+  useEffect(() => {
+    if (editor && !loading) {
+      editor.commands.setContent(content || "<p></p>");
     }
-    fetchPost();
-    return () => { ignore = true; };
-  }, [id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editor, loading]);
 
-  const isValidImage = !!imageUrl && imageUrl.startsWith("http");
+  // 🔸 Alternar tags
+  function toggleTag(tagId) {
+    setSelectedTags((prev) =>
+      prev.includes(tagId) ? prev.filter((x) => x !== tagId) : [...prev, tagId]
+    );
+  }
 
-  // Guardar artigo
+  // 🔸 Submeter artigo
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
 
     const clean = (s) => (s || "").trim();
-    const payloadBase = {
-      title: clean(title),
-      author: clean(author),
-      content: clean(content),
-      imageUrl: clean(imageUrl),
-      tags: selectedTags, // ✅ array de IDs de tags
-    };
-
-    if (!payloadBase.title || !payloadBase.author || !payloadBase.content) {
+    // valida campos base
+    if (!clean(title) || !clean(author) || !clean(content)) {
       setError("Preenche Título, Autor e Conteúdo.");
       return;
     }
 
     try {
       setSaving(true);
+      let finalImageUrl = imageUrl;
 
-      if (!id) {
-        const docRef = await addDoc(collection(db, "blog"), {
-          ...payloadBase,
-          createdAt: serverTimestamp(),
+      // 1️⃣ Se há nova imagem, pede URL assinado e faz o upload
+      if (imageFile) {
+        const sigRes = await fetch(`${API}/storage/blog-upload-url`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fileName: imageFile.name,
+            contentType: imageFile.type,
+            articleId: id || null,
+          }),
         });
+        if (!sigRes.ok) throw new Error("Falha ao obter URL assinado");
+        const { uploadUrl, publicUrl } = await sigRes.json();
 
-        // Renomear imagem “temp” → “article-[id].jpg”
-        if (imageUrl.includes("article-temp")) {
-          const newId = docRef.id;
-          const newFileName = `article-${newId}.jpg`;
-          await supabase.storage.from("blog-images").move("article-temp.jpg", newFileName);
-          const { data: publicData } = supabase.storage
-            .from("blog-images")
-            .getPublicUrl(newFileName);
-          const finalUrl = `${publicData.publicUrl}?v=${Date.now()}`;
-          await setDoc(doc(db, "blog", newId), { imageUrl: finalUrl }, { merge: true });
-        }
-      } else {
-        await setDoc(
-          doc(db, "blog", id),
-          { ...payloadBase, updatedAt: serverTimestamp() },
-          { merge: true }
-        );
+        const putRes = await fetch(uploadUrl, {
+          method: "PUT",
+          headers: { "Content-Type": imageFile.type },
+          body: imageFile,
+        });
+        if (!putRes.ok) throw new Error("Falha no upload da imagem");
+
+        finalImageUrl = publicUrl;
       }
+
+      // 2️⃣ Envia JSON ao backend
+      const payload = {
+        title: clean(title),
+        author: clean(author),
+        content: content, // HTML do editor
+        tags: selectedTags,
+        imageUrl: finalImageUrl,
+      };
+
+      const method = id ? "PUT" : "POST";
+      const endpoint = id ? `${API}/blogs/${id}` : `${API}/blogs`;
+
+      const res = await fetch(endpoint, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("Erro ao guardar artigo");
 
       navigate("/admin/blog", { replace: true });
     } catch (err) {
       console.error(err);
-      setError("Ocorreu um erro ao guardar o artigo.");
+      setError(err.message || "Erro ao guardar artigo.");
     } finally {
       setSaving(false);
     }
   }
 
-  // Alternar seleção de tags
-  function toggleTag(tagId) {
-    setSelectedTags((prev) =>
-      prev.includes(tagId) ? prev.filter((x) => x !== tagId) : [...prev, tagId]
-    );
-  }
+  const previewUrl = imageFile ? URL.createObjectURL(imageFile) : imageUrl || "";
+
+  // 🔸 Toolbar helpers
+  const isActive = (name, attrs = {}) => editor?.isActive(name, attrs);
+  const run = (fn) => editor?.chain().focus()[fn]().run();
 
   return (
     <div className="blogform-page">
@@ -183,7 +232,6 @@ export default function BlogForm() {
                 />
               </label>
 
-              {/* 🔹 Tags (multi-select com pílulas coloridas) */}
               <label>
                 <span>Tags</span>
                 <div className="services-dropdown">
@@ -191,9 +239,13 @@ export default function BlogForm() {
                     <button
                       type="button"
                       key={t.id}
-                      className={`service-pill ${selectedTags.includes(t.id) ? "selected" : ""}`}
+                      className={`service-pill ${
+                        selectedTags.includes(t.id) ? "selected" : ""
+                      }`}
                       style={{
-                        backgroundColor: selectedTags.includes(t.id) ? t.color : "#f0f0f0",
+                        backgroundColor: selectedTags.includes(t.id)
+                          ? t.color || "var(--color-primary)"
+                          : "#f0f0f0",
                         color: selectedTags.includes(t.id) ? "#fff" : "#333",
                       }}
                       onClick={() => toggleTag(t.id)}
@@ -206,20 +258,138 @@ export default function BlogForm() {
 
               <label>
                 <span>Imagem</span>
-                <ImageUpload onUploadComplete={setImageUrl} articleId={id} />
+                <ImageUpload existingUrl={imageUrl} onFileSelect={setImageFile} />
               </label>
 
               <label>
                 <span>Conteúdo</span>
-                <textarea
-                  rows="10"
-                  placeholder="Escreve o conteúdo do artigo…"
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  required
-                />
+
+                {/* 🔹 Toolbar do editor */}
+                <div className="editor-toolbar">
+                  <button
+                    type="button"
+                    className={isActive("bold") ? "active" : ""}
+                    onClick={() => run("toggleBold")}
+                    aria-label="Negrito"
+                  >
+                    B
+                  </button>
+                  <button
+                    type="button"
+                    className={isActive("italic") ? "active" : ""}
+                    onClick={() => run("toggleItalic")}
+                    aria-label="Itálico"
+                  >
+                    I
+                  </button>
+                  <button
+                    type="button"
+                    className={isActive("underline") ? "active" : ""}
+                    onClick={() => run("toggleUnderline")}
+                    aria-label="Sublinhado"
+                  >
+                    U
+                  </button>
+
+                  <span className="toolbar-sep" />
+
+                  <button
+                    type="button"
+                    className={isActive("heading", { level: 2 }) ? "active" : ""}
+                    onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
+                  >
+                    Título
+                  </button>
+                  <button
+                    type="button"
+                    className={isActive("heading", { level: 3 }) ? "active" : ""}
+                    onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}
+                  >
+                    Subtítulo
+                  </button>
+
+                  <span className="toolbar-sep" />
+
+                  <button
+                    type="button"
+                    className={isActive("bulletList") ? "active" : ""}
+                    onClick={() => run("toggleBulletList")}
+                  >
+                    • Lista
+                  </button>
+                  <button
+                    type="button"
+                    className={isActive("orderedList") ? "active" : ""}
+                    onClick={() => run("toggleOrderedList")}
+                  >
+                    1. Lista
+                  </button>
+                  <button
+                    type="button"
+                    className={isActive("blockquote") ? "active" : ""}
+                    onClick={() => run("toggleBlockquote")}
+                  >
+                    “ Citação
+                  </button>
+                  
+                  <button
+                    type="button"
+                    onClick={() => run("setHorizontalRule")}
+                    aria-label="Separador"
+                  >
+                    — Separador —
+                  </button>
+
+                  <span className="toolbar-sep" />
+
+                  <button
+                    type="button"
+                    className={isActive("link") ? "active" : ""}
+                    onClick={() => {
+                      const url = window.prompt("Insere o link (https://…):");
+                      if (!url) return;
+                      editor
+                        ?.chain()
+                        .focus()
+                        .extendMarkRange("link")
+                        .setLink({ href: url })
+                        .run();
+                    }}
+                  >
+                    🔗 Link
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => editor?.chain().focus().unsetLink().run()}
+                  >
+                    ❌ Link
+                  </button>
+
+                  <span className="toolbar-sep" />
+
+                  <button
+                    type="button"
+                    onClick={() => editor?.chain().focus().undo().run()}
+                  >
+                    ↺
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => editor?.chain().focus().redo().run()}
+                  >
+                    ↻
+                  </button>
+                </div>
+
+                {/* 🔹 Área do editor */}
+                <div className="editor-wrapper">
+                  <EditorContent editor={editor} />
+                </div>
+
                 <div className="meta-row">
-                  <small>{content.trim().split(/\s+/).filter(Boolean).length} palavras</small>
+                  <small>
+                    {plainText.trim().split(/\s+/).filter(Boolean).length} palavras
+                  </small>
                 </div>
               </label>
             </form>
@@ -227,30 +397,38 @@ export default function BlogForm() {
             <aside className="preview-card">
               <h3>Preview</h3>
               <div className="preview">
-                {isValidImage ? (
-                  <img src={imageUrl} alt="Pré-visualização" />
+                {previewUrl ? (
+                  <img src={previewUrl} alt="Pré-visualização" />
                 ) : (
-                  <div className="preview-placeholder">Sem imagem válida</div>
+                  <div className="preview-placeholder">Sem imagem</div>
                 )}
+
                 <div className="preview-body">
                   <h4>{title || "Título do artigo"}</h4>
-                  <p className="preview-author">{author ? `por ${author}` : "Autor"}</p>
+                  <p className="preview-author">
+                    {author ? `por ${author}` : "Autor"}
+                  </p>
 
-                  {/* 🔹 Preview das tags selecionadas */}
                   <div className="preview-tags">
                     {selectedTags.map((tagId) => {
                       const t = allTags.find((x) => x.id === tagId);
                       return t ? (
-                        <span key={tagId} className="tag" style={{ backgroundColor: t.color }}>
+                        <span
+                          key={tagId}
+                          className="tag"
+                          style={{ backgroundColor: t.color }}
+                        >
                           {t.name}
                         </span>
                       ) : null;
                     })}
                   </div>
 
+                  {/* Pequeno excerto em texto plano */}
                   <p className="preview-excerpt">
-                    {content
-                      ? content.slice(0, 180) + (content.length > 180 ? "…" : "")
+                    {plainText
+                      ? plainText.slice(0, 180) +
+                        (plainText.length > 180 ? "…" : "")
                       : "Introdução do artigo…"}
                   </p>
                 </div>
