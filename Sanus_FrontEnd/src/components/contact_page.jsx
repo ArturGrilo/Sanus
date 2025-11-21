@@ -166,11 +166,6 @@ Mensagem: ${formData.message || "-"}`;
                 </h3>
               </div>
               <div className="sanus-contact-column-1">
-                <p className="sanus-general-text">
-                    Explique-nos em poucas linhas o que precisa. A nossa equipa
-                    analisa o seu pedido e responde de forma personalizada, de
-                    acordo com a evidência clínica mais atual.
-                </p>
 
                 <div className="sanus-contact-highlights">
                     <a href={`tel:${clinicMobilePhone}`} className="sanus-contact-highlight-card">
