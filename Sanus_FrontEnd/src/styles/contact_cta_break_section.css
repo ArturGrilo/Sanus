@@ -16,9 +16,14 @@
     font-size: 2rem;
 }
 
-.sanus-contact-cta .btn{
+.sanus-cta-btn-container{
     z-index: 11;
     width: 100%;
+}
+
+.sanus-contact-cta .btn{
+    width: 100%;
+    max-width: 500px;
 }
 
 .sanus-contact-cta .sanus-pattern{

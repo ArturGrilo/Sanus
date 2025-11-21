@@ -49,7 +49,7 @@ export default function Header() {
               <li><a href="#servicos">Serviços</a></li>
               <li><a onClick={() => navigate("/blog")}>Blog</a></li>
               <li><a href="#recrutamento">Recrutamento</a></li>
-              <li><a href="#contato">Contatos</a></li>
+              <li><a onClick={() => navigate("/contactos")}>Contatos</a></li>
             </ul>
           </nav>
           <a href="#agendamento" className="btn btn-primary">Agende Agora</a>

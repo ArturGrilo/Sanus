@@ -17,6 +17,7 @@ import ServicoDetalhe from "./components/service_details";
 import BlogPage from "./components/blog_page";
 import AboutPage from "./components/about_page";
 import BlogDetail from "./components/blog_detail";
+import ContactPage from "./components/contact_page";
 
 // Páginas do back office
 import Login from "./admin/Login";
@@ -57,6 +58,7 @@ export default function App() {
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/sobre-nos" element={<AboutPage />} />
       <Route path="/blog/:id" element={<BlogDetail />} />
+      <Route path="/contactos" element={<ContactPage />} />
 
       {/* 🔐 Back Office */}
       <Route path="/login" element={<Login />} />

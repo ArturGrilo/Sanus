@@ -1,0 +1,454 @@
+/* =========================
+   HERO
+   ========================= */
+
+.sanus-contact-hero {
+  margin-top: -114px;
+  position: relative;
+  height: 460px;
+  background-image: url("/Clinica/contactos.png"); /* ajusta para a imagem que quiseres */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+}
+
+.sanus-contact-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 255, 255, 0.14),
+      transparent 60%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(0, 32, 40, 0.85),
+      rgba(0, 0, 0, 0.55)
+    );
+  z-index: 1;
+}
+
+.sanus-contact-hero-overlay {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  max-width: 680px;
+  padding: 0 16px;
+}
+
+.sanus-contact-hero-overlay h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  color: var(--color-bg, #ffffff);
+}
+
+.sanus-contact-hero-overlay p {
+  margin-top: 10px;
+  font-size: 1.3rem;
+  opacity: 0.9;
+}
+
+.sanus-contact-hero-wave {
+  position: absolute;
+  bottom: -1px;
+  width: 100%;
+  z-index: 2;
+}
+
+/* =========================
+   MAIN LAYOUT
+   ========================= */
+
+.sanus-contact-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px;
+  position: relative;
+  margin-top: -2px;
+  z-index: 10;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 30%,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.sanus-contact-page-container {
+  max-width: 1120px;
+  padding: 32px 20px 0 20px;
+  width: 100%;
+}
+
+.sanus-contact-grid {
+  display: grid;
+  gap: 36px;
+  grid-template-columns: 1.1fr 1.2fr;
+  align-items: flex-start;
+}
+
+/* =========================
+   LEFT SIDE – INFO
+   ========================= */
+
+.sanus-contact-info{
+    display: flex;
+    gap: 40px;
+    flex-direction: column;
+}
+
+.sanus-contact-column-1{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sanus-contact-highlights {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .sanus-contact-highlights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.sanus-contact-highlight-card {
+  background: linear-gradient(
+    145deg,
+    rgba(0, 128, 144, 0.04),
+    rgba(0, 128, 144, 0.01)
+  );
+  border-radius: 18px;
+  padding: 16px 18px;
+  border: 1px solid rgba(0, 128, 144, 0.16);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.5s ease;
+}
+
+.sanus-contact-highlight-card:hover{
+    background-color: var(--color-primary-alt);
+}
+
+.sanus-contact-highlight-card p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.sanus-contact-link {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--color-primary-dark, #002028);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.sanus-contact-link:hover {
+  border-color: rgba(0, 128, 144, 0.6);
+  color: var(--color-primary, #008090);
+  transform: translateY(-1px);
+}
+
+.sanus-contact-link.subtle {
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* =========================
+   RIGHT SIDE – FORM CARD
+   ========================= */
+
+.sanus-contact-form-card {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 4px;
+  padding: 40px 20px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.sanus-contact-form-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+  color: var(--color-primary-dark, #002028);
+}
+
+.sanus-contact-form-subtitle {
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.7);
+  margin-bottom: 16px;
+}
+
+/* FORM FIELDS */
+
+.sanus-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sanus-contact-field-group {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .sanus-contact-field-group {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.sanus-contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sanus-contact-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-primary-dark, #002028);
+}
+
+.sanus-contact-field input,
+.sanus-contact-field select,
+.sanus-contact-field textarea {
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.08s ease;
+  background: #fff;
+}
+
+.sanus-contact-field textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.sanus-contact-field input:focus,
+.sanus-contact-field select:focus,
+.sanus-contact-field textarea:focus {
+  border-color: rgba(0, 128, 144, 0.7);
+  box-shadow: 0 0 0 1px rgba(0, 128, 144, 0.25);
+  transform: translateY(-1px);
+}
+
+/* RADIO GROUP */
+
+.sanus-contact-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sanus-contact-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.01);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.08s ease;
+}
+
+.sanus-contact-radio input {
+  accent-color: var(--color-primary, #008090);
+}
+
+.sanus-contact-radio:hover {
+  background: rgba(0, 128, 144, 0.04);
+  border-color: rgba(0, 128, 144, 0.4);
+  transform: translateY(-1px);
+}
+
+/* CONSENT */
+
+.sanus-contact-consent {
+  margin-top: 4px;
+}
+
+.sanus-contact-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.sanus-contact-checkbox input {
+  margin-top: 5px;
+  accent-color: var(--color-primary, #008090);
+}
+
+.sanus-contact-consent-meta {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 4px;
+}
+
+/* STATUS MESSAGES */
+
+.sanus-contact-status {
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.sanus-contact-status-error {
+  background: rgba(220, 53, 69, 0.06);
+  color: #a11726;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.sanus-contact-status-success {
+  background: rgba(0, 128, 144, 0.06);
+  color: var(--color-primary-dark, #002028);
+  border: 1px solid rgba(0, 128, 144, 0.3);
+}
+
+/* ACTIONS */
+
+.sanus-contact-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.sanus-contact-actions .btn{
+    width: 100%;
+    max-width: 400px;
+}
+
+.sanus-contact-faq{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    position: relative;
+    margin-top: -2px;
+    z-index: 11;
+    background-color: white;
+    max-width: 1800px;
+    padding: 0 40px;
+    justify-content: center;
+}
+
+.sanus-contact-faq-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.sanus-contact-faq-item {
+  border-radius: 14px;
+  padding: 10px 14px;
+  background: #f9fbfc;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.sanus-contact-faq-item summary {
+  cursor: pointer;
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--color-primary-dark, #002028);
+}
+
+.sanus-contact-faq-item p {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.sanus-contact-location{
+    position: relative;
+    margin-top: -200px;
+}
+
+.sanus-contact-location .sanus-location{
+    z-index: 8;
+}
+
+.sanus-contact-location-wave{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    z-index: 9;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 1023px) {
+  .sanus-contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sanus-contact-page-container {
+    padding-top: 20px;
+  }
+  .sanus-contact-location {
+    position: relative;
+    margin-top: -120px;
+  }
+}
+
+@media (max-width: 900px) {
+  .sanus-contact-hero-overlay h1 {
+    font-size: 3.1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .sanus-contact-hero {
+    height: 380px;
+  }
+
+  .sanus-contact-actions{
+    flex-direction: column;
+  }
+
+  .sanus-contact-radio-group{
+    justify-content: center;
+  }
+
+  .sanus-contact-hero-overlay {
+    top: 58%;
+  }
+
+  .sanus-contact-hero-overlay h1 {
+    font-size: 2.5rem;
+  }
+
+  .sanus-contact-info h2 {
+    font-size: 1.8rem;
+  }
+}

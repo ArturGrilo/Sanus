@@ -98,7 +98,7 @@ button, .btn {
 .btn-primary:hover {
   background-color: var(--color-primary-dark);
   color: var(--color-bg);
-  border: 1px solid var(--color-primary-dark);
+  border: 1px solid var(--color-bg);
 }
 
 .btn-secundary {
@@ -110,7 +110,7 @@ button, .btn {
 .btn-secundary:hover {
   background-color: var(--color-primary);
   border: 1px solid var(--color-primary);
-  color: var(--color-primary-dark);
+  color: var(--color-text);
 }
 
 .btn-outline {
@@ -139,6 +139,7 @@ a {
   color: var(--color-primary-dark);
   text-decoration: none;
   transition: color 0.2s ease;
+  cursor: pointer;
 }
 
 a:hover {
@@ -282,6 +283,16 @@ a:hover {
 .sanus-general-card.alt2{
     background: var(--color-primary);
 } 
+
+.sanus-blog-card{
+  cursor: pointer;
+}
+
+@media (max-width: 1600px) {
+    .sanus-general-text{
+      font-size: 16px;
+    }
+}
 
 @media (max-width: 550px) {
     .sanus-general-title{
