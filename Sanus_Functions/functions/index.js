@@ -289,4 +289,13 @@ app.put("/privacy", async (req, res) => {
 // ============================================================
 // Export Firebase Function (sem multer, simples e estável)
 // ============================================================
-exports.api = functions.https.onRequest(app);
+exports.api = functions
+    .region("europe-west1") // ou us-central1 se quiseres manter
+    .runWith({
+      memory: "512MB",
+      timeoutSeconds: 60,
+      minInstances: 0,
+    })
+    .https
+    .onRequest(app);
+
