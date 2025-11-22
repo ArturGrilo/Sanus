@@ -4,21 +4,27 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import SidebarMenu from "./sidebar_menu";
 
-export default function Header() {
+export default function Header({ forceScrolled = false }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
+    // 👉 SE forceScrolled estiver true, ignora scroll completamente
+    if (forceScrolled) {
+      setIsScrolled(true);
+      return;
+    }
+
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setIsScrolled(scrollY > 0);
+      setIsScrolled(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+
+  }, [forceScrolled]);
 
   useEffect(() => {
     document.body.classList.toggle("sidebar-open", menuOpen);

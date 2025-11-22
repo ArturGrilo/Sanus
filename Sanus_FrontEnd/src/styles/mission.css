@@ -48,6 +48,16 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    z-index: 1;
+}
+
+.sanus-mission-button .btn{
+    min-width: 300px;
+}
+
+.sanus-mission-button .btn:hover{
+    background-color: transparent;
+    border-color: var(--color-primary-dark);
 }
 
 .sanus-mission a{

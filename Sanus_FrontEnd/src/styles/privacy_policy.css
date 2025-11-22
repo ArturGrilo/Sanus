@@ -1,0 +1,12 @@
+.sanus-privacy-policy-page
+
+.sanus-policy-container{
+    text-align: left;
+}
+
+.sanus-policy-content{
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

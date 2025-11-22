@@ -138,6 +138,10 @@
   color: var(--color-bg);
 }
 
+.sanus-location-button-container .btn{
+  min-width: 300px;
+}
+
 @media (max-width: 1800px) {
   .sanus-location{
     margin-top: -5%;

@@ -58,6 +58,15 @@
   background: var(--color-image);
 }
 
+.sanus-recrutamento-button-container{
+    z-index: 1;
+}
+
+.sanus-recrutamento-button-container .btn{
+    min-width: 300px;
+    text-align: center;
+}
+
 @media (max-width: 1450px) {
     .sanus-recrutamento {    
         margin-top: -200px;

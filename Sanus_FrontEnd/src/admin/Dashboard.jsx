@@ -36,6 +36,11 @@ export default function Dashboard() {
             <p>Criar/editar cores e nomes de tags.</p>
           </Link>
 
+          <Link to="/admin/privacy" className="dashboard-card">
+            <h3>Política de Privacidade</h3>
+            <p>Editar o texto da política apresentada no site.</p>
+          </Link>
+
           {/* ---- Card futuro ---- */}
           <div className="dashboard-card disabled">
             <h3>Gerir Equipa</h3>

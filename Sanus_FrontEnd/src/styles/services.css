@@ -79,6 +79,7 @@
 .sanus-services-card .btn:hover{ 
     background-color: transparent;
     color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
 }
 
 .sanus-services-card.alt{

@@ -27,6 +27,8 @@ import BlogList from "./admin/BlogList";
 import BlogForm from "./admin/BlogForm";
 import FeedbackForm from "./admin/FeedbackForm";
 import FeedbackList from "./admin/FeedbackList";
+import PrivacyForm from "./admin/PrivacyForm";
+import PrivacyPage from "./components/privacy_policy";
 {/*import ServicesList from "./admin/ServiceList";
 import ServiceForm from "./admin/ServiceForm";
 import TagsList from "./admin/TagsList";
@@ -59,6 +61,7 @@ export default function App() {
       <Route path="/sobre-nos" element={<AboutPage />} />
       <Route path="/blog/:id" element={<BlogDetail />} />
       <Route path="/contactos" element={<ContactPage />} />
+      <Route path="/politica-de-privacidade" element={<PrivacyPage />} />
 
       {/* 🔐 Back Office */}
       <Route path="/login" element={<Login />} />
@@ -70,6 +73,7 @@ export default function App() {
         <Route path="/admin/feedback" element={<FeedbackList />} />
         <Route path="/admin/feedback/new" element={<FeedbackForm />} />
         <Route path="/admin/feedback/edit/:id" element={<FeedbackForm />} />
+        <Route path="/admin/privacy" element={<PrivacyForm />} />
         {/*<Route path="/admin/services" element={<ServicesList />} />
         <Route path="/admin/services/new" element={<ServiceForm />} />
         <Route path="/admin/services/edit/:id" element={<ServiceForm />} />
