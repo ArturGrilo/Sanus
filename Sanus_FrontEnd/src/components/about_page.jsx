@@ -8,10 +8,11 @@ import Recrutamento from "./recrutamento";
 import WhatsappButton from "./whatsapp_button";
 import Feedback from "./feedback";
 import ContactCTA from "./contact_cta_break_section";
+import PageTransition from "./page_transition";
 
 export default function AboutPage() {
   return (
-    <>
+    <PageTransition>
       <Header />
 
       {/* HERO SECTION */}
@@ -119,6 +120,6 @@ export default function AboutPage() {
       <div className="sanus-about-us-footer">
         <Footer />
       </div>
-    </>
+    </PageTransition>
   );
 }

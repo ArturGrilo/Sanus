@@ -4,6 +4,7 @@ import "../styles/blog_page.css";
 import WhatsappButton from "./whatsapp_button";
 import { useEffect, useState } from "react";
 import BlogCard from "./blog_card";
+import BlogCardSkeleton from "./skeleton_blog_card";
 
 export default function BlogPage() {
   const [articles, setArticles] = useState([]);
@@ -55,7 +56,19 @@ export default function BlogPage() {
         <div className="sanus-blog-page-container">
             <div className="sanus-blog-page-grid">
               {loading ? (
-                <p style={{ color: "var(--color-primary-dark)" }}>A carregar artigos...</p>
+                <>
+
+                  {/* GRID SKELETON */}
+                  <div className="sanus-blog-page-container">
+                    <div className="sanus-blog-page-grid">
+                      <BlogCardSkeleton featured />
+                      <BlogCardSkeleton featured />
+                      <BlogCardSkeleton />
+                      <BlogCardSkeleton />
+                      <BlogCardSkeleton />
+                    </div>
+                  </div>
+                </>
               ) : articles.length === 0 ? (
                 <p style={{ color: "var(--color-primary-dark)" }}>Nenhum artigo disponível.</p>
               ) : (

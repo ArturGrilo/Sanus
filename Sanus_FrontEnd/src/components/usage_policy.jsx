@@ -4,7 +4,7 @@ import Header from "./header";
 import Footer from "./footer";
 import TextSkeleton from "./skeleton_text";
 
-export default function PrivacyPage() {
+export default function UsagePage() {
   const [content, setContent] = useState("<p>A carregar…</p>");
   const [loading, setLoading] = useState(true);
 
@@ -13,12 +13,12 @@ export default function PrivacyPage() {
   useEffect(() => {
     async function loadPolicy() {
       try {
-        const res = await fetch(`${API}/privacy`);
+        const res = await fetch(`${API}/usage`);
         const data = await res.json();
 
         setContent(data.content || "<p></p>");
       } catch {
-        setContent("<p>Não foi possível carregar a política neste momento.</p>");
+        setContent("<p>Não foi possível carregar os termos neste momento.</p>");
       } finally {
         setLoading(false);
       }

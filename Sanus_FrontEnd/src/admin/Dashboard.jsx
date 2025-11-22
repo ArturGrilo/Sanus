@@ -41,6 +41,16 @@ export default function Dashboard() {
             <p>Editar o texto da política apresentada no site.</p>
           </Link>
 
+          <Link to="/admin/cookies" className="dashboard-card">
+            <h3>Política de Cookies</h3>
+            <p>Editar o texto da política de cookies.</p>
+          </Link>
+
+          <Link to="/admin/usage" className="dashboard-card">
+            <h3>Termos de utilização</h3>
+            <p>Editar o texto dos termos de utilização.</p>
+          </Link>
+
           {/* ---- Card futuro ---- */}
           <div className="dashboard-card disabled">
             <h3>Gerir Equipa</h3>

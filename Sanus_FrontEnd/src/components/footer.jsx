@@ -71,8 +71,11 @@ export default function Footer() {
                 <div className="sanus-footer-more-info">
                     <p>Sanus Vitae © 2025</p>
                     <p> 
-                        <Link to="/politica-de-privacidade">Política de Privacidade </Link>
-                        | Política de Cookies | Termos de Utilização
+                        <Link to="/politica-de-privacidade">Política de Privacidade</Link>
+                        {" | "} 
+                        <Link to="/politica-de-cookies">Política de Cookies</Link>
+                        {" | "} 
+                        <Link to="/termos-de-utilizacao">Termos de Utilização</Link>
                     </p>
                 </div>
             </div>

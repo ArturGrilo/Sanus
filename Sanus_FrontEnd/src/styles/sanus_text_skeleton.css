@@ -1,0 +1,47 @@
+.sanus-text-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 40px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.skeleton-line {
+  height: 16px;
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    #e2e5e7 0%,
+    #f3f3f3 50%,
+    #e2e5e7 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-line.title {
+  height: 26px;
+  width: 60%;
+}
+
+.skeleton-line.half {
+  width: 40%;
+}
+
+.skeleton-line.long {
+  width: 85%;
+}
+
+.skeleton-space {
+  height: 20px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

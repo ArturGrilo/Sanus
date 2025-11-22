@@ -285,12 +285,98 @@ app.put("/privacy", async (req, res) => {
   }
 });
 
+// ============================================================
+// 🚀 Cookies Policy
+// ============================================================
+
+// GET - devolver política de cookies
+app.get("/cookies", async (req, res) => {
+  try {
+    const snap = await db.collection("cookies_policy").doc("main").get();
+
+    if (!snap.exists) {
+      return res.json({content: "<p></p>"});
+    }
+
+    res.json({
+      content: snap.data().content || "<p></p>",
+      updatedAt: snap.data().updatedAt || null,
+    });
+  } catch (err) {
+    console.error("Erro ao carregar política de cookies:", err);
+    res.status(500).send("Erro ao carregar política de cookies");
+  }
+});
+
+// PUT - atualizar política de cookies
+app.put("/cookies", async (req, res) => {
+  try {
+    const {content} = req.body;
+    if (!content) return res.status(400).send("Conteúdo vazio.");
+
+    await db.collection("cookies_policy").doc("main").set({
+      content,
+      updatedAt: FieldValue.serverTimestamp(),
+    },
+    {merge: true},
+    );
+
+    res.json({success: true});
+  } catch (err) {
+    console.error("Erro ao guardar política de cookies:", err);
+    res.status(500).send("Erro ao guardar política de cookies");
+  }
+});
+
+// ============================================================
+// 🚀 Termos de utilização
+// ============================================================
+
+// GET - devolver termos de utilização
+app.get("/usage", async (req, res) => {
+  try {
+    const snap = await db.collection("usage_policy").doc("main").get();
+
+    if (!snap.exists) {
+      return res.json({content: "<p></p>"});
+    }
+
+    res.json({
+      content: snap.data().content || "<p></p>",
+      updatedAt: snap.data().updatedAt || null,
+    });
+  } catch (err) {
+    console.error("Erro ao carregar termos de utilização:", err);
+    res.status(500).send("Erro ao carregar termos de utilização");
+  }
+});
+
+// PUT - atualizar política de cookies
+app.put("/usage", async (req, res) => {
+  try {
+    const {content} = req.body;
+    if (!content) return res.status(400).send("Conteúdo vazio.");
+
+    await db.collection("usage_policy").doc("main").set({
+      content,
+      updatedAt: FieldValue.serverTimestamp(),
+    },
+    {merge: true},
+    );
+
+    res.json({success: true});
+  } catch (err) {
+    console.error("Erro ao guardar termos de utilização:", err);
+    res.status(500).send("Erro ao guardar termos de utilização");
+  }
+});
+
 
 // ============================================================
 // Export Firebase Function (sem multer, simples e estável)
 // ============================================================
 exports.api = functions
-    .region("europe-west1") // ou us-central1 se quiseres manter
+    .region("europe-west1")
     .runWith({
       memory: "512MB",
       timeoutSeconds: 60,

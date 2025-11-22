@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 // Páginas do site
 import Header from "./components/header";
@@ -18,6 +19,8 @@ import BlogPage from "./components/blog_page";
 import AboutPage from "./components/about_page";
 import BlogDetail from "./components/blog_detail";
 import ContactPage from "./components/contact_page";
+import PrivacyPage from "./components/privacy_policy";
+import CookiesPage from "./components/cookies_policy";
 
 // Páginas do back office
 import Login from "./admin/Login";
@@ -28,7 +31,9 @@ import BlogForm from "./admin/BlogForm";
 import FeedbackForm from "./admin/FeedbackForm";
 import FeedbackList from "./admin/FeedbackList";
 import PrivacyForm from "./admin/PrivacyForm";
-import PrivacyPage from "./components/privacy_policy";
+import CookiesForm from "./admin/CookiesForm";
+import UsageForm from "./admin/UsageForm";
+import UsagePage from "./components/usage_policy";
 {/*import ServicesList from "./admin/ServiceList";
 import ServiceForm from "./admin/ServiceForm";
 import TagsList from "./admin/TagsList";
@@ -36,54 +41,60 @@ import TagForm from "./admin/TagForm";*/}
 
 export default function App() {
   return (
-    <Routes>
-      {/* 🌐 Site principal */}
-      <Route
-        path="/"
-        element={
-          <>
-            <Header />
-            <Hero />
-            <Services />
-            <Mission />
-            <Team />
-            <Recrutamento />
-            <Feedback />
-            <Insurance />
-            <Location />
-            <BlogSection variant="home" limit={3} />  
-            <Footer />
-            <WhatsappButton />
-          </>
-        }
-      />
-      <Route path="/blog" element={<BlogPage />} />
-      <Route path="/sobre-nos" element={<AboutPage />} />
-      <Route path="/blog/:id" element={<BlogDetail />} />
-      <Route path="/contactos" element={<ContactPage />} />
-      <Route path="/politica-de-privacidade" element={<PrivacyPage />} />
+    <AnimatePresence mode="wait">
+      <Routes>
+        {/* 🌐 Site principal */}
+        <Route
+          path="/"
+          element={
+            <>
+              <Header />
+              <Hero />
+              <Services />
+              <Mission />
+              <Team />
+              <Recrutamento />
+              <Feedback />
+              <Insurance />
+              <Location />
+              <BlogSection variant="home" limit={3} />  
+              <Footer />
+              <WhatsappButton />
+            </>
+          }
+        />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/sobre-nos" element={<AboutPage />} />
+        <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/contactos" element={<ContactPage />} />
+        <Route path="/politica-de-privacidade" element={<PrivacyPage />} />
+        <Route path="/politica-de-cookies" element={<CookiesPage />} />
+        <Route path="/termos-de-utilizacao" element={<UsagePage />} />
 
-      {/* 🔐 Back Office */}
-      <Route path="/login" element={<Login />} />
-      <Route element={<RequireAuth />}>
-        <Route path="/admin" element={<Dashboard />} />
-        <Route path="/admin/blog" element={<BlogList />} />
-        <Route path="/admin/blog/new" element={<BlogForm />} />
-        <Route path="/admin/blog/edit/:id" element={<BlogForm />} />
-        <Route path="/admin/feedback" element={<FeedbackList />} />
-        <Route path="/admin/feedback/new" element={<FeedbackForm />} />
-        <Route path="/admin/feedback/edit/:id" element={<FeedbackForm />} />
-        <Route path="/admin/privacy" element={<PrivacyForm />} />
-        {/*<Route path="/admin/services" element={<ServicesList />} />
-        <Route path="/admin/services/new" element={<ServiceForm />} />
-        <Route path="/admin/services/edit/:id" element={<ServiceForm />} />
-        <Route path="/admin/tags" element={<TagsList />} />
-        <Route path="/admin/tags/new" element={<TagForm />} />
-        <Route path="/admin/tags/edit/:id" element={<TagForm />} />*/}
-      </Route>
-      <Route path="/servicos/:id" element={<ServicoDetalhe />} />
-      <Route path="/admin/*" element={<Login />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        {/* 🔐 Back Office */}
+        <Route path="/login" element={<Login />} />
+        <Route element={<RequireAuth />}>
+          <Route path="/admin" element={<Dashboard />} />
+          <Route path="/admin/blog" element={<BlogList />} />
+          <Route path="/admin/blog/new" element={<BlogForm />} />
+          <Route path="/admin/blog/edit/:id" element={<BlogForm />} />
+          <Route path="/admin/feedback" element={<FeedbackList />} />
+          <Route path="/admin/feedback/new" element={<FeedbackForm />} />
+          <Route path="/admin/feedback/edit/:id" element={<FeedbackForm />} />
+          <Route path="/admin/privacy" element={<PrivacyForm />} />
+          <Route path="/admin/cookies" element={<CookiesForm />} />
+          <Route path="/admin/usage" element={<UsageForm />} />
+          {/*<Route path="/admin/services" element={<ServicesList />} />
+          <Route path="/admin/services/new" element={<ServiceForm />} />
+          <Route path="/admin/services/edit/:id" element={<ServiceForm />} />
+          <Route path="/admin/tags" element={<TagsList />} />
+          <Route path="/admin/tags/new" element={<TagForm />} />
+          <Route path="/admin/tags/edit/:id" element={<TagForm />} />*/}
+        </Route>
+        <Route path="/servicos/:id" element={<ServicoDetalhe />} />
+        <Route path="/admin/*" element={<Login />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </AnimatePresence>
   );
 }

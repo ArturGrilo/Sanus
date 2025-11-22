@@ -4,7 +4,7 @@ import Header from "./header";
 import Footer from "./footer";
 import TextSkeleton from "./skeleton_text";
 
-export default function PrivacyPage() {
+export default function CookiesPage() {
   const [content, setContent] = useState("<p>A carregar…</p>");
   const [loading, setLoading] = useState(true);
 
@@ -13,7 +13,7 @@ export default function PrivacyPage() {
   useEffect(() => {
     async function loadPolicy() {
       try {
-        const res = await fetch(`${API}/privacy`);
+        const res = await fetch(`${API}/cookies`);
         const data = await res.json();
 
         setContent(data.content || "<p></p>");
