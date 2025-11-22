@@ -4,7 +4,6 @@
   base = "Sanus_FrontEnd"
 
 [build.environment]
-  VITE_BACKEND_URL = "https://us-central1-sanus-vitae-barreiro.cloudfunctions.net/api"
   SECRETS_SCAN_ENABLED = "false"
 
 [[redirects]]
