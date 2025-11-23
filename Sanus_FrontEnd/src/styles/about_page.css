@@ -1,54 +1,3 @@
-.about-hero {
-  margin-top: -114px;
-  position: relative;
-  height: 460px;
-  background-image: url("/Clinica/foto8.jpeg");
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  color: white;
-  overflow: hidden;
-}
-
-.about-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0,32,40,0.8), rgba(0,32,40,0.0));
-  background: linear-gradient(to bottom, rgba(0,32,40,0.8), rgba(0,0,0,0.25));
-  z-index: 1;
-}
-
-.about-overlay {
-  position: absolute;
-  top: 50%;
-  text-align: center;
-  transform: translateY(-50%);
-  z-index: 10;
-}
-
-.about-overlay h1 {
-  font-size: 4.2rem;
-  font-weight: 700;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  color: var(--color-bg);
-}
-
-.about-overlay p {
-  margin-top: 10px;
-  font-size: 1.4rem;
-  opacity: 0.85;
-}
-
-.about-wave {
-  position: absolute;
-  bottom: -2px;
-  width: 100%;
-  z-index: 2;
-}
-
 .sanus-about-us{
     display: flex;
     flex-direction: column;
@@ -59,6 +8,8 @@
 }
 
 .sanus-about-us-container {
+    margin-top: -2px;
+    background-color: white;
     display: flex;
     flex-direction: column;
     max-width: 1800px;
@@ -142,18 +93,11 @@
 }
 
 @media (max-width: 1500px) {
-    .about-overlay h1 {
-        font-size: 3.5rem;
-    }
     .feedback-comment {
         font-size: 2rem;
     }
     .sanus-about-us-footer{
         margin-top: -100px;
-    }
-
-    .about-hero {
-        height: 400px;
     }
 }
 
@@ -167,9 +111,6 @@
     .feedback-comment {
         font-size: 1.7rem;
     }
-    .about-overlay h1 {
-        font-size: 2.5rem;
-    }
     .sanus-about-us-values-grid-item-value {
         font-size: 2rem;
     }
@@ -178,10 +119,6 @@
     }
     .sanus-about-us-footer{
         margin-top: -50px;
-    }
-
-    .about-overlay{
-        top: 60%;
     }
     .sanus-about-us-container{
         padding: 40px 20px;

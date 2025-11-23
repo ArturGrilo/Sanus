@@ -1,51 +1,103 @@
-.blog-hero-skeleton {
+.sanus-blog-hero {
   margin-top: -114px;
+  position: relative;
   height: 460px;
+  background-image: url("/Services/fisioterapia.webp");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+}
+
+.sanus-blog-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,32,40,0.8), rgba(0,32,40,0.0));
+  background: linear-gradient(to bottom, rgba(0,32,40,0.8), rgba(0,0,0,0.25));
+  z-index: 1;
+}
+
+.sanus-blog-hero-overlay {
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.sanus-blog-hero-overlay h1 {
+  font-size: 4.2rem;
+  font-weight: 700;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  color: var(--color-bg);
+}
+
+.sanus-blog-hero-overlay p {
+  margin-top: 10px;
+  font-size: 1.4rem;
+  opacity: 0.85;
+}
+
+.sanus-blog-hero-wave {
+  position: absolute;
+  bottom: -1px;
+  width: 100%;
+  z-index: 2;
+}
+
+/* HERO SKELETON */
+.skeleton-hero {
+  background-image: none !important;
+  background-color: #dfe6e9 !important;
   position: relative;
   overflow: hidden;
 }
 
-.hero-shimmer {
+/* shimmer effect */
+.skeleton-hero::after {
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #11333a 0%, #1b4953 50%, #11333a 100%);
-  filter: brightness(1.1);
-  background-size: 200% 100%;
-  animation: shimmerHero 2.2s infinite;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.4) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  animation: shimmer 1.5s infinite;
+  z-index: 2;
 }
 
-.hero-lines {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  width: 100%;
-  text-align: center;
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
-.hero-lines .line {
-  height: 22px;
-  background: rgba(255, 255, 255, 0.45);
-  border-radius: 12px;
-  margin: 12px auto;
-  animation: fadeHero 0.5s ease-out;
+/* Skeleton blocks */
+.skeleton-block {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  animation: pulse 1.8s ease-in-out infinite;
 }
 
-.hero-lines .big {
-  width: 220px;
-  height: 32px;
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.6; }
 }
 
-.hero-lines .small {
+.skeleton-title {
   width: 260px;
+  height: 55px;
+  margin: 0 auto;
 }
 
-@keyframes shimmerHero {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-@keyframes fadeHero {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+.skeleton-subtitle {
+  width: 180px;
+  height: 20px;
+  margin: 20px auto 0;
 }

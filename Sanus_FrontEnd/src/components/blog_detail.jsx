@@ -5,6 +5,7 @@ import Footer from "./footer";
 import WhatsappButton from "./whatsapp_button";
 import "../styles/blog_detail.css";
 import BlogSection from "./blog_section";
+import TextSkeleton from "./skeleton_text";
 
 export default function BlogDetail() {
   const { id } = useParams();
@@ -32,8 +33,10 @@ export default function BlogDetail() {
     return (
       <>
         <Header />
-        <section className="sanus-blog-detail-loading">
-          <p>A carregar artigo...</p>
+        <section className="sanus-blog-detail-content">
+          <div className="sanus-blog-detail-container">
+            <TextSkeleton />
+          </div>
         </section>
         <Footer />
       </>
@@ -56,7 +59,6 @@ export default function BlogDetail() {
   return (
     <>
       <Header />
-
       {/* HERO */}
       <section
         className="sanus-blog-detail-hero"
