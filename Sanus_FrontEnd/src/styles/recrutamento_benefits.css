@@ -44,8 +44,14 @@
   }
 }
 
+@media (max-width: 950px) {
+  .sanus-recrutamento-page-benefits-container .sanus-services-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 700px) {
-  .sanus-recrutamento-page-benefits-grid {
+  .sanus-recrutamento-page-benefits-container .sanus-services-container {
     grid-template-columns: 1fr;
   }
   .sanus-recrutamento-page-benefits {

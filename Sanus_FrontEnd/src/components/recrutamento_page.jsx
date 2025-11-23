@@ -41,7 +41,7 @@ export default function RecrutamentoPage() {
       <SanusBenefits />
       
 
-      {/* PERFIL */}
+      {/* PERFIL
       <section className="sanus-recrutamento-page-perfis">
         <div className="sanus-recrutamento-page-container">
           <h2 className="sanus-section-title">Perfis que procuramos</h2>
@@ -55,7 +55,6 @@ export default function RecrutamentoPage() {
         </div>
       </section>
 
-      {/* OPORTUNIDADES (dinâmico mais tarde) */}
       <section className="sanus-recrutamento-page-vagas">
         <div className="sanus-recrutamento-page-container">
           <h2 className="sanus-section-title">Oportunidades em Aberto</h2>
@@ -69,7 +68,6 @@ export default function RecrutamentoPage() {
         </div>
       </section>
 
-      {/* CANDIDATURA */}
       <section className="sanus-recrutamento-page-form">
         <div className="sanus-recrutamento-page-container">
           <h2 className="sanus-section-title">Candidatura Espontânea</h2>
@@ -86,7 +84,6 @@ export default function RecrutamentoPage() {
         </div>
       </section>
 
-      {/* PROCESSO */}
       <section className="sanus-recrutamento-page-processo">
         <div className="sanus-recrutamento-page-container">
           <h2 className="sanus-section-title">Processo de Recrutamento</h2>
@@ -110,7 +107,7 @@ export default function RecrutamentoPage() {
       </section>
 
       <ContactCTA />
-      <Feedback />
+      <Feedback /> */}
       <WhatsappButton />
       <Footer />
     </PageTransition>
