@@ -34,6 +34,8 @@ import PrivacyForm from "./admin/PrivacyForm";
 import CookiesForm from "./admin/CookiesForm";
 import UsageForm from "./admin/UsageForm";
 import UsagePage from "./components/usage_policy";
+import PageTransition from "./components/page_transition";
+import RecrutamentoPage from "./components/recrutamento_page";
 {/*import ServicesList from "./admin/ServiceList";
 import ServiceForm from "./admin/ServiceForm";
 import TagsList from "./admin/TagsList";
@@ -47,7 +49,7 @@ export default function App() {
         <Route
           path="/"
           element={
-            <>
+            <PageTransition>
               <Header />
               <Hero />
               <Services />
@@ -60,7 +62,7 @@ export default function App() {
               <BlogSection variant="home" limit={3} />  
               <Footer />
               <WhatsappButton />
-            </>
+            </PageTransition>
           }
         />
         <Route path="/blog" element={<BlogPage />} />
@@ -70,6 +72,7 @@ export default function App() {
         <Route path="/politica-de-privacidade" element={<PrivacyPage />} />
         <Route path="/politica-de-cookies" element={<CookiesPage />} />
         <Route path="/termos-de-utilizacao" element={<UsagePage />} />
+        <Route path="/recrutamento" element={<RecrutamentoPage />} />
 
         {/* 🔐 Back Office */}
         <Route path="/login" element={<Login />} />

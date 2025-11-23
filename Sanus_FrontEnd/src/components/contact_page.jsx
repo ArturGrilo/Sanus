@@ -5,6 +5,8 @@ import WhatsappButton from "./whatsapp_button";
 import "../styles/contact_page.css";
 import Location from "./location";
 import { Envelope, Phone, DeviceMobile, WhatsappLogo } from "phosphor-react"
+import SanusHero from "./sanus_hero";
+import PageTransition from "./page_transition";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -125,31 +127,13 @@ Mensagem: ${formData.message || "-"}`;
   };
 
   return (
-    <>
+    <PageTransition>
       <Header />
-
-      {/* HERO SECTION */}
-      <section className="sanus-contact-hero">
-        <div className="sanus-contact-hero-overlay">
-          <h1>Contactos</h1>
-          <p>
-            O cuidado começa com uma conversa.
-          </p>
-        </div>
-
-        <svg
-          className="sanus-contact-hero-wave"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 320"
-        >
-          <path
-            fill="#fff"
-            fillOpacity="1"
-            d="M0,160L80,186.7C160,213,320,267,480,266.7C640,267,800,213,960,197.3C1120,181,1280,203,1360,213.3L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
-          ></path>
-        </svg>
-      </section>
-
+      <SanusHero
+        title="Contactos"
+        subtitle="O cuidado começa com uma conversa."
+        imageUrl="/Clinica/contactos.png"
+      /> 
       {/* CONTACT CONTENT */}
       <section className="sanus-contact-page">
         <div className="sanus-contact-page-container">
@@ -373,29 +357,31 @@ Mensagem: ${formData.message || "-"}`;
         </div>
       </section>
       <div className="sanus-contact-location">
-        <svg className="sanus-contact-location-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffffff" fill-opacity="1" d="M0,64L120,53.3C240,43,480,21,720,37.3C960,53,1200,107,1320,133.3L1440,160L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg>
+        <svg className="sanus-contact-location-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffffff" fillOpacity="1" d="M0,64L120,53.3C240,43,480,21,720,37.3C960,53,1200,107,1320,133.3L1440,160L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg>
         <Location />
       </div>
-      <section className="sanus-contact-faq">
-        <div className="sanus-contact-section-header">
-            <header className="sanus-general-title">
-                <p className="sanus-services-text little">Dúvidas</p>
-                <h2>Perguntas frequentes</h2>
-            </header>
-        </div>
-        <div className="sanus-contact-faq-grid">
-            {faqs.map((faq, idx) => (
-            <details key={idx} className="sanus-contact-faq-item">
-                <summary>{faq.question}</summary>
-                <p>{faq.answer}</p>
-            </details>
-            ))}
+      <section className="sanus-contact-faq-section">
+        <div className="sanus-contact-faq">
+          <div className="sanus-contact-section-header">
+              <header className="sanus-general-title">
+                  <p className="sanus-services-text little">Dúvidas</p>
+                  <h2>Perguntas frequentes</h2>
+              </header>
+          </div>
+          <div className="sanus-contact-faq-grid">
+              {faqs.map((faq, idx) => (
+              <details key={idx} className="sanus-contact-faq-item">
+                  <summary>{faq.question}</summary>
+                  <p>{faq.answer}</p>
+              </details>
+              ))}
+          </div>
         </div>
       </section>
       <WhatsappButton />
       <div className="sanus-about-us-footer">
         <Footer />
       </div>
-    </>
+    </PageTransition>
   );
 }

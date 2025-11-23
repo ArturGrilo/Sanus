@@ -54,7 +54,7 @@ export default function Header({ forceScrolled = false }) {
               <li><a onClick={() => navigate("/sobre-nos")}>Quem Somos</a></li>
               <li><a href="#servicos">Serviços</a></li>
               <li><a onClick={() => navigate("/blog")}>Blog</a></li>
-              <li><a href="#recrutamento">Recrutamento</a></li>
+              <li><a onClick={() => navigate("/recrutamento")}>Recrutamento</a></li>
               <li><a onClick={() => navigate("/contactos")}>Contatos</a></li>
             </ul>
           </nav>

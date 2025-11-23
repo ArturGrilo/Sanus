@@ -6,10 +6,12 @@ export default function SanusHero({
   title = "",
   subtitle = "",
   imageUrl = "",
+  height = "",       // Altura dinâmica
+  titleSize = "",      // Fonte do título dinâmica
+  subtitleSize = "", // Fonte do subtítulo dinâmica
 }) {
   const [loaded, setLoaded] = useState(false);
 
-  // Carregar imagem antes de mostrar o Hero
   useEffect(() => {
     if (!imageUrl) {
       setLoaded(true);
@@ -21,18 +23,20 @@ export default function SanusHero({
     img.onload = () => setLoaded(true);
   }, [imageUrl]);
 
-  // Enquanto a imagem ainda está a carregar → mostra skeleton premium
-  if (!loaded) return <BlogHeroSkeleton />;
+  // Enquanto carrega a imagem → skeleton
+  if (!loaded) return <BlogHeroSkeleton height={height} />;
 
-  // Quando carregou → mostra hero real
   return (
     <section
       className="sanus-page-hero-generic"
-      style={{ backgroundImage: `url(${imageUrl})` }}
+      style={{
+        backgroundImage: `url(${imageUrl})`,
+        height, // ← aplica altura dinâmica
+      }}
     >
       <div className="sanus-page-hero-overlay">
-        {title && <h1>{title}</h1>}
-        {subtitle && <p>{subtitle}</p>}
+        {title && <h1 style={{ fontSize: titleSize }}>{title}</h1>}
+        {subtitle && <p style={{ fontSize: subtitleSize }}>{subtitle}</p>}
       </div>
 
       <svg

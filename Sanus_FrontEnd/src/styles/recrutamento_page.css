@@ -1,0 +1,110 @@
+.sanus-recrutamento-page {
+  display: flex;
+  justify-content: center;
+  padding: 80px 20px;
+  background-color: white;
+  margin-top: -2px;
+  z-index: 1;
+  position: relative;
+}
+
+.sanus-recrutamento-page-container {
+  max-width: 1800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.sanus-recrutamento-page .feedback-comment-list h3{
+    display: flex;
+    flex-direction: column;
+}
+
+.sanus-section-title {
+  font-family: var(--font-title);
+  font-size: 2.6rem;
+  color: var(--color-primary-dark);
+  text-align: center;
+}
+
+/* PERFIS */
+.sanus-recrutamento-page-perfis-list {
+  font-size: 1.4rem;
+  line-height: 2.3rem;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-left: 20px;
+}
+
+/* VAGAS */
+.sanus-recrutamento-page-vagas-list {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.sanus-recrutamento-page-sem-vagas {
+  font-size: 1.3rem;
+  color: var(--color-text);
+}
+
+/* FORM */
+.sanus-recrutamento-page-form-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.sanus-recrutamento-page-form-box input,
+.sanus-recrutamento-page-form-box textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.sanus-recrutamento-page-form-box textarea {
+  min-height: 140px;
+}
+
+/* PROCESSO */
+.sanus-recrutamento-page-processo-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 30px;
+}
+
+.sanus-recrutamento-page-processo-item {
+  text-align: center;
+}
+
+.step-number {
+  display: inline-block;
+  font-size: 1.6rem;
+  color: white;
+  background: var(--color-primary);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .sanus-recrutamento-page-processo-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .sanus-recrutamento-page-processo-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -15,7 +15,7 @@ export default function SidebarMenu({ isOpen, onClose }) {
             <li><a onClick={() => navigate("/sobre-nos")}>Quem Somos</a></li>
             <li><a href="#servicos" onClick={onClose}>Serviços</a></li>
             <li><a onClick={() => navigate("/blog")}>Blog</a></li>
-            <li><a href="#recrutamento" onClick={onClose}>Recrutamento</a></li>
+            <li><a onClick={() => navigate("/recrutamento")}>Recrutamento</a></li>
             <li><a onClick={() => navigate("/contactos")}>Contatos</a></li>
             <a href="#agendamento" className="btn btn-secundary" onClick={onClose}>
                 Agende Agora

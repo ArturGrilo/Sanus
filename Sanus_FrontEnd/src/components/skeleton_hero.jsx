@@ -1,9 +1,10 @@
 import "../styles/skeleton_hero.css";
+import "../styles/sanus_hero.css";
 
 export default function BlogHeroSkeleton() {
   return (
-    <section className="sanus-blog-hero skeleton-hero">
-      <div className="sanus-blog-hero-overlay">
+    <section className="sanus-page-hero-generic skeleton-hero">
+      <div className="sanus-page-hero-overlay">
 
         <div className="skeleton-block skeleton-title"></div>
         <div className="skeleton-block skeleton-subtitle"></div>
@@ -11,7 +12,7 @@ export default function BlogHeroSkeleton() {
       </div>
 
       <svg
-        className="sanus-blog-hero-wave"
+        className="sanus-page-hero-wave"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1440 320"
       >

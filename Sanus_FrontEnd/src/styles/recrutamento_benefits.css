@@ -1,0 +1,82 @@
+.sanus-recrutamento-page-benefits-wave{
+    position: relative;
+    width: 100%;
+}
+
+.sanus-recrutamento-page-benefits {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -250px;
+  z-index: 10;
+}
+
+.sanus-recrutamento-page-benefits-container {
+    background-color: var(--color-primary-alt);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sanus-recrutamento-page-benefits-sub-container {
+    max-width: 1800px;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    text-align: left;
+}
+
+.sanus-recrutamento-page-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.sanus-recrutamento-page-benefit-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: var(--shadow-card);
+}
+
+.sanus-recrutamento-page-benefit-card h3 {
+  margin-bottom: 10px;
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  color: var(--color-primary-dark);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1700px) {
+    .sanus-recrutamento-page-benefits {
+        margin-top: -200px;
+    }
+}
+
+@media (max-width: 1250px) {
+    .sanus-recrutamento-page-benefits {
+        margin-top: -100px;
+    }
+}
+
+
+@media (max-width: 1100px) {
+  .sanus-recrutamento-page-benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sanus-recrutamento-page-benefits-sub-container {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 700px) {
+  .sanus-recrutamento-page-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  .sanus-recrutamento-page-benefits {
+    margin-top: -50px;
+  }
+}

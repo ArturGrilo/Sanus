@@ -40,7 +40,7 @@
 .sanus-recrutamento-img-column {
     width: 70%;
     aspect-ratio: 2 / 1; /* quase a altura do ecrã */
-    background: url('/public/Images/image.png') center/cover no-repeat;
+    background: url('/public/Team/team.png') center/cover no-repeat;
     z-index: 2;
     overflow: hidden;
     object-fit: cover;
