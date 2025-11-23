@@ -21,6 +21,7 @@
 
 .sanus-page-hero-overlay {
   position: absolute;
+  width: 100%;
     top: 52%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -62,5 +63,8 @@
   }
   .sanus-page-hero-overlay{
       top: 60%;
+  }
+  .sanus-page-hero-generic {
+    height: 400px;
   }
 }
