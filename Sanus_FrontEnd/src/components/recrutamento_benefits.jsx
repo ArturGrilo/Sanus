@@ -1,15 +1,58 @@
 import "../styles/recrutamento_benefits.css";
+import SanusCardsSection from "./sanus_little_cards";
 
 export default function SanusBenefits({
   title = "Porque trabalhar connosco?",
   benefits = [
-    { title: "Ambiente Humano", desc: "Equipa leve, empática e colaborativa." },
-    { title: "Formação Contínua", desc: "Workshops internos e apoio a certificações." },
-    { title: "Excelência Clínica", desc: "Protocolos modernos e orientados pela evidência." },
-    { title: "Tecnologia & Inovação", desc: "Recursos digitais e equipamentos topo de gama." },
-    { title: "Horários Equilibrados", desc: "Respeito pelo descanso e bem-estar." },
-    { title: "Crescimento Real", desc: "Plano de progressão e responsabilidade gradual." },
-  ],
+    {
+        id: 1,
+        image: "/Recrutamento/ambiente_humano.jpg",
+        subtitle: "CULTURA",
+        title: "Ambiente Humano",
+        text: "Equipa leve, empática e colaborativa. Aqui o respeito e a entreajuda são prioridade.",
+        alt: "Ambiente humano e colaborativo"
+    },
+    {
+        id: 2,
+        image: "/Clinica/contactos.png",
+        subtitle: "EVOLUÇÃO",
+        title: "Formação Contínua",
+        text: "Acesso regular a workshops, mentoria clínica e apoio real à certificação profissional.",
+        alt: "Formação e evolução contínua"
+    },
+    {
+        id: 3,
+        image: "/Clinica/foto1.jpeg",
+        subtitle: "EXCELÊNCIA",
+        title: "Prática Baseada na Evidência",
+        text: "Protocolos modernos, atualizados e alinhados com as melhores práticas internacionais.",
+        alt: "Excelência clínica"
+    },
+    {
+        id: 4,
+        image: "/Recrutamento/tecnologia.jpeg",
+        subtitle: "INOVAÇÃO",
+        title: "Tecnologia Avançada",
+        text: "Equipamentos topo de gama, ferramentas digitais e processos otimizados para te facilitar a vida.",
+        alt: "Tecnologia avançada na fisioterapia"
+    },
+    {
+        id: 5,
+        image: "/Recrutamento/horario.jpg",
+        subtitle: "EQUILÍBRIO",
+        title: "Horários Saudáveis",
+        text: "Um modelo que respeita o teu descanso, recuperação e bem-estar.",
+        alt: "Equilíbrio entre vida pessoal e profissional"
+    },
+    {
+        id: 6,
+        image: "/Recrutamento/carreira.jpg",
+        subtitle: "CARREIRA",
+        title: "Crescimento Real",
+        text: "Progressão estruturada, novas responsabilidades e desenvolvimento orientado ao teu ritmo.",
+        alt: "Crescimento profissional"
+    }
+]
 }) {
   return (
     <section className="sanus-recrutamento-page-benefits">
@@ -26,24 +69,11 @@ export default function SanusBenefits({
       </svg>
 
       <div className="sanus-recrutamento-page-benefits-container">
-        <div className="sanus-recrutamento-page-benefits-sub-container">
-            <header className="sanus-general-title">
-                <p className="sanus-services-text little">Beneficios</p>
-                <h2>{title}</h2>
-            </header>
-
-            <div className="sanus-recrutamento-page-benefits-grid">
-                {benefits.map((benefit) => (
-                    <div
-                    className="sanus-recrutamento-page-benefit-card"
-                    key={benefit.title}
-                    >
-                    <h3>{benefit.title}</h3>
-                    <p>{benefit.desc}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
+        <SanusCardsSection
+            title={title}
+            subtitle="Beneficios"
+            cards={benefits}
+        />
       </div>
     </section>
   );
