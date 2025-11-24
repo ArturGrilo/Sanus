@@ -73,6 +73,7 @@ export default function SanusBenefits({
             title={title}
             subtitle="Beneficios"
             cards={benefits}
+            showWaves={false}
         />
       </div>
     </section>

@@ -33,6 +33,7 @@
   --color-other: #F28C82;
   --color-image: rgba(46, 92, 110, 0.2);
   --color-border: #d8e1df;
+  --border-radius-var: 4px 20px;
 
   /* Cores principais Cláudia
   --color-primary: #bdd82a;
@@ -83,7 +84,7 @@ button, .btn {
   font-weight: 600;
   font-size: 20px;
   padding: 12px 25px;
-  border-radius: 3px 20px;
+  border-radius: var(--border-radius-var);
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -232,7 +233,7 @@ a:hover {
 
 .sanus-general-card{
     height: fit-content;
-    border-radius: 4px 20px;
+    border-radius: var(--border-radius-var);
     text-decoration: none;
     background: linear-gradient(
       to top,               /* direção: de baixo/direita para cima/esquerda */

@@ -7,8 +7,37 @@ import WhatsappButton from "./whatsapp_button";
 import ContactCTA from "./contact_cta_break_section";
 import Feedback from "./feedback";
 import SanusBenefits from "./recrutamento_benefits";
+import ProfilesSection from "./recrutamento_profiles";
+import {HandsClapping, UsersThree, GraduationCap} from "phosphor-react";
+import { HandHeartIcon } from "@phosphor-icons/react";
 
 export default function RecrutamentoPage() {
+  const profiles = [
+    {
+      icon: <UsersThree size={36} weight="regular" color="var(--color-primary-dark)" />,
+      title: "Fisioterapeutas",
+      desc: "Todas as áreas clínicas."
+    },
+
+    {
+      icon: <HandsClapping size={36} weight="regular" color="var(--color-primary-dark)" />,
+      title: "Receção / Front-Office",
+      desc: "Atendimento humano e organização."
+    },
+
+    {
+      icon: <GraduationCap size={36} weight="regular" color="var(--color-primary-dark)" />,
+      title: "Estágios Curriculares",
+      desc: "Formação prática com acompanhamento próximo."
+    },
+
+    {
+      icon: <HandHeartIcon size={36} weight="regular" color="var(--color-primary-dark)" />,
+      title: "Profissionais Externos",
+      desc: "Massagem, Pilates e terapias complementares."
+    }
+  ];
+
   return (
     <PageTransition>
       <Header />
@@ -39,7 +68,11 @@ export default function RecrutamentoPage() {
         </div>
       </section>
       <SanusBenefits />
-      
+      <ProfilesSection
+        title="Perfis que procuramos"
+        subtitle="Profissões"
+        items={profiles}
+      />
 
       {/* PERFIL
       <section className="sanus-recrutamento-page-perfis">
