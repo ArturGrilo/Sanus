@@ -14,7 +14,7 @@
   max-width: 1800px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 40px 20px 40px;
   margin-top: 60px;
 }
 
@@ -97,7 +97,7 @@
 
 @media (max-width: 900px) {
     .sanus-profiles-container {
-        padding: 0 20px;
+        padding: 0 20px 40px 20px;
     }
     .sanus-profiles-section .sanus-general-title{
         margin-top: 0px;
@@ -112,6 +112,6 @@
 
 @media (max-width: 600px) {
     .sanus-profile-title {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 }
