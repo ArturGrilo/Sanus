@@ -15,7 +15,7 @@ export default function RecrutamentoPage() {
   const profiles = [
     {
       icon: <UsersThree size={36} weight="regular" color="var(--color-primary-dark)" />,
-      title: "Fisioterapeutas",
+      title: "Fisioterapeuta",
       desc: "Todas as áreas clínicas."
     },
 
@@ -27,13 +27,13 @@ export default function RecrutamentoPage() {
 
     {
       icon: <GraduationCap size={36} weight="regular" color="var(--color-primary-dark)" />,
-      title: "Estágios Curriculares",
+      title: "Estágio Curricular",
       desc: "Formação prática com acompanhamento próximo."
     },
 
     {
       icon: <HandHeartIcon size={36} weight="regular" color="var(--color-primary-dark)" />,
-      title: "Profissionais Externos",
+      title: "Profissional Externo",
       desc: "Massagem, Pilates e terapias complementares."
     }
   ];
