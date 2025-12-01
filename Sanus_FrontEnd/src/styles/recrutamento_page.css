@@ -28,14 +28,7 @@
   text-align: center;
 }
 
-/* PERFIS */
-.sanus-recrutamento-page-perfis-list {
-  font-size: 1.4rem;
-  line-height: 2.3rem;
-  max-width: 800px;
-  margin: 0 auto;
-  padding-left: 20px;
-}
+
 
 /* VAGAS */
 .sanus-recrutamento-page-vagas-list {
@@ -69,31 +62,6 @@
 
 .sanus-recrutamento-page-form-box textarea {
   min-height: 140px;
-}
-
-/* PROCESSO */
-.sanus-recrutamento-page-processo-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 30px;
-}
-
-.sanus-recrutamento-page-processo-item {
-  text-align: center;
-}
-
-.step-number {
-  display: inline-block;
-  font-size: 1.6rem;
-  color: white;
-  background: var(--color-primary);
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 12px;
 }
 
 /* RESPONSIVE */

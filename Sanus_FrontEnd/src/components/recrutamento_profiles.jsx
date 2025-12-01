@@ -34,6 +34,7 @@ export default function ProfilesSection({
           ))}
         </div>
       </div>
+      <svg className="sanus-profiles-pattern" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="a" width="40" height="40" patternTransform="scale(2)" patternUnits="userSpaceOnUse"><rect width="100%" height="100%" fill="#fff"/><path fill="none" stroke="#49caac" strokeLinecap="square" d="M20-5V5m0 30v10m20-30v10M0 15v10"/><path fill="none" stroke="var(--color-primary-dark)" strokeLinecap="square" d="M-5 40H5M-5 0H5m30 0h10M35 40h10M15 20h10"/></pattern></defs><rect width="800%" height="800%" fill="url(#a)"/></svg>
     </section>
   );
 }

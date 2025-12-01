@@ -14,27 +14,59 @@ import { HandHeartIcon } from "@phosphor-icons/react";
 export default function RecrutamentoPage() {
   const profiles = [
     {
-      icon: <UsersThree size={36} weight="regular" color="var(--color-primary-dark)" />,
+      icon: <UsersThree size={36} weight="regular" color="var(--color-other)" />,
       title: "Fisioterapeuta",
       desc: "Todas as áreas clínicas."
     },
 
     {
-      icon: <HandsClapping size={36} weight="regular" color="var(--color-primary-dark)" />,
+      icon: <HandsClapping size={36} weight="regular" color="var(--color-other)" />,
       title: "Receção / Front-Office",
       desc: "Atendimento humano e organização."
     },
 
     {
-      icon: <GraduationCap size={36} weight="regular" color="var(--color-primary-dark)" />,
+      icon: <GraduationCap size={36} weight="regular" color="var(--color-other)" />,
       title: "Estágio Curricular",
       desc: "Formação prática com acompanhamento próximo."
     },
 
     {
-      icon: <HandHeartIcon size={36} weight="regular" color="var(--color-primary-dark)" />,
+      icon: <HandHeartIcon size={36} weight="regular" color="var(--color-other)" />,
       title: "Profissional Externo",
       desc: "Massagem, Pilates e terapias complementares."
+    },
+  ];
+
+  const steps = [
+    {
+      icon: <span className="sanus-profile-icon">1</span>,
+      title: "Envio da candidatura",
+    },
+
+    {
+      icon: <span className="">2</span>,
+      title: "Análise do perfil",
+    },
+
+    {
+      icon: <span className="">3</span>,
+      title: "Entrevista online / presencial",
+    },
+
+    {
+      icon: <span className="">4</span>,
+      title: "Sessão prática / observação",
+    },
+
+    {
+      icon: <span className="">5</span>,
+      title: "Proposta final",
+    },
+
+    {
+      icon: <span className="">6</span>,
+      title: "Integração e mentoria",
     }
   ];
 
@@ -74,19 +106,7 @@ export default function RecrutamentoPage() {
         items={profiles}
       />
 
-      {/* PERFIL
-      <section className="sanus-recrutamento-page-perfis">
-        <div className="sanus-recrutamento-page-container">
-          <h2 className="sanus-section-title">Perfis que procuramos</h2>
-
-          <ul className="sanus-recrutamento-page-perfis-list">
-            <li>Fisioterapeutas (todas as áreas)</li>
-            <li>Receção/Front-Office</li>
-            <li>Estágios Curriculares</li>
-            <li>Profissionais Externos (Massagem, Pilates, etc.)</li>
-          </ul>
-        </div>
-      </section>
+      {/* 
 
       <section className="sanus-recrutamento-page-vagas">
         <div className="sanus-recrutamento-page-container">
@@ -100,6 +120,7 @@ export default function RecrutamentoPage() {
           </div>
         </div>
       </section>
+            */}
 
       <section className="sanus-recrutamento-page-form">
         <div className="sanus-recrutamento-page-container">
@@ -117,30 +138,20 @@ export default function RecrutamentoPage() {
         </div>
       </section>
 
-      <section className="sanus-recrutamento-page-processo">
-        <div className="sanus-recrutamento-page-container">
-          <h2 className="sanus-section-title">Processo de Recrutamento</h2>
-
-          <div className="sanus-recrutamento-page-processo-grid">
-            {[
-              "Envio da candidatura",
-              "Análise do perfil",
-              "Entrevista online/presencial",
-              "Sessão prática/observação",
-              "Proposta final",
-              "Integração e mentoria",
-            ].map((step, index) => (
-              <div key={index} className="sanus-recrutamento-page-processo-item">
-                <span className="step-number">{index + 1}</span>
-                <p>{step}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+      <ProfilesSection
+        title="Processo de Recrutamento"
+        subtitle="Etapas"
+        items={steps}
+      />
+      <section style={{ position: "relative", margin: "0 0 -20px 0", zIndex: "10" }}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="var(--color-primary-dark)" fillOpacity="1" d="M0,160L80,186.7C160,213,320,267,480,266.7C640,267,800,213,960,197.3C1120,181,1280,203,1360,213.3L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path></svg>
       </section>
-
-      <ContactCTA />
-      <Feedback /> */}
+      <ContactCTA
+        title="Está interessado ou tem alguma dúvida?"
+        buttonText="Entre em contacto"
+        buttonLink="/contactos"
+      />
+      <Feedback />
       <WhatsappButton />
       <Footer />
     </PageTransition>

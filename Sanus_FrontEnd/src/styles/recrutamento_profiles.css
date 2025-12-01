@@ -8,6 +8,7 @@
     position: relative;
     height: auto;
     overflow: hidden;
+    padding-bottom: 30px;
 }
 
 .sanus-profiles-container {
@@ -37,9 +38,27 @@
 
 /* GRID */
 .sanus-profiles-grid {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(40vw, 1fr));
   gap: 16px;
+  z-index: 0;
+}
+
+.sanus-profiles-pattern{
+  display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 35%;
+    width: 45%;
+    -webkit-mask-image: linear-gradient(to top right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: cover;
+    mask-image: linear-gradient(to top right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    mask-repeat: no-repeat;
+    mask-size: cover;
+    z-index: 0;
 }
 
 /* CARD */
@@ -61,6 +80,7 @@
 
 /* ICON */
 .sanus-profile-icon {
+  color: var(--color-other);
   font-size: 2.7rem;
   margin-bottom: 18px;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
