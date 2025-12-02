@@ -1,7 +1,8 @@
 .sanus-recrutamento-page {
+  position: relative;
   display: flex;
   justify-content: center;
-  padding: 80px 20px;
+  padding: 80px 0px;
   background-color: white;
   margin-top: -2px;
   z-index: 1;
@@ -14,6 +15,20 @@
   display: flex;
   flex-direction: column;
   gap: 80px;
+}
+
+.sanus-recrutamento-page-form-container {
+  max-width: 1800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+  padding: 0 40px;
+}
+
+.sanus-recrutamento-page-form-container .sanus-general-title{
+  width: 100%;
 }
 
 .sanus-recrutamento-page .feedback-comment-list h3{
@@ -64,10 +79,49 @@
   min-height: 140px;
 }
 
+.sanus-recrutamento-page-form{
+    flex-direction: column;
+    display: flex;
+    padding: 80px 0px;
+    background-color: var(--color-primary-dark);
+    position: relative;
+    z-index: 10;
+    position: relative;
+    height: 720px;
+}
+
+.sanus-recrutamento-form-main-container{
+  display: flex; 
+  flex-direction: column; 
+  margin-top: -300px;
+}
+
 /* RESPONSIVE */
+@media (max-width: 2000px) {
+  .sanus-recrutamento-page-form{
+    height: 820px;
+  }
+}
+
 @media (max-width: 1100px) {
   .sanus-recrutamento-page-processo-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+  .sanus-recrutamento-page-form-container {
+    gap: 60px;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 924px){
+  .sanus-recrutamento-form-main-container{
+    margin-top: -200px;
+  }
+}
+
+@media (max-width: 767px) {
+  .sanus-recrutamento-page-form{
+    height: 1120px;
   }
 }
 

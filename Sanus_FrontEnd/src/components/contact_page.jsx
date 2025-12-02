@@ -7,6 +7,7 @@ import Location from "./location";
 import { Envelope, Phone, DeviceMobile, WhatsappLogo } from "phosphor-react"
 import SanusHero from "./sanus_hero";
 import PageTransition from "./page_transition";
+import FAQSection from "./faq_section";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -360,24 +361,11 @@ Mensagem: ${formData.message || "-"}`;
         <svg className="sanus-contact-location-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffffff" fillOpacity="1" d="M0,64L120,53.3C240,43,480,21,720,37.3C960,53,1200,107,1320,133.3L1440,160L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg>
         <Location />
       </div>
-      <section className="sanus-contact-faq-section">
-        <div className="sanus-contact-faq">
-          <div className="sanus-contact-section-header">
-              <header className="sanus-general-title">
-                  <p className="sanus-services-text little">Dúvidas</p>
-                  <h2>Perguntas frequentes</h2>
-              </header>
-          </div>
-          <div className="sanus-contact-faq-grid">
-              {faqs.map((faq, idx) => (
-              <details key={idx} className="sanus-contact-faq-item">
-                  <summary>{faq.question}</summary>
-                  <p>{faq.answer}</p>
-              </details>
-              ))}
-          </div>
-        </div>
-      </section>
+      <FAQSection 
+        title="Perguntas Frequentes"
+        subtitle="Dúvidas"
+        faqs={faqs}
+      />
       <WhatsappButton />
       <div className="sanus-about-us-footer">
         <Footer />

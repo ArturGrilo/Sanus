@@ -4,10 +4,12 @@ export default function ProfilesSection({
   title = "Perfis que procuramos",
   subtitle = "",
   items = [],
+  color = "var(--color-primary-alt)",
+  zdeIndex = 11
 }) {
   return (
-    <section className="sanus-profiles-section">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#4BCAAD" fillOpacity="0.3" d="M0,32L120,32C240,32,480,32,720,64C960,96,1200,160,1320,192L1440,224L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg>
+    <section className="sanus-profiles-section" style={{zIndex: zdeIndex}}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill={color} fillOpacity="1" d="M0,32L120,32C240,32,480,32,720,64C960,96,1200,160,1320,192L1440,224L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg>
       <header className="sanus-about-us-cards-title sanus-general-title">
         {subtitle && <p className="sanus-about-us-cards-text little">{subtitle}</p>}
         {title && <h2>{title}</h2>}

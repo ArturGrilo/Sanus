@@ -5,13 +5,47 @@ import SanusHero from "./sanus_hero";
 import PageTransition from "./page_transition";
 import WhatsappButton from "./whatsapp_button";
 import ContactCTA from "./contact_cta_break_section";
-import Feedback from "./feedback";
 import SanusBenefits from "./recrutamento_benefits";
 import ProfilesSection from "./recrutamento_profiles";
 import {HandsClapping, UsersThree, GraduationCap} from "phosphor-react";
 import { HandHeartIcon } from "@phosphor-icons/react";
+import FAQSection from "./faq_section";
+import RecruitmentApplicationForm from "./recruitment_application_form";
 
 export default function RecrutamentoPage() {
+  const faqs = [
+    {
+      question: "Qual o perfil de profissional que procuram?",
+      answer:
+        "Valorizamos profissionais empáticos, responsáveis e orientados para resultados, com forte capacidade de comunicação e alinhamento com uma prática clínica moderna e baseada na evidência."
+    },
+    {
+      question: "Aceitam fisioterapeutas recém-licenciados?",
+      answer:
+        "Sim. Temos um programa de integração e mentoria estruturado para apoiar quem está em início de carreira, garantindo desenvolvimento progressivo e acompanhamento próximo."
+    },
+    {
+      question: "Preciso de experiência em alguma área específica?",
+      answer:
+        "A experiência é valorizada, mas não obrigatória. O mais importante é o alinhamento com a cultura da clínica, vontade de aprender e compromisso com a qualidade do atendimento."
+    },
+    {
+      question: "Quanto tempo demora até receber resposta?",
+      answer:
+        "O tempo médio é entre 5 e 10 dias úteis, podendo variar consoante o número de candidaturas. Garantimos resposta a todos os candidatos."
+    },
+    {
+      question: "O que deve incluir o meu CV?",
+      answer:
+        "Formação académica, certificações, experiência relevante, áreas de interesse e contactos atualizados. Portfólio ou relatório de estágio podem ser incluídos."
+    },
+    {
+      question: "Que tipo de contrato oferecem?",
+      answer:
+        "Dependendo da função, oferecemos contratos a termo, sem termo ou colaboração externa. Explicamos todas as condições durante o processo."
+    },
+  ];
+
   const profiles = [
     {
       icon: <UsersThree size={36} weight="regular" color="var(--color-other)" />,
@@ -104,54 +138,34 @@ export default function RecrutamentoPage() {
         title="Perfis que procuramos"
         subtitle="Profissões"
         items={profiles}
+        zdeIndex={11}
       />
 
-      {/* 
-
-      <section className="sanus-recrutamento-page-vagas">
-        <div className="sanus-recrutamento-page-container">
-          <h2 className="sanus-section-title">Oportunidades em Aberto</h2>
-
-          <div className="sanus-recrutamento-page-vagas-list">
-            <p className="sanus-recrutamento-page-sem-vagas">
-              De momento não existem vagas disponíveis.  
-              <br />Mas adorávamos conhecer-te — envia candidatura espontânea.
-            </p>
-          </div>
-        </div>
+      <RecruitmentApplicationForm />
+      <section style={{ marginBottom: "-100px" }}>
+        <ProfilesSection
+          title="Processo de Recrutamento"
+          subtitle="Etapas"
+          items={steps}
+          color="var(--color-primary-dark)"
+          zdeIndex={9}
+        />
       </section>
-            */}
-
-      <section className="sanus-recrutamento-page-form">
-        <div className="sanus-recrutamento-page-container">
-          <h2 className="sanus-section-title">Candidatura Espontânea</h2>
-
-          <form className="sanus-recrutamento-page-form-box">
-            <input type="text" placeholder="Nome" required />
-            <input type="email" placeholder="Email" required />
-            <input type="tel" placeholder="Telefone" required />
-            <input type="text" placeholder="Função a que se candidata" />
-            <textarea placeholder="Mensagem"></textarea>
-            <input type="file" />
-            <button type="submit" className="sanus-btn-primary">Enviar</button>
-          </form>
-        </div>
-      </section>
-
-      <ProfilesSection
-        title="Processo de Recrutamento"
-        subtitle="Etapas"
-        items={steps}
-      />
       <section style={{ position: "relative", margin: "0 0 -20px 0", zIndex: "10" }}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="var(--color-primary-dark)" fillOpacity="1" d="M0,160L80,186.7C160,213,320,267,480,266.7C640,267,800,213,960,197.3C1120,181,1280,203,1360,213.3L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path></svg>
       </section>
       <ContactCTA
-        title="Está interessado ou tem alguma dúvida?"
+        title="Quer saber mais sobre a Sanus Vitae?"
         buttonText="Entre em contacto"
         buttonLink="/contactos"
       />
-      <Feedback />
+      <section style={{ marginBottom: "-80px", marginTop: "40px" }}>
+        <FAQSection 
+          title="Perguntas Frequentes"
+          subtitle="Dúvidas"
+          faqs={faqs}
+        />
+      </section>
       <WhatsappButton />
       <Footer />
     </PageTransition>

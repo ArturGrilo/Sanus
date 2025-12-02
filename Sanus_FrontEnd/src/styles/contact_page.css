@@ -113,6 +113,7 @@
    ========================= */
 
 .sanus-contact-form-card {
+  width: 100%;
   background: rgba(255, 255, 255, 0.96);
   border-radius: 4px 20px;
   padding: 40px 20px;
@@ -282,54 +283,6 @@
     max-width: 400px;
 }
 
-.sanus-contact-faq-section{
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  margin: 0 auto;
-    background-color: white;
-    margin-top: -2px;
-    z-index: 11;
-    position: relative;
-    margin-bottom: 60px;
-}
-
-.sanus-contact-faq{
-  text-align: left;
-  width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    max-width: 1800px;
-    padding: 0 40px;
-    justify-content: center;
-}
-
-.sanus-contact-faq-grid {
-  display: grid;
-  gap: 10px;
-}
-
-.sanus-contact-faq-item {
-  border-radius: 4px 20px;
-  padding: 10px 14px;
-  background: #f9fbfc;
-  border: 1px solid rgba(0, 0, 0, 0.03);
-}
-
-.sanus-contact-faq-item summary {
-  cursor: pointer;
-  font-size: 0.96rem;
-  font-weight: 600;
-  color: var(--color-primary-dark, #002028);
-}
-
-.sanus-contact-faq-item p {
-  margin-top: 6px;
-  font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.78);
-}
-
 .sanus-contact-location{
     position: relative;
     margin-top: -200px;
@@ -362,10 +315,6 @@
   .sanus-contact-location {
     position: relative;
     margin-top: -120px;
-  }
-  .sanus-contact-faq{
-    margin-bottom: 40px;
-    padding: 20px;
   }
 }
 
