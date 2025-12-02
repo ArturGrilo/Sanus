@@ -121,6 +121,7 @@
 
 @media (max-width: 767px) {
   .sanus-recrutamento-page-form{
+    margin-top: -1px;
     height: 1120px;
   }
 }
