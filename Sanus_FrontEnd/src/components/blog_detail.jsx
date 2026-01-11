@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "./header";
 import Footer from "./footer";
-import WhatsappButton from "./whatsapp_button";
 import "../styles/blog_detail.css";
 import BlogSection from "./blog_section";
 import TextSkeleton from "./skeleton_text";
@@ -107,7 +106,6 @@ export default function BlogDetail() {
       </section>
       <button className="btn btn-secundary sanus-blog-details-back-button" onClick={() => navigate("/blog")}>Voltar</button>
       <BlogSection variant="detail" excludeId={article.id} limit={3} />
-      <WhatsappButton />
       <div className="sanus-about-us-footer">
         <Footer />
       </div>

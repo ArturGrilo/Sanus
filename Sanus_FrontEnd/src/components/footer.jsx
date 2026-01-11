@@ -8,6 +8,15 @@ import SanusVitaeLogo from '../images/Logo/SanusVitaeLogo.png';
 import { Link } from "react-router-dom";
 
 export default function Footer() {
+  const phoneNumber = "+351928410954";
+  const phoneNumber2 = "+351212160237";
+  const phoneUrl = `tel:${phoneNumber}`;
+  const phoneUrl2 = `tel:${phoneNumber2}`;
+  const email = "sanusvitae2021@gmail.com";
+  const emailUrl = `mailto:${email}`;
+  const mapsUrl ="https://www.google.com/maps/search/?api=1&query=Rua+de+Dili+17A+2830-172+Santo+Andre+Barreiro";
+  const facebookUrl = "https://www.facebook.com/sanusvitae";
+  const instaUrl = "https://www.instagram.com/sanusvitae_fisio/"
   return (
     <section className="sanus-footer" id="localizacao">
         <svg className="sanus-footer-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="var(--color-primary-dark)" background="#000000" fillOpacity="1" d="M0,160L120,176C240,192,480,224,720,240C960,256,1200,256,1320,256L1440,256L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>
@@ -17,8 +26,24 @@ export default function Footer() {
                     <img src={SanusVitaeLogo} className="sanus-header-logo" alt="Sanus Vitae logo" />
                     <p className="sanus-general-text alt">clínica fisiátrica</p>
                     <div className="sanus-footer-item">
-                        <FacebookLogo size={28} color="var(--color-bg)" weight="fill" />
-                        <InstagramLogo size={28} color="var(--color-bg)" weight="fill" />
+                        <a
+                            href={facebookUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Sanus Vitae no Facebook"
+                            className="location-link"
+                        >
+                            <FacebookLogo size={28} color="var(--color-bg)" weight="fill" />
+                        </a>
+                        <a
+                            href={instaUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Sanus Vitae no Instagram"
+                            className="location-link"
+                        >
+                            <InstagramLogo size={28} color="var(--color-bg)" weight="fill" />
+                        </a>
                     </div>
                 </div>
 
@@ -37,23 +62,30 @@ export default function Footer() {
                     </div>
                     {/* Coluna 2: Localização e horário */}
                     <div className="sanus-footer-info">
-                        <div className="sanus-footer-item">
+                        <a className="sanus-footer-item location-link"
+                            href={mapsUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <MapPin size={28} color="var(--color-bg)" weight="fill" />
                             <div className="sanus-footer-map-address">
                                 <p className="sanus-general-text alt">Rua de Dili, n,º 17A</p>
                                 <p className="sanus-general-text alt">2830-172 Santo André - Barreiro</p>
                             </div>
-                        </div>
+                        </a>
                         <div className="sanus-footer-item">
                             <Phone size={28} color="var(--color-bg)" weight="fill" />
                             <div className="sanus-footer-horaire">
-                                <p className="sanus-general-text alt">(+351) 928 410 954</p>
-                                <p className="sanus-general-text alt">(+351) 212 160 237</p>
+                                <a className="sanus-general-text alt location-link"
+                                href={phoneUrl}
+                                >(+351) 928 410 954</a>
+                                <a className="sanus-general-text alt location-link"
+                                href={phoneUrl2}>(+351) 212 160 237</a>
                             </div>
                         </div>
                         <div className="sanus-footer-item">
                             <Envelope size={28} color="var(--color-bg)" weight="fill" />
-                            <p className="sanus-general-text alt">sanusvitae2021@gmail.com</p>
+                            <a className="sanus-general-text alt location-link" href={emailUrl}>sanusvitae2021@gmail.com</a>
                         </div>
                     </div>
 

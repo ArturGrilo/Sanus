@@ -1,7 +1,6 @@
 import Header from "./header";
 import Footer from "./footer";
 import "../styles/blog_page.css";
-import WhatsappButton from "./whatsapp_button";
 import { useEffect, useState } from "react";
 import BlogCard from "./blog_card";
 import BlogCardSkeleton from "./skeleton_blog_card";
@@ -74,7 +73,6 @@ export default function BlogPage() {
             </div>
         </div>
       </section>
-      <WhatsappButton/>
       <div className="sanus-about-us-footer">
         <Footer />
       </div>

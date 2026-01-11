@@ -25,6 +25,10 @@ button.btn.btn-secundary.sanus-specialty-details-back-button {
   position: relative;
 }
 
+.sanus-service-specialties .sanus-services{
+  padding-top: 100px;
+}
+
 /* Corpo formatado (Tiptap HTML) */
 .sanus-specialty-detail-body {
   color: var(--color-text);
@@ -105,5 +109,9 @@ button.btn.btn-secundary.sanus-specialty-details-back-button {
 @media (max-width: 550px) {
   .sanus-specialty-detail-content {
     padding: 60px 20px;
+  }
+
+  .sanus-service-specialties .sanus-services{
+    padding-top: 200px;
   }
 }

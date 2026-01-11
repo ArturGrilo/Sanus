@@ -15,9 +15,9 @@ export default function ContactCTA({
       </h3>
 
       <div className="sanus-cta-btn-container">
-        <a onClick={() => navigate(buttonLink)} className="btn btn-primary">
+        <button onClick={() => navigate(buttonLink)} className="btn btn-primary">
           {buttonText}
-        </a>
+        </button>
       </div>
 
       <svg

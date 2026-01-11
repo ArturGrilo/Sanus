@@ -1,6 +1,6 @@
 import "../styles/mission.css"
 import { HandHeartIcon, MicroscopeIcon, CertificateIcon, CheckFatIcon, SmileyIcon } from "@phosphor-icons/react";
-import { Handshake } from "phosphor-react"
+import { Handshake } from "phosphor-react";
 import { useNavigate } from "react-router-dom";
 
 export default function Mission() {

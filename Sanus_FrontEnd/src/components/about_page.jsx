@@ -3,15 +3,32 @@ import Footer from "./footer";
 import "../styles/about_page.css";
 import Mission from "./mission";
 import SanusCardsSection from "./sanus_little_cards";
-import Team from "./team";
+import FAQSection from "./faq_section";
 import Recrutamento from "./recrutamento";
-import WhatsappButton from "./whatsapp_button";
 import Feedback from "./feedback";
 import ContactCTA from "./contact_cta_break_section";
 import PageTransition from "./page_transition";
 import SanusHero from "./sanus_hero";
 
 export default function AboutPage() {
+  const faqs = [
+    {
+      question: "Qual é a filosofia de cuidado da Sanus Vitae?",
+      answer:
+        "Acreditamos que cada corpo é único. Por isso, avaliamos de forma rigorosa, definimos objetivos claros e acompanhamos cada pessoa com proximidade, segurança e foco em resultados sustentáveis.",
+    },
+    {
+      question: "Os tratamentos são sempre personalizados?",
+      answer:
+        "Sim. Todos os planos são ajustados à condição clínica, objetivos e contexto de vida de cada pessoa. Não aplicamos protocolos genéricos.",
+    },
+    {
+      question: "Trabalham com evidência científica?",
+      answer:
+        "Sim. As nossas intervenções baseiam-se nas melhores práticas clínicas atuais, aliando conhecimento científico, experiência profissional e evolução contínua.",
+    },
+  ];
+
   const missionCards = [
     {
       id: 1,
@@ -97,7 +114,11 @@ export default function AboutPage() {
         <Feedback/>
       </div>
       <ContactCTA/>
-      <Team/>
+      {/* FAQ (mesmo componente do recrutamento) */}
+      <section className="sv-agendar-faq">
+        <FAQSection title="Perguntas Frequentes" subtitle="Sobre nós" faqs={faqs} />
+      </section>
+      {/*<Team/>*/}
       <Recrutamento/>
       <section className="sanus-about-us" style={{marginTop:"160px", marginBottom:"100px"}}>
         <div className="sanus-about-us-container">
@@ -113,7 +134,6 @@ export default function AboutPage() {
             </div>
         </div>
       </section>
-      <WhatsappButton/>
       <div className="sanus-about-us-footer">
         <Footer />
       </div>

@@ -1,5 +1,7 @@
 // ============================================================
 // Sanus Vitae - Cloud Functions API (versão simplificada e estável)
+// ✅ Atualizado: services agora suporta specialties + benefits + faqs + cta_section
+// ✅ ESLint-friendly: sem destructuring snake_case sem alias
 // ============================================================
 
 // 🔹 1. Carregar variáveis do .env (antes de tudo)
@@ -39,15 +41,6 @@ app.use(express.json());
 // ============================================================
 /**
  * Extrai o object path dentro do bucket do Supabase Storage a partir de um URL público.
- *
- * Ex:
- * https://xxx.supabase.co/storage/v1/object/public/blog-images/file.jpg
- * (bucket="blog-images") -> "file.jpg"
- *
- * Ex:
- * https://xxx.supabase.co/storage/v1/object/public/service-images/indications/abc/x.jpg
- * (bucket="service-images") -> "indications/abc/x.jpg"
- *
  * @param {string} publicUrl
  * @return {string|null}
  */
@@ -69,8 +62,6 @@ function extractSupabaseObjectPath(publicUrl) {
 
 /**
  * Extrai e sanitiza a extensão de um ficheiro.
- * Garante apenas caracteres [a-z0-9] e fallback para jpg.
- *
  * @param {string} fileName
  * @return {string}
  */
@@ -110,6 +101,60 @@ async function findOldSpecialtyImageUrl(serviceId, itemId) {
   } catch (e) {
     return null;
   }
+}
+
+/**
+ * Normaliza FAQs: [{question, answer}]
+ * @param {any} raw
+ * @return {Array<{question: string, answer: string}>}
+ */
+function normalizeFaqs(raw) {
+  if (!Array.isArray(raw)) return [];
+  return raw
+      .filter(Boolean)
+      .map((x) => ({
+        question: String(x?.question || "").trim(),
+        answer: String(x?.answer || "").trim(),
+      }))
+      .filter((x) => x.question.length > 0 || x.answer.length > 0);
+}
+
+/**
+ * Normaliza Benefits: [{title, bullets: string[]}]
+ * @param {any} raw
+ * @return {Array<{title: string, bullets: string[]}>}
+ */
+function normalizeBenefits(raw) {
+  if (!Array.isArray(raw)) return [];
+  return raw
+      .filter(Boolean)
+      .map((b) => {
+        const bulletsRaw = b?.bullets;
+        const bullets = Array.isArray(bulletsRaw) ?
+          bulletsRaw.map((t) => String(t || "").trim()).filter(Boolean) :
+          [];
+        return {
+          title: String(b?.title || "").trim(),
+          bullets,
+        };
+      })
+      .filter((b) => b.title.length > 0 || b.bullets.length > 0);
+}
+
+/**
+ * Normaliza CTA Section (object):
+ * { btn_text, cta_text, ... } (mantemos compat com nomes)
+ * @param {any} raw
+ * @return {{btn_text: string, cta_text: string}}
+ */
+function normalizeCtaSection(raw) {
+  const obj = raw && typeof raw === "object" ? raw : {};
+  const btnText = String(obj.btn_text || obj.btnText || "").trim();
+  const ctaText = String(obj.cta_text || obj.ctaText || "").trim();
+  return {
+    btn_text: btnText,
+    cta_text: ctaText,
+  };
 }
 
 // ============================================================
@@ -274,7 +319,7 @@ app.post("/storage/service-indication-upload-url", async (req, res) => {
 });
 
 // ============================================================
-// ✅ NOVO: Upload assinado - imagens das specialties por serviço
+// ✅ Upload assinado - imagens das specialties por serviço
 // ============================================================
 app.post("/storage/service-specialty-upload-url", async (req, res) => {
   try {
@@ -345,10 +390,11 @@ app.post("/storage/service-specialty-upload-url", async (req, res) => {
 app.get("/services", async (req, res) => {
   try {
     const snapshot = await db.collection("services").orderBy("createdAt").get();
+    // mantém compat: _id (como tinhas), sem mexer no front
     const services = snapshot.docs.map((doc) => ({_id: doc.id, ...doc.data()}));
     return res.json(services);
   } catch (err) {
-    console.error(err);
+    console.error("Erro a buscar serviços:", err);
     return res.status(500).send("Erro a buscar serviços");
   }
 });
@@ -391,26 +437,44 @@ app.get("/admin/services/:id", async (req, res) => {
   }
 });
 
+// ============================================================
 // ADMIN - criar serviço
+// ✅ Agora também guarda: benefits, faqs, cta_section
+// ============================================================
 app.post("/admin/services", async (req, res) => {
   try {
-    const {
-      title,
-      subtitle = "",
-      slug,
-      text = "",
-      // eslint-disable-next-line camelcase
-      bigger_description = "",
-      ctaText = "",
-      image = "",
-      imageUrl = "",
-      indications = [],
-      // eslint-disable-next-line camelcase
-      treatment_steps = [],
-      // eslint-disable-next-line camelcase
-      treatment_types = [],
-      specialties = [],
-    } = req.body || {};
+    const body = req.body || {};
+
+    const title = String(body.title || "").trim();
+    const subtitle = String(body.subtitle || "").trim();
+    const slug = String(body.slug || "").trim();
+    const text = String(body.text || "").trim();
+
+    // snake_case vindo do front -> alias para evitar ESLint camelcase
+    const biggerDescription = String(body.bigger_description || body.biggerDescription || "").trim();
+
+    const ctaText = String(body.ctaText || "").trim();
+
+    // compat imagem (image / imageUrl)
+    const image = String(body.image || body.imageUrl || "").trim();
+    const imageUrl = String(body.imageUrl || body.image || "").trim();
+
+    const indications = Array.isArray(body.indications) ? body.indications : [];
+
+    const treatmentSteps = Array.isArray(body.treatment_steps) ?
+      body.treatment_steps :
+      (Array.isArray(body.treatmentSteps) ? body.treatmentSteps : []);
+
+    const treatmentTypes = Array.isArray(body.treatment_types) ?
+      body.treatment_types :
+      (Array.isArray(body.treatmentTypes) ? body.treatmentTypes : []);
+
+    const specialties = Array.isArray(body.specialties) ? body.specialties : [];
+
+    // ✅ novos campos
+    const benefits = normalizeBenefits(body.benefits);
+    const faqs = normalizeFaqs(body.faqs);
+    const ctaSection = normalizeCtaSection(body.cta_section || body.ctaSection);
 
     if (!title || !slug) return res.status(400).send("title e slug são obrigatórios");
 
@@ -419,17 +483,24 @@ app.post("/admin/services", async (req, res) => {
       subtitle,
       slug,
       text,
-      // eslint-disable-next-line camelcase
-      bigger_description,
+      bigger_description: biggerDescription,
       ctaText,
-      image: image || imageUrl || "",
-      imageUrl: imageUrl || image || "",
-      indications: Array.isArray(indications) ? indications : [],
-      // eslint-disable-next-line camelcase
-      treatment_steps: Array.isArray(treatment_steps) ? treatment_steps : [],
-      // eslint-disable-next-line camelcase
-      treatment_types: Array.isArray(treatment_types) ? treatment_types : [],
-      specialties: Array.isArray(specialties) ? specialties : [],
+
+      // compat: guarda nos 2
+      image,
+      imageUrl,
+
+      indications,
+
+      treatment_steps: Array.isArray(treatmentSteps) ? treatmentSteps : [],
+      treatment_types: Array.isArray(treatmentTypes) ? treatmentTypes : [],
+      specialties,
+
+      // ✅ NOVOS
+      benefits,
+      faqs,
+      cta_section: ctaSection,
+
       createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
     });
@@ -441,26 +512,41 @@ app.post("/admin/services", async (req, res) => {
   }
 });
 
+// ============================================================
 // ADMIN - atualizar serviço por ID
+// ✅ Agora também guarda: benefits, faqs, cta_section
+// ============================================================
 app.put("/admin/services/:id", async (req, res) => {
   try {
-    const {
-      title,
-      subtitle = "",
-      slug,
-      text = "",
-      // eslint-disable-next-line camelcase
-      bigger_description = "",
-      ctaText = "",
-      image = "",
-      imageUrl = "",
-      indications = [],
-      // eslint-disable-next-line camelcase
-      treatment_steps = [],
-      // eslint-disable-next-line camelcase
-      treatment_types = [],
-      specialties = [],
-    } = req.body || {};
+    const body = req.body || {};
+
+    const title = String(body.title || "").trim();
+    const subtitle = String(body.subtitle || "").trim();
+    const slug = String(body.slug || "").trim();
+    const text = String(body.text || "").trim();
+
+    const biggerDescription = String(body.bigger_description || body.biggerDescription || "").trim();
+    const ctaText = String(body.ctaText || "").trim();
+
+    const image = String(body.image || body.imageUrl || "").trim();
+    const imageUrl = String(body.imageUrl || body.image || "").trim();
+
+    const indications = Array.isArray(body.indications) ? body.indications : [];
+
+    const treatmentSteps = Array.isArray(body.treatment_steps) ?
+      body.treatment_steps :
+      (Array.isArray(body.treatmentSteps) ? body.treatmentSteps : []);
+
+    const treatmentTypes = Array.isArray(body.treatment_types) ?
+      body.treatment_types :
+      (Array.isArray(body.treatmentTypes) ? body.treatmentTypes : []);
+
+    const specialties = Array.isArray(body.specialties) ? body.specialties : [];
+
+    // ✅ novos campos
+    const benefits = normalizeBenefits(body.benefits);
+    const faqs = normalizeFaqs(body.faqs);
+    const ctaSection = normalizeCtaSection(body.cta_section || body.ctaSection);
 
     if (!title || !slug) return res.status(400).send("title e slug são obrigatórios");
 
@@ -469,17 +555,23 @@ app.put("/admin/services/:id", async (req, res) => {
       subtitle,
       slug,
       text,
-      // eslint-disable-next-line camelcase
-      bigger_description,
+      bigger_description: biggerDescription,
       ctaText,
-      image: image || imageUrl || "",
-      imageUrl: imageUrl || image || "",
-      indications: Array.isArray(indications) ? indications : [],
-      // eslint-disable-next-line camelcase
-      treatment_steps: Array.isArray(treatment_steps) ? treatment_steps : [],
-      // eslint-disable-next-line camelcase
-      treatment_types: Array.isArray(treatment_types) ? treatment_types : [],
-      specialties: Array.isArray(specialties) ? specialties : [],
+
+      image,
+      imageUrl,
+
+      indications,
+
+      treatment_steps: Array.isArray(treatmentSteps) ? treatmentSteps : [],
+      treatment_types: Array.isArray(treatmentTypes) ? treatmentTypes : [],
+      specialties,
+
+      // ✅ NOVOS
+      benefits,
+      faqs,
+      cta_section: ctaSection,
+
       updatedAt: FieldValue.serverTimestamp(),
     }, {merge: true});
 

@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
 // Páginas do site
@@ -24,6 +24,7 @@ import CookiesPage from "./components/cookies_policy";
 import ServiceSpecialtyDetail from "./components/service_specialties_details";
 import ServicesPage from "./components/services_page";
 import AgendarPage from "./components/book_page";
+import CookieBanner from "./components/cookie_banner";
 
 // Páginas do back office
 import Login from "./admin/Login";
@@ -41,13 +42,20 @@ import PageTransition from "./components/page_transition";
 import RecrutamentoPage from "./components/recrutamento_page";
 import ServicesList from "./admin/ServiceList";
 import ServiceForm from "./admin/ServiceForm";
-{/*import TagsList from "./admin/TagsList";
-import TagForm from "./admin/TagForm";*/}
+import TagsList from "./admin/TagsList";
+import TagForm from "./admin/TagForm";
 
 export default function App() {
+  const location = useLocation();
+
+  const isAdminRoute =
+    location.pathname.startsWith("/admin") || location.pathname === "/login";
+
   return (
     <AnimatePresence mode="wait">
-      <Routes>
+      {!isAdminRoute && <CookieBanner /> && <WhatsappButton />}
+
+      <Routes location={location} key={location.pathname}>
         {/* 🌐 Site principal */}
         <Route
           path="/"
@@ -57,14 +65,27 @@ export default function App() {
               <Hero />
               <Services />
               <Mission />
-              <Team />
+              <section className="sanus-about-us" style={{marginTop:"160px", marginBottom:"100px"}}>
+                <div className="sanus-about-us-container">
+                    <div className="feedback-comment-list" style={{width: "100%", justifyContent: "center"}}>
+                        <h3>
+                            <span className="feedback-comment">
+                                Aqui, não tratamos apenas o corpo.
+                            </span>
+                            <span className="feedback-comment other-color">
+                                Cuidamos da pessoa.
+                            </span>
+                        </h3>
+                    </div>
+                </div>
+              </section>
+              {/*<Team />*/}
               <Recrutamento />
               <Feedback />
               <Insurance />
               <Location />
-              <BlogSection variant="home" limit={3} />  
+              <BlogSection variant="home" limit={3} />
               <Footer />
-              <WhatsappButton />
             </PageTransition>
           }
         />
@@ -97,11 +118,11 @@ export default function App() {
           <Route path="/admin/services" element={<ServicesList />} />
           <Route path="/admin/services/new" element={<ServiceForm />} />
           <Route path="/admin/services/edit/:id" element={<ServiceForm />} />
-          {/*<Route path="/admin/tags" element={<TagsList />} />
+          <Route path="/admin/tags" element={<TagsList />} />
           <Route path="/admin/tags/new" element={<TagForm />} />
-          <Route path="/admin/tags/edit/:id" element={<TagForm />} />*/}
+          <Route path="/admin/tags/edit/:id" element={<TagForm />} />
         </Route>
-        
+
         <Route path="/admin/*" element={<Login />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

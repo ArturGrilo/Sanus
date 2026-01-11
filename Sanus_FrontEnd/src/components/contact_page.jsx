@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Header from "./header";
 import Footer from "./footer";
-import WhatsappButton from "./whatsapp_button";
 import "../styles/contact_page.css";
 import Location from "./location";
 import { Envelope, Phone, DeviceMobile, WhatsappLogo } from "phosphor-react"
@@ -366,7 +365,6 @@ Mensagem: ${formData.message || "-"}`;
         subtitle="Dúvidas"
         faqs={faqs}
       />
-      <WhatsappButton />
       <div className="sanus-about-us-footer">
         <Footer />
       </div>

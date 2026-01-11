@@ -40,14 +40,14 @@
 .sanus-recrutamento-img-column {
     width: 70%;
     aspect-ratio: 2 / 1; /* quase a altura do ecrã */
-    background: url('/Team/team.png') center/cover no-repeat;
+    background: url('/Clinica/equipa.png') center/cover no-repeat;
     z-index: 2;
     overflow: hidden;
     object-fit: cover;
     bottom: 40px;
     -webkit-box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
     box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
-    border-radius: 3px 20px;
+    border-radius: var(--border-radius-var);
     position: relative;
 }
 

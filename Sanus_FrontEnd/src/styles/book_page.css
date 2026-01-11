@@ -258,10 +258,13 @@
 @media (max-width: 1100px) {
   .sv-agendar-steps {
     grid-template-columns: 1fr;
+    padding-bottom: 50px;
   }
 
   .sv-agendar-grid {
     grid-template-columns: 1fr;
+    padding-top: 50px;
+    border-top: 1px solid lightgray;
   }
 
   .sv-form-row {

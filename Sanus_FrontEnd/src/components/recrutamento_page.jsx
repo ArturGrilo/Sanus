@@ -3,7 +3,6 @@ import Footer from "./footer";
 import "../styles/recrutamento_page.css";
 import SanusHero from "./sanus_hero";
 import PageTransition from "./page_transition";
-import WhatsappButton from "./whatsapp_button";
 import ContactCTA from "./contact_cta_break_section";
 import SanusBenefits from "./recrutamento_benefits";
 import ProfilesSection from "./recrutamento_profiles";
@@ -110,7 +109,7 @@ export default function RecrutamentoPage() {
       <SanusHero
         title="Recrutamento"
         subtitle="Cresce connosco."
-        imageUrl="/Team/Team.png"
+        imageUrl="/Clinica/equipa.png"
       />
       {/* INTRO */}
       <section className="sanus-recrutamento-page">
@@ -166,7 +165,6 @@ export default function RecrutamentoPage() {
           faqs={faqs}
         />
       </section>
-      <WhatsappButton />
       <Footer />
     </PageTransition>
   );

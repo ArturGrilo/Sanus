@@ -6,6 +6,9 @@ import { Clock, MapPin } from "phosphor-react"
 import { useNavigate } from "react-router-dom";
 
 export default function Location() {
+  const mapsUrl ="https://www.google.com/maps/search/?api=1&query=Rua+de+Dili+17A+2830-172+Santo+Andre+Barreiro";
+
+
   const navigate = useNavigate();
   return (
     <section className="sanus-location">
@@ -25,15 +28,19 @@ export default function Location() {
 
           {/* Informação */}
           <div className="sanus-location-info">
-            <div className="sanus-location-details-column" style={{ justifyContent: "end" }}>
-              <div className="sanus-location-details-column-item">
+            <div className="sanus-location-details-column">
+              <a className="sanus-location-details-column-item location-link"
+                href={mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <MapPin size={28} color="var(--color-bg)" weight="duotone" />
                 <div className="sanus-location-details-column-item-container">
                   <h2 className="sanus-location-main-text">Localização</h2>
                   <p className="sanus-services-text alt">Rua de Dili, nº 17A</p>
                   <p className="sanus-services-text alt">2830-172 Santo André, Barreiro</p>
                 </div>
-              </div>
+              </a>
               <div className="sanus-location-details-column-item">
                 <Clock size={28} color="var(--color-bg)" weight="duotone" />
                 <div className="sanus-location-details-column-item-container">

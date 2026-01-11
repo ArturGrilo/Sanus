@@ -1,6 +1,8 @@
-import "../styles/recrutamento.css"
+import "../styles/recrutamento.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Recrutamento() {
+  const navigate = useNavigate();
   return (
     <section className="sanus-recrutamento" id="localizacao">
         <svg style={{ transform: "scaleX(-1)", transformOrigin: "center" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#2E5C6E" fillOpacity="0.97" d="M0,160L120,176C240,192,480,224,720,240C960,256,1200,256,1320,256L1440,256L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>
@@ -19,7 +21,7 @@ export default function Recrutamento() {
                         Se quer fazer parte desta missão, descubra as oportunidades abaixo.
                     </p>
                     <div className="sanus-recrutamento-button-container">
-                        <button href="#fisioterapia" className="btn btn-primary">Saiba mais</button>
+                        <button onClick={() => navigate("/recrutamento")} className="btn btn-primary">Saiba mais</button>
                     </div>
                 </div>
                 <div className="sanus-recrutamento-img-column">

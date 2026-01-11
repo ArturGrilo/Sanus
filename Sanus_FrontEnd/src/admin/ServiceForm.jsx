@@ -5,7 +5,7 @@ import Header from "./Header";
 import "./BlogForm.css";
 import "./ServiceForm.css";
 
-// Tabs (nomes conforme colocaste)
+// Tabs
 import ServiceFormBaseTab from "./ServiceFormBaseTab";
 import ServiceFormContentTab from "./ServiceFormContentTab";
 import ServiceFormTreatmentTypesTab from "./ServiceFormTreatmentTypesTab";
@@ -13,7 +13,12 @@ import ServiceFormTreatmentStepsTab from "./ServiceFormTreatmentStepsTab";
 import ServiceFormIndicationsTab from "./ServiceFormIndicationsTab";
 import ServiceFormSpecialtiesTab from "./ServiceFormSpecialtiesTab";
 
-// 🔹 Tiptap (Rich Text Editor) para a descrição detalhada
+// ✅ NOVOS TABS
+import ServiceFormBenefitsTab from "./ServiceFormBenefitsTab";
+import ServiceFormFaqsTab from "./ServiceFormFaqsTab";
+import ServiceFormCtaSectionTab from "./ServiceFormCtaSectionTab";
+
+// Tiptap para bigger_description (serviço)
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Heading from "@tiptap/extension-heading";
@@ -24,9 +29,7 @@ import Underline from "@tiptap/extension-underline";
 const HeadingWithHeader = Heading.extend({
   renderHTML({ node, HTMLAttributes }) {
     const level = node.attrs.level;
-
     if (level !== 2) return ["h" + level, HTMLAttributes, 0];
-
     return ["header", {}, ["h2", HTMLAttributes, 0]];
   },
 });
@@ -38,20 +41,27 @@ export default function ServiceForm() {
 
   const [activeTab, setActiveTab] = useState("base");
 
+  // Base
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [slug, setSlug] = useState("");
   const [text, setText] = useState("");
-  const [biggerDescription, setBiggerDescription] = useState(""); // HTML do editor
+  const [biggerDescription, setBiggerDescription] = useState(""); // HTML
   const [ctaText, setCtaText] = useState("");
 
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState(null);
 
+  // Existing blocks
   const [indications, setIndications] = useState([]);
   const [treatmentSteps, setTreatmentSteps] = useState([]);
   const [treatmentTypes, setTreatmentTypes] = useState([]);
-  const [specialties, setSpecialties] = useState([]); // ✅ NOVO
+  const [specialties, setSpecialties] = useState([]);
+
+  // ✅ NOVOS CAMPOS
+  const [benefits, setBenefits] = useState([]);
+  const [faqs, setFaqs] = useState([]);
+  const [ctaSection, setCtaSection] = useState({ btn_text: "", cta_text: "" });
 
   const [loading, setLoading] = useState(!!id);
   const [saving, setSaving] = useState(false);
@@ -94,9 +104,19 @@ export default function ServiceForm() {
         setIndications(Array.isArray(data.indications) ? data.indications : []);
         setTreatmentSteps(Array.isArray(data.treatment_steps) ? data.treatment_steps : []);
         setTreatmentTypes(Array.isArray(data.treatment_types) ? data.treatment_types : []);
-
-        // ✅ NOVO
         setSpecialties(Array.isArray(data.specialties) ? data.specialties : []);
+
+        // ✅ NOVOS
+        setBenefits(Array.isArray(data.benefits) ? data.benefits : []);
+        setFaqs(Array.isArray(data.faqs) ? data.faqs : []);
+        setCtaSection(
+          data.cta_section && typeof data.cta_section === "object"
+            ? {
+                btn_text: data.cta_section.btn_text || "",
+                cta_text: data.cta_section.cta_text || "",
+              }
+            : { btn_text: "", cta_text: "" }
+        );
       } catch (err) {
         console.error(err);
         setError("Não foi possível carregar o serviço.");
@@ -107,7 +127,7 @@ export default function ServiceForm() {
   }, [id, API]);
 
   // ============================================================
-  // 🔹 TIPTAP EDITOR (Descrição detalhada)
+  // 🔹 TIPTAP EDITOR (Descrição detalhada do serviço)
   // ============================================================
   const biggerEditor = useEditor({
     extensions: [
@@ -124,7 +144,6 @@ export default function ServiceForm() {
     onUpdate: ({ editor }) => setBiggerDescription(editor.getHTML()),
   });
 
-  // Quando terminamos de carregar (edição), colocamos o conteúdo no editor
   useEffect(() => {
     if (biggerEditor && !loading) {
       biggerEditor.commands.setContent(biggerDescription || "<p></p>");
@@ -132,14 +151,12 @@ export default function ServiceForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [biggerEditor, loading]);
 
-  // 🔸 Util para contar palavras (texto sem HTML)
   const biggerPlainText = useMemo(() => {
     const tmp = document.createElement("div");
     tmp.innerHTML = biggerDescription || "";
     return tmp.textContent || tmp.innerText || "";
   }, [biggerDescription]);
 
-  // 🔸 Toolbar helpers
   const isActiveBigger = (name, attrs = {}) => biggerEditor?.isActive(name, attrs);
   const runBigger = (fn) => biggerEditor?.chain().focus()[fn]().run();
 
@@ -152,8 +169,8 @@ export default function ServiceForm() {
       .map((s, idx) => ({
         id: s?.id || uuidv4(),
         order: Number.isFinite(Number(s?.order)) ? Number(s.order) : idx + 1,
-        icon: (s?.icon || "").trim(),
-        title: (s?.title || "").trim(),
+        icon: String(s?.icon || "").trim(),
+        title: String(s?.title || "").trim(),
         bullets: Array.isArray(s?.bullets)
           ? s.bullets.map((b) => String(b || "").trim()).filter(Boolean)
           : [],
@@ -167,9 +184,9 @@ export default function ServiceForm() {
       .map((t, idx) => ({
         id: t?.id || uuidv4(),
         order: Number.isFinite(Number(t?.order)) ? Number(t.order) : idx + 1,
-        icon: (t?.icon || "").trim(),
-        title: (t?.title || "").trim(),
-        subtitle: (t?.subtitle || "").trim(),
+        icon: String(t?.icon || "").trim(),
+        title: String(t?.title || "").trim(),
+        subtitle: String(t?.subtitle || "").trim(),
       }))
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   };
@@ -185,11 +202,46 @@ export default function ServiceForm() {
         slug: String(s?.slug || "").trim(),
         small_description: String(s?.small_description || "").trim(),
         big_description: String(s?.big_description || "").trim(),
-        // compat: aceita imageUrl/image
         image: String(s?.image || s?.imageUrl || "").trim(),
         imageUrl: String(s?.imageUrl || s?.image || "").trim(),
       }))
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  };
+
+  // ✅ Benefits: [{title, bullets[]}]
+  const normalizeBenefits = (arr) => {
+    if (!Array.isArray(arr)) return [];
+    return arr
+      .filter(Boolean)
+      .map((b) => ({
+        // id local só para UI -> não enviar
+        title: String(b?.title || "").trim(),
+        bullets: Array.isArray(b?.bullets)
+          ? b.bullets.map((x) => String(x || "").trim()).filter(Boolean)
+          : [],
+      }))
+      .filter((b) => b.title.length > 0 || b.bullets.length > 0);
+  };
+
+  // ✅ FAQs: [{question, answer}]
+  const normalizeFaqs = (arr) => {
+    if (!Array.isArray(arr)) return [];
+    return arr
+      .filter(Boolean)
+      .map((f) => ({
+        question: String(f?.question || "").trim(),
+        answer: String(f?.answer || "").trim(),
+      }))
+      .filter((f) => f.question.length > 0 || f.answer.length > 0);
+  };
+
+  // ✅ CTA section: {btn_text, cta_text}
+  const normalizeCtaSection = (obj) => {
+    const o = obj && typeof obj === "object" ? obj : {};
+    return {
+      btn_text: String(o.btn_text || "").trim(),
+      cta_text: String(o.cta_text || "").trim(),
+    };
   };
 
   // ============================================================
@@ -199,7 +251,7 @@ export default function ServiceForm() {
     e.preventDefault();
     setError("");
 
-    const clean = (s) => (s || "").trim();
+    const clean = (s) => String(s || "").trim();
 
     if (!clean(title) || !clean(slug)) {
       setError("Preenche pelo menos Título e Slug.");
@@ -240,21 +292,35 @@ export default function ServiceForm() {
       const normalizedTypes = normalizeTreatmentTypes(treatmentTypes);
       const normalizedSpecialties = normalizeSpecialties(specialties);
 
+      // ✅ NOVOS
+      const normalizedBenefits = normalizeBenefits(benefits);
+      const normalizedFaqs = normalizeFaqs(faqs);
+      const normalizedCtaSection = normalizeCtaSection(ctaSection);
+
       const payload = {
         title: clean(title),
         subtitle: clean(subtitle),
         slug: clean(slug),
         text: clean(text),
-        bigger_description: biggerDescription || "",
+
+        // snake_case sem ESLint: usar keys entre aspas
+        "bigger_description": biggerDescription || "",
+
         ctaText: clean(ctaText),
         image: finalImageUrl,
         imageUrl: finalImageUrl,
-        indications: Array.isArray(indications) ? indications : [],
-        treatment_steps: normalizedSteps,
-        treatment_types: normalizedTypes,
 
-        // ✅ NOVO
+        indications: Array.isArray(indications) ? indications : [],
+
+        "treatment_steps": normalizedSteps,
+        "treatment_types": normalizedTypes,
+
         specialties: normalizedSpecialties,
+
+        // ✅ NOVOS
+        benefits: normalizedBenefits,
+        faqs: normalizedFaqs,
+        "cta_section": normalizedCtaSection,
       };
 
       const method = id ? "PUT" : "POST";
@@ -271,7 +337,7 @@ export default function ServiceForm() {
       navigate("/admin/services", { replace: true });
     } catch (err) {
       console.error(err);
-      setError(err.message || "Erro ao guardar o serviço.");
+      setError(err?.message || "Erro ao guardar o serviço.");
     } finally {
       setSaving(false);
     }
@@ -309,65 +375,46 @@ export default function ServiceForm() {
           <div className="skeleton">A carregar…</div>
         ) : (
           <form id="serviceform" onSubmit={handleSubmit} className="form-card">
-            {/* Tabs header */}
             <div className="sv-tabs">
               <div className="sv-tablist">
-                <button
-                  type="button"
-                  className="sv-tab"
-                  aria-selected={activeTab === "base"}
-                  onClick={() => setActiveTab("base")}
-                >
+                <button type="button" className="sv-tab" aria-selected={activeTab === "base"} onClick={() => setActiveTab("base")}>
                   Base
                 </button>
 
-                <button
-                  type="button"
-                  className="sv-tab"
-                  aria-selected={activeTab === "content"}
-                  onClick={() => setActiveTab("content")}
-                >
+                <button type="button" className="sv-tab" aria-selected={activeTab === "content"} onClick={() => setActiveTab("content")}>
                   Conteúdo
                 </button>
 
-                <button
-                  type="button"
-                  className="sv-tab"
-                  aria-selected={activeTab === "types"}
-                  onClick={() => setActiveTab("types")}
-                >
+                <button type="button" className="sv-tab" aria-selected={activeTab === "types"} onClick={() => setActiveTab("types")}>
                   Técnicas
                 </button>
 
-                <button
-                  type="button"
-                  className="sv-tab"
-                  aria-selected={activeTab === "steps"}
-                  onClick={() => setActiveTab("steps")}
-                >
+                <button type="button" className="sv-tab" aria-selected={activeTab === "steps"} onClick={() => setActiveTab("steps")}>
                   Etapas
                 </button>
 
-                <button
-                  type="button"
-                  className="sv-tab"
-                  aria-selected={activeTab === "indications"}
-                  onClick={() => setActiveTab("indications")}
-                >
+                <button type="button" className="sv-tab" aria-selected={activeTab === "indications"} onClick={() => setActiveTab("indications")}>
                   Indicações
                 </button>
 
-                <button
-                  type="button"
-                  className="sv-tab"
-                  aria-selected={activeTab === "specialties"}
-                  onClick={() => setActiveTab("specialties")}
-                >
+                <button type="button" className="sv-tab" aria-selected={activeTab === "specialties"} onClick={() => setActiveTab("specialties")}>
                   Especialidades
+                </button>
+
+                {/* ✅ NOVOS */}
+                <button type="button" className="sv-tab" aria-selected={activeTab === "benefits"} onClick={() => setActiveTab("benefits")}>
+                  Benefícios
+                </button>
+
+                <button type="button" className="sv-tab" aria-selected={activeTab === "faqs"} onClick={() => setActiveTab("faqs")}>
+                  FAQs
+                </button>
+
+                <button type="button" className="sv-tab" aria-selected={activeTab === "cta"} onClick={() => setActiveTab("cta")}>
+                  CTA
                 </button>
               </div>
 
-              {/* Tabs content */}
               {activeTab === "base" && (
                 <ServiceFormBaseTab
                   title={title}
@@ -428,6 +475,19 @@ export default function ServiceForm() {
                   serviceId={id}
                   setError={setError}
                 />
+              )}
+
+              {/* ✅ NOVOS */}
+              {activeTab === "benefits" && (
+                <ServiceFormBenefitsTab benefits={benefits} setBenefits={setBenefits} />
+              )}
+
+              {activeTab === "faqs" && (
+                <ServiceFormFaqsTab faqs={faqs} setFaqs={setFaqs} />
+              )}
+
+              {activeTab === "cta" && (
+                <ServiceFormCtaSectionTab ctaSection={ctaSection} setCtaSection={setCtaSection} />
               )}
             </div>
           </form>

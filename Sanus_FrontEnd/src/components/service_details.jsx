@@ -10,11 +10,12 @@ import InBetweenWaves from "./in_between_waves";
 import PageTransition from "./page_transition";
 import SanusHero from "./sanus_hero";
 import TextSkeleton from "./skeleton_text";
-import WhatsappButton from "./whatsapp_button";
 import ServiceSpecialties from "./service_specialties";
+import ContactCTA from "./contact_cta_break_section";
+import FAQSection from "./faq_section";
 
 export default function ServicoDetalhe() {
-  const { id } = useParams(); // ⚠️ aqui "id" é o slug do serviço (ex: fisioterapia)
+  const { id } = useParams(); // aqui "id" é o slug do serviço (ex: fisioterapia)
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -34,6 +35,7 @@ export default function ServicoDetalhe() {
         const res = await fetch(`${API}/services/${id}`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
+
         if (!alive) return;
         setServico(data);
       } catch (err) {
@@ -63,7 +65,7 @@ export default function ServicoDetalhe() {
 
     const hash = location.hash;
 
-    // Sem hash: vai para topo
+    // Sem hash: topo
     if (!hash) {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -71,7 +73,7 @@ export default function ServicoDetalhe() {
 
     let rafId = null;
     let tries = 0;
-    const maxTries = 90; // ~1.5s a 60fps
+    const maxTries = 90; // ~1.5s
 
     const tryScroll = () => {
       const el = document.querySelector(hash);
@@ -101,7 +103,7 @@ export default function ServicoDetalhe() {
   // MEMOS
   // =========================
 
-  // ✅ "O nosso método" (Etapas) — continua com treatment_steps
+  // ✅ "O nosso método" (Etapas) — treatment_steps
   const steps = useMemo(() => {
     const raw = servico?.treatment_steps;
     if (!Array.isArray(raw) || raw.length === 0) return [];
@@ -126,7 +128,7 @@ export default function ServicoDetalhe() {
     }));
   }, [servico]);
 
-  // ✅ "Como tratamos" (Técnicas) — usa treatment_types
+  // ✅ "Como tratamos" (Técnicas) — treatment_types
   const treatmentTypesItems = useMemo(() => {
     const raw = servico?.treatment_types;
     if (!Array.isArray(raw) || raw.length === 0) return [];
@@ -143,13 +145,13 @@ export default function ServicoDetalhe() {
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
     return normalized.map((t) => ({
-      iconName: t.iconName, // ProfilesSection tenta Phosphor
+      iconName: t.iconName,
       title: t.title || "—",
       desc: t.subtitle || "",
     }));
   }, [servico]);
 
-  // ✅ Cards "Para quem é indicada?"
+  // ✅ Indicações
   const indicationsCards = useMemo(() => {
     const raw = servico?.indications;
     if (!Array.isArray(raw) || raw.length === 0) return [];
@@ -173,9 +175,60 @@ export default function ServicoDetalhe() {
   }, [servico]);
 
   const serviceSlugForSpecialties = useMemo(() => {
-    // preferir slug real do serviço (porque service_details abre por slug)
     return String(servico?.slug || id || "").trim();
   }, [servico, id]);
+
+  // ✅ Benefits -> reaproveitar ProfilesSection
+  // Firestore: benefits: [{title, bullets[]}]
+  const benefitsItems = useMemo(() => {
+    const raw = servico?.benefits;
+    if (!Array.isArray(raw) || raw.length === 0) return [];
+
+    const normalized = raw
+      .filter(Boolean)
+      .map((b, idx) => ({
+        iconText: String(idx + 1),
+        title: String(b?.title || "").trim(),
+        bullets: Array.isArray(b?.bullets)
+          ? b.bullets.map((x) => String(x || "").trim()).filter(Boolean)
+          : [],
+      }))
+      .filter((b) => b.title.length > 0 || b.bullets.length > 0);
+
+    return normalized.map((b) => ({
+      icon: <span>{b.iconText}</span>,
+      title: b.title || "—",
+      steps: b.bullets,
+    }));
+  }, [servico]);
+
+  // ✅ FAQs (FireStore: faqs: [{ question, answer }])
+  const faqsItems = useMemo(() => {
+    const raw = servico?.faqs;
+    if (!Array.isArray(raw) || raw.length === 0) return [];
+
+    return raw
+      .filter(Boolean)
+      .map((f) => ({
+        question: String(f?.question || "").trim(),
+        answer: String(f?.answer || "").trim(),
+      }))
+      .filter((f) => f.question.length > 0 || f.answer.length > 0);
+  }, [servico]);
+
+
+  // ✅ CTA section
+  const ctaSection = useMemo(() => {
+    const raw = servico?.cta_section;
+    if (!raw || typeof raw !== "object") return null;
+
+    const btnText = String(raw.btn_text || "").trim();
+    const ctaText = String(raw.cta_text || "").trim();
+
+    if (!btnText && !ctaText) return null;
+
+    return { btnText, ctaText };
+  }, [servico]);
 
   // =========================
   // RENDER (loading / not found)
@@ -184,9 +237,7 @@ export default function ServicoDetalhe() {
     return (
       <PageTransition>
         <Header />
-        <SanusHero
-          loading={loading}
-        />
+        <SanusHero loading={loading} />
         <section className="sanus-servico-content">
           <div className="sanus-servico-container">
             <TextSkeleton />
@@ -237,6 +288,7 @@ export default function ServicoDetalhe() {
         imageUrl={servico.image || servico.imageUrl || "/Clinica/foto4.jpeg"}
       />
 
+      {/* ✅ Conteúdo principal */}
       <section className="sanus-servico-content">
         <div className="sanus-servico-container">
           <article
@@ -246,17 +298,14 @@ export default function ServicoDetalhe() {
         </div>
       </section>
 
+      {/* ✅ Indicações */}
       {indicationsCards.length > 0 && (
         <section style={{ marginTop: "2.5rem" }} className="sanus-services-indications">
-          <SanusCardsSection
-            title="Quando é indicado?"
-            subtitle=""
-            cards={indicationsCards}
-            showWaves={true}
-          />
+          <SanusCardsSection title="Quando é indicado?" subtitle="" cards={indicationsCards} showWaves={true} />
         </section>
       )}
 
+      {/* ✅ Etapas */}
       {steps.length > 0 && (
         <section style={{ marginTop: "-.5px" }}>
           <ProfilesSection
@@ -270,6 +319,7 @@ export default function ServicoDetalhe() {
 
       <InBetweenWaves />
 
+      {/* ✅ Técnicas */}
       {treatmentTypesItems.length > 0 && (
         <section style={{ marginTop: "-.5px", position: "relative", zIndex: 3 }}>
           <ProfilesSection
@@ -284,11 +334,24 @@ export default function ServicoDetalhe() {
 
       <InBetweenWaves color="var(--color-primary-alt)" />
 
+      {/* ✅ Benefits (NOVO) */}
+      {benefitsItems.length > 0 && (
+        <section id="benefits" style={{ marginTop: "-0.5px" }}>
+          <ProfilesSection
+            title="Benefícios"
+            subtitle="O que pode esperar"
+            items={benefitsItems}
+            zdeIndex={9}
+            showTopSvg={false}
+          />
+        </section>
+      )}
+
+      {/* ✅ Especialidades */}
       {specialtiesList.length > 0 && (
-        <section
-          id="specialties"
-          style={{ marginTop: "-.5px", zIndex: 10, position: "relative" }}
-        >
+        <div>
+        <InBetweenWaves color="var(--color-primary-dark)" />
+        <section id="specialties" className="sanus-service-specialties" style={{ marginTop: "-.5px", zIndex: 10, position: "relative" }}>
           <ServiceSpecialties
             specialties={specialtiesList}
             loading={false}
@@ -297,9 +360,39 @@ export default function ServicoDetalhe() {
             serviceSlug={serviceSlugForSpecialties}
           />
         </section>
+        </div>
       )}
 
-      <WhatsappButton />
+      {/* ✅ CTA Section (NOVO) */}
+      {ctaSection && (
+        <section style={{ position: "relative" }}>
+          <svg
+            className="sv-services-waves"
+            style={{ zIndex: 2, bottom: "98%" }}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1440 320"
+          >
+            <path
+              fill="var(--color-primary-dark)"
+              fillOpacity="1"
+              d="M0,128L120,154.7C240,181,480,235,720,261.3C960,288,1200,288,1320,288L1440,288L1440,320L0,320Z"
+            />
+          </svg>
+  
+          {/* CTA */}
+          <div style={{ position: "relative", zIndex: 12, marginTop: "-2px"}} className="sanus-services-page-cta-container">
+            <ContactCTA
+              title= {ctaSection.ctaText}
+              buttonText={ctaSection.btnText}
+              buttonLink="/agendar"
+            />
+          </div>
+        </section>
+      )}
+      {/* ✅ FAQ (mesmo padrão do recrutamento) */}
+      <section style={{ marginBottom: "-80px", marginTop: "40px" }}>
+        <FAQSection title="Perguntas Frequentes" subtitle="Serviços" faqs={faqsItems} />
+      </section>
       <div className="sanus-about-us-footer">
         <Footer />
       </div>

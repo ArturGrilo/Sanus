@@ -3,7 +3,6 @@ import Header from "./header";
 import Footer from "./footer";
 import PageTransition from "./page_transition";
 import SanusHero from "./sanus_hero";
-import WhatsappButton from "./whatsapp_button";
 import ContactCTA from "./contact_cta_break_section";
 import FAQSection from "./faq_section";
 import { WhatsappLogoIcon, DeviceMobileIcon, EnvelopeIcon } from "@phosphor-icons/react";
@@ -280,8 +279,6 @@ export default function AgendarPage() {
       <section className="sv-agendar-faq">
         <FAQSection title="Perguntas Frequentes" subtitle="Agendamento" faqs={faqs} />
       </section>
-
-      <WhatsappButton />
       <Footer />
     </PageTransition>
   );

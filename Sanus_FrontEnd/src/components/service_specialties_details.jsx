@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState, useCallback } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Header from "./header";
 import Footer from "./footer";
-import WhatsappButton from "./whatsapp_button";
 import TextSkeleton from "./skeleton_text";
 import PageTransition from "./page_transition";
 import SanusHero from "./sanus_hero";
@@ -145,8 +144,6 @@ export default function ServiceSpecialtyDetail() {
             </button>
           </div>
         </section>
-
-        <WhatsappButton />
         <div className="sanus-about-us-footer">
           <Footer />
         </div>
@@ -182,7 +179,6 @@ export default function ServiceSpecialtyDetail() {
         Voltar
       </button>
 
-      <WhatsappButton />
       <div className="sanus-about-us-footer">
         <Footer />
       </div>
