@@ -1,0 +1,109 @@
+button.btn.btn-secundary.sanus-specialty-details-back-button {
+    z-index: 10;
+    position: relative;
+}
+
+/* =========================================================
+   Service Specialty Detail (estilo alinhado com Blog Detail)
+   ========================================================= */
+
+.sanus-specialty-detail-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 60px 40px;
+  background: #fff;
+  margin-top: -2px;
+  z-index: 1;
+}
+
+.sanus-specialty-detail-container {
+  max-width: 1200px;
+  width: 100%;
+  z-index: 2;
+  position: relative;
+}
+
+/* Corpo formatado (Tiptap HTML) */
+.sanus-specialty-detail-body {
+  color: var(--color-text);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  text-align: left;
+}
+
+.sanus-specialty-detail-body p {
+  margin-bottom: 16px;
+}
+
+/* Se no teu Tiptap usas <header><h2>... */
+.sanus-specialty-detail-body header {
+  margin: 30px 0 14px;
+}
+
+.sanus-specialty-detail-body h2 {
+  margin: 30px 0 14px;
+  font-size: 1.6rem;
+  color: var(--color-primary-dark);
+}
+
+.sanus-specialty-detail-body h3 {
+  margin: 24px 0 12px;
+  font-size: 1.3rem;
+  color: var(--color-primary-dark);
+}
+
+.sanus-specialty-detail-body blockquote {
+  border-left: 4px solid var(--color-primary);
+  padding-left: 16px;
+  color: #555;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+.sanus-specialty-detail-body a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.sanus-specialty-detail-body ul,
+.sanus-specialty-detail-body ol {
+  margin-left: 24px;
+  margin-bottom: 18px;
+}
+
+.sanus-specialty-detail-body hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 24px 0;
+}
+
+/* Loading / Erro (se precisares) */
+.sanus-specialty-detail-loading {
+  padding: 120px 20px;
+  text-align: center;
+  color: var(--color-primary-dark);
+}
+
+.sanus-specialty-detail-loading button {
+  margin-top: 16px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+/* Botão voltar — alinhado com o blog */
+.sanus-specialty-details-back-button {
+  min-width: 300px;
+  margin-bottom: 60px;
+}
+
+@media (max-width: 550px) {
+  .sanus-specialty-detail-content {
+    padding: 60px 20px;
+  }
+}

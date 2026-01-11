@@ -1,28 +1,63 @@
-import { useEffect, useState } from "react";
-import { db } from "../lib/firebase";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { doc, getDoc, setDoc, addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
 import Header from "./Header";
 import "./BlogForm.css";
-import ImageUpload from "./ImageUpload";
-import { supabase } from "../lib/supabaseClient";
+import "./ServiceForm.css";
+
+// Tabs (nomes conforme colocaste)
+import ServiceFormBaseTab from "./ServiceFormBaseTab";
+import ServiceFormContentTab from "./ServiceFormContentTab";
+import ServiceFormTreatmentTypesTab from "./ServiceFormTreatmentTypesTab";
+import ServiceFormTreatmentStepsTab from "./ServiceFormTreatmentStepsTab";
+import ServiceFormIndicationsTab from "./ServiceFormIndicationsTab";
+import ServiceFormSpecialtiesTab from "./ServiceFormSpecialtiesTab";
+
+// 🔹 Tiptap (Rich Text Editor) para a descrição detalhada
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Heading from "@tiptap/extension-heading";
+import Link from "@tiptap/extension-link";
+import Underline from "@tiptap/extension-underline";
+
+// ✅ Custom Heading: quando for H2, guarda como <header><h2>...</h2></header>
+const HeadingWithHeader = Heading.extend({
+  renderHTML({ node, HTMLAttributes }) {
+    const level = node.attrs.level;
+
+    if (level !== 2) return ["h" + level, HTMLAttributes, 0];
+
+    return ["header", {}, ["h2", HTMLAttributes, 0]];
+  },
+});
 
 export default function ServiceForm() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const API = import.meta.env.VITE_BACKEND_URL;
+
+  const [activeTab, setActiveTab] = useState("base");
 
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [slug, setSlug] = useState("");
   const [text, setText] = useState("");
-  const [biggerDescription, setBiggerDescription] = useState("");
+  const [biggerDescription, setBiggerDescription] = useState(""); // HTML do editor
   const [ctaText, setCtaText] = useState("");
+
   const [imageUrl, setImageUrl] = useState("");
-  const [loading, setLoading] = useState(Boolean(id));
+  const [imageFile, setImageFile] = useState(null);
+
+  const [indications, setIndications] = useState([]);
+  const [treatmentSteps, setTreatmentSteps] = useState([]);
+  const [treatmentTypes, setTreatmentTypes] = useState([]);
+  const [specialties, setSpecialties] = useState([]); // ✅ NOVO
+
+  const [loading, setLoading] = useState(!!id);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  // 🔹 Gerar slug automaticamente com base no título
+  // 🔹 Gerar slug automaticamente (apenas ao criar)
   useEffect(() => {
     if (title && !id) {
       const generatedSlug = title
@@ -35,82 +70,218 @@ export default function ServiceForm() {
     }
   }, [title, id]);
 
+  // 🔹 ADMIN: carregar serviço por ID
   useEffect(() => {
-    async function fetchService() {
-      if (!id) return;
-      const snap = await getDoc(doc(db, "services", id));
-      if (snap.exists()) {
-        const data = snap.data();
+    if (!id) {
+      setLoading(false);
+      return;
+    }
+
+    (async () => {
+      try {
+        const res = await fetch(`${API}/admin/services/${id}`);
+        if (!res.ok) throw new Error("Erro ao carregar serviço");
+        const data = await res.json();
+
         setTitle(data.title || "");
         setSubtitle(data.subtitle || "");
         setSlug(data.slug || "");
         setText(data.text || "");
         setBiggerDescription(data.bigger_description || "");
         setCtaText(data.ctaText || "");
-        setImageUrl(data.image || "");
-      }
-      setLoading(false);
-    }
-    fetchService();
-  }, [id]);
+        setImageUrl(data.image || data.imageUrl || "");
 
+        setIndications(Array.isArray(data.indications) ? data.indications : []);
+        setTreatmentSteps(Array.isArray(data.treatment_steps) ? data.treatment_steps : []);
+        setTreatmentTypes(Array.isArray(data.treatment_types) ? data.treatment_types : []);
+
+        // ✅ NOVO
+        setSpecialties(Array.isArray(data.specialties) ? data.specialties : []);
+      } catch (err) {
+        console.error(err);
+        setError("Não foi possível carregar o serviço.");
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [id, API]);
+
+  // ============================================================
+  // 🔹 TIPTAP EDITOR (Descrição detalhada)
+  // ============================================================
+  const biggerEditor = useEditor({
+    extensions: [
+      StarterKit.configure({ heading: false }),
+      HeadingWithHeader.configure({ levels: [2, 3] }),
+      Link.configure({
+        openOnClick: true,
+        HTMLAttributes: { rel: "noopener noreferrer", target: "_blank" },
+      }),
+      Underline,
+    ],
+    content: "<p>Escreve a descrição detalhada…</p>",
+    autofocus: false,
+    onUpdate: ({ editor }) => setBiggerDescription(editor.getHTML()),
+  });
+
+  // Quando terminamos de carregar (edição), colocamos o conteúdo no editor
+  useEffect(() => {
+    if (biggerEditor && !loading) {
+      biggerEditor.commands.setContent(biggerDescription || "<p></p>");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [biggerEditor, loading]);
+
+  // 🔸 Util para contar palavras (texto sem HTML)
+  const biggerPlainText = useMemo(() => {
+    const tmp = document.createElement("div");
+    tmp.innerHTML = biggerDescription || "";
+    return tmp.textContent || tmp.innerText || "";
+  }, [biggerDescription]);
+
+  // 🔸 Toolbar helpers
+  const isActiveBigger = (name, attrs = {}) => biggerEditor?.isActive(name, attrs);
+  const runBigger = (fn) => biggerEditor?.chain().focus()[fn]().run();
+
+  // ============================================================
+  // 🔹 HELPERS: Normalização
+  // ============================================================
+  const normalizeTreatmentSteps = (arr) => {
+    if (!Array.isArray(arr)) return [];
+    return arr
+      .map((s, idx) => ({
+        id: s?.id || uuidv4(),
+        order: Number.isFinite(Number(s?.order)) ? Number(s.order) : idx + 1,
+        icon: (s?.icon || "").trim(),
+        title: (s?.title || "").trim(),
+        bullets: Array.isArray(s?.bullets)
+          ? s.bullets.map((b) => String(b || "").trim()).filter(Boolean)
+          : [],
+      }))
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  };
+
+  const normalizeTreatmentTypes = (arr) => {
+    if (!Array.isArray(arr)) return [];
+    return arr
+      .map((t, idx) => ({
+        id: t?.id || uuidv4(),
+        order: Number.isFinite(Number(t?.order)) ? Number(t.order) : idx + 1,
+        icon: (t?.icon || "").trim(),
+        title: (t?.title || "").trim(),
+        subtitle: (t?.subtitle || "").trim(),
+      }))
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  };
+
+  const normalizeSpecialties = (arr) => {
+    if (!Array.isArray(arr)) return [];
+    return arr
+      .map((s, idx) => ({
+        id: s?.id || uuidv4(),
+        order: Number.isFinite(Number(s?.order)) ? Number(s.order) : idx + 1,
+        title: String(s?.title || "").trim(),
+        subtitle: String(s?.subtitle || "").trim(),
+        slug: String(s?.slug || "").trim(),
+        small_description: String(s?.small_description || "").trim(),
+        big_description: String(s?.big_description || "").trim(),
+        // compat: aceita imageUrl/image
+        image: String(s?.image || s?.imageUrl || "").trim(),
+        imageUrl: String(s?.imageUrl || s?.image || "").trim(),
+      }))
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  };
+
+  // ============================================================
+  // 🔹 SUBMIT
+  // ============================================================
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
 
-    const payload = {
-      title: title.trim(),
-      subtitle: subtitle.trim(),
-      slug: slug.trim(),
-      text: text.trim(),
-      bigger_description: biggerDescription.trim(),
-      ctaText: ctaText.trim(),
-      image: imageUrl.trim(),
-      updatedAt: serverTimestamp(),
-    };
+    const clean = (s) => (s || "").trim();
+
+    if (!clean(title) || !clean(slug)) {
+      setError("Preenche pelo menos Título e Slug.");
+      setActiveTab("base");
+      return;
+    }
 
     try {
       setSaving(true);
-      let newDocRef;
+      let finalImageUrl = imageUrl;
 
-      if (id) {
-        await setDoc(doc(db, "services", id), payload, { merge: true });
-        newDocRef = { id };
-      } else {
-        newDocRef = await addDoc(collection(db, "services"), {
-          ...payload,
-          createdAt: serverTimestamp(),
+      // 1️⃣ Upload imagem principal do serviço
+      if (imageFile) {
+        const sigRes = await fetch(`${API}/storage/service-upload-url`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fileName: imageFile.name,
+            contentType: imageFile.type,
+            serviceId: id || null,
+          }),
         });
+
+        if (!sigRes.ok) throw new Error("Falha ao obter URL assinado");
+        const { uploadUrl, publicUrl } = await sigRes.json();
+
+        const putRes = await fetch(uploadUrl, {
+          method: "PUT",
+          headers: { "Content-Type": imageFile.type },
+          body: imageFile,
+        });
+
+        if (!putRes.ok) throw new Error("Falha no upload da imagem");
+        finalImageUrl = publicUrl;
       }
 
-      // 🔹 Atualizar imagem temporária se necessário
-      if (imageUrl.includes("service-temp.jpg")) {
-        const { error: moveError } = await supabase.storage
-          .from("services-images")
-          .move("service-temp.jpg", `service-${newDocRef.id}.jpg`);
+      const normalizedSteps = normalizeTreatmentSteps(treatmentSteps);
+      const normalizedTypes = normalizeTreatmentTypes(treatmentTypes);
+      const normalizedSpecialties = normalizeSpecialties(specialties);
 
-        if (!moveError) {
-          const { data } = supabase.storage
-            .from("services-images")
-            .getPublicUrl(`service-${newDocRef.id}.jpg`);
-          const publicUrl = `${data.publicUrl}?v=${Date.now()}`;
-          await setDoc(
-            doc(db, "services", newDocRef.id),
-            { image: publicUrl },
-            { merge: true }
-          );
-        }
-      }
+      const payload = {
+        title: clean(title),
+        subtitle: clean(subtitle),
+        slug: clean(slug),
+        text: clean(text),
+        bigger_description: biggerDescription || "",
+        ctaText: clean(ctaText),
+        image: finalImageUrl,
+        imageUrl: finalImageUrl,
+        indications: Array.isArray(indications) ? indications : [],
+        treatment_steps: normalizedSteps,
+        treatment_types: normalizedTypes,
+
+        // ✅ NOVO
+        specialties: normalizedSpecialties,
+      };
+
+      const method = id ? "PUT" : "POST";
+      const endpoint = id ? `${API}/admin/services/${id}` : `${API}/admin/services`;
+
+      const res = await fetch(endpoint, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error("Erro ao guardar o serviço");
 
       navigate("/admin/services", { replace: true });
     } catch (err) {
       console.error(err);
-      setError("Erro ao guardar o serviço.");
+      setError(err.message || "Erro ao guardar o serviço.");
     } finally {
       setSaving(false);
     }
   }
 
+  const previewUrl = imageFile ? URL.createObjectURL(imageFile) : imageUrl || "";
+
+  // ============================================================
+  // 🔹 RENDER
+  // ============================================================
   return (
     <div className="blogform-page">
       <Header />
@@ -126,12 +297,7 @@ export default function ServiceForm() {
             >
               Voltar
             </button>
-            <button
-              form="serviceform"
-              type="submit"
-              className="btn btn-primary"
-              disabled={saving}
-            >
+            <button form="serviceform" type="submit" className="btn btn-primary" disabled={saving}>
               {saving ? "A guardar…" : "Guardar"}
             </button>
           </div>
@@ -143,86 +309,127 @@ export default function ServiceForm() {
           <div className="skeleton">A carregar…</div>
         ) : (
           <form id="serviceform" onSubmit={handleSubmit} className="form-card">
-            <label>
-              <span>Título</span>
-              <input value={title} onChange={(e) => setTitle(e.target.value)} required />
-            </label>
+            {/* Tabs header */}
+            <div className="sv-tabs">
+              <div className="sv-tablist">
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "base"}
+                  onClick={() => setActiveTab("base")}
+                >
+                  Base
+                </button>
 
-            <label>
-              <span>Subtítulo</span>
-              <input value={subtitle} onChange={(e) => setSubtitle(e.target.value)} />
-            </label>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "content"}
+                  onClick={() => setActiveTab("content")}
+                >
+                  Conteúdo
+                </button>
 
-            <label>
-              <span>Slug</span>
-              <input value={slug} onChange={(e) => setSlug(e.target.value)} required />
-              <small style={{ color: "gray" }}>ex: fisioterapia, servicos-ao-domicilio</small>
-            </label>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "types"}
+                  onClick={() => setActiveTab("types")}
+                >
+                  Técnicas
+                </button>
 
-            <label>
-              <span>Descrição para o cartão na pagina inicial</span>
-              <textarea rows="4" value={text} onChange={(e) => setText(e.target.value)} />
-            </label>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "steps"}
+                  onClick={() => setActiveTab("steps")}
+                >
+                  Etapas
+                </button>
 
-            <label>
-              <span>Descrição para a página com mais detalhes</span>
-              <textarea
-                rows="8"
-                value={biggerDescription}
-                onChange={(e) => setBiggerDescription(e.target.value)}
-                placeholder="Escreva aqui o conteúdo da página detalhada em formato Markdown..."
-              />
-              <div
-                style={{
-                  fontSize: "0.85rem",
-                  background: "#f9fafb",
-                  padding: "0.75rem 1rem",
-                  borderRadius: "6px",
-                  marginTop: "0.5rem",
-                  color: "#444",
-                  lineHeight: 1.5,
-                }}
-              >
-                <strong>Dicas de formatação do texto acima:</strong>
-                <ul style={{ marginTop: "0.5rem", marginLeft: "1.2rem", textAlign: "left" }}>
-                  <li>
-                    <code>**texto**</code> → <strong>negrito</strong>
-                  </li>
-                  <li>
-                    <code>- item</code> → cria uma lista com pontos
-                  </li>
-                  <li>
-                    <code>[texto do link](https://...)</code> → cria um link
-                  </li>
-                  <li>
-                    <code>---</code> → linha horizontal
-                  </li>
-                  <li>
-                    Duas quebras de linha → novo parágrafo
-                  </li>
-                </ul>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "indications"}
+                  onClick={() => setActiveTab("indications")}
+                >
+                  Indicações
+                </button>
+
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "specialties"}
+                  onClick={() => setActiveTab("specialties")}
+                >
+                  Especialidades
+                </button>
               </div>
-            </label>
-            <label>
-              <span>Texto do botão</span>
-              <input value={ctaText} onChange={(e) => setCtaText(e.target.value)} />
-            </label>
 
-            <label>
-              <span>Imagem</span>
-              <ImageUpload onUploadComplete={setImageUrl} serviceId={id} />
-              {imageUrl && (
-                <img
-                  src={imageUrl}
-                  alt="Pré-visualização"
-                  style={{
-                    maxWidth: "300px",
-                    marginTop: 10,
-                    borderRadius: 10,
-                  }}
+              {/* Tabs content */}
+              {activeTab === "base" && (
+                <ServiceFormBaseTab
+                  title={title}
+                  setTitle={setTitle}
+                  subtitle={subtitle}
+                  setSubtitle={setSubtitle}
+                  slug={slug}
+                  setSlug={setSlug}
+                  text={text}
+                  setText={setText}
+                  ctaText={ctaText}
+                  setCtaText={setCtaText}
+                  imageUrl={imageUrl}
+                  setImageFile={setImageFile}
+                  previewUrl={previewUrl}
                 />
               )}
-            </label>
+
+              {activeTab === "content" && (
+                <ServiceFormContentTab
+                  biggerEditor={biggerEditor}
+                  biggerPlainText={biggerPlainText}
+                  isActiveBigger={isActiveBigger}
+                  runBigger={runBigger}
+                />
+              )}
+
+              {activeTab === "types" && (
+                <ServiceFormTreatmentTypesTab
+                  treatmentTypes={treatmentTypes}
+                  setTreatmentTypes={setTreatmentTypes}
+                  error={error}
+                />
+              )}
+
+              {activeTab === "steps" && (
+                <ServiceFormTreatmentStepsTab
+                  treatmentSteps={treatmentSteps}
+                  setTreatmentSteps={setTreatmentSteps}
+                />
+              )}
+
+              {activeTab === "indications" && (
+                <ServiceFormIndicationsTab
+                  indications={indications}
+                  setIndications={setIndications}
+                  API={API}
+                  serviceId={id}
+                  setError={setError}
+                />
+              )}
+
+              {activeTab === "specialties" && (
+                <ServiceFormSpecialtiesTab
+                  specialties={specialties}
+                  setSpecialties={setSpecialties}
+                  API={API}
+                  serviceId={id}
+                  setError={setError}
+                />
+              )}
+            </div>
           </form>
         )}
       </main>

@@ -21,6 +21,9 @@ import BlogDetail from "./components/blog_detail";
 import ContactPage from "./components/contact_page";
 import PrivacyPage from "./components/privacy_policy";
 import CookiesPage from "./components/cookies_policy";
+import ServiceSpecialtyDetail from "./components/service_specialties_details";
+import ServicesPage from "./components/services_page";
+import AgendarPage from "./components/book_page";
 
 // Páginas do back office
 import Login from "./admin/Login";
@@ -36,9 +39,9 @@ import UsageForm from "./admin/UsageForm";
 import UsagePage from "./components/usage_policy";
 import PageTransition from "./components/page_transition";
 import RecrutamentoPage from "./components/recrutamento_page";
-{/*import ServicesList from "./admin/ServiceList";
+import ServicesList from "./admin/ServiceList";
 import ServiceForm from "./admin/ServiceForm";
-import TagsList from "./admin/TagsList";
+{/*import TagsList from "./admin/TagsList";
 import TagForm from "./admin/TagForm";*/}
 
 export default function App() {
@@ -73,6 +76,10 @@ export default function App() {
         <Route path="/politica-de-cookies" element={<CookiesPage />} />
         <Route path="/termos-de-utilizacao" element={<UsagePage />} />
         <Route path="/recrutamento" element={<RecrutamentoPage />} />
+        <Route path="/servicos" element={<ServicesPage />} />
+        <Route path="/servicos/:id" element={<ServicoDetalhe />} />
+        <Route path="/servicos/:serviceSlug/:specialtySlug" element={<ServiceSpecialtyDetail />} />
+        <Route path="/agendar" element={<AgendarPage />} />
 
         {/* 🔐 Back Office */}
         <Route path="/login" element={<Login />} />
@@ -87,14 +94,14 @@ export default function App() {
           <Route path="/admin/privacy" element={<PrivacyForm />} />
           <Route path="/admin/cookies" element={<CookiesForm />} />
           <Route path="/admin/usage" element={<UsageForm />} />
-          {/*<Route path="/admin/services" element={<ServicesList />} />
+          <Route path="/admin/services" element={<ServicesList />} />
           <Route path="/admin/services/new" element={<ServiceForm />} />
           <Route path="/admin/services/edit/:id" element={<ServiceForm />} />
-          <Route path="/admin/tags" element={<TagsList />} />
+          {/*<Route path="/admin/tags" element={<TagsList />} />
           <Route path="/admin/tags/new" element={<TagForm />} />
           <Route path="/admin/tags/edit/:id" element={<TagForm />} />*/}
         </Route>
-        <Route path="/servicos/:id" element={<ServicoDetalhe />} />
+        
         <Route path="/admin/*" element={<Login />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <section className="sanus-footer" id="localizacao">
-        <svg className="sanus-footer-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#2E5C6E" background="#000000" fillOpacity="0.97" d="M0,160L120,176C240,192,480,224,720,240C960,256,1200,256,1320,256L1440,256L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>
+        <svg className="sanus-footer-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="var(--color-primary-dark)" background="#000000" fillOpacity="1" d="M0,160L120,176C240,192,480,224,720,240C960,256,1200,256,1320,256L1440,256L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>
         <div className="sanus-footer-2">
             <div className="sanus-footer-container">
                 <div className="sanus-footer-logo-column">

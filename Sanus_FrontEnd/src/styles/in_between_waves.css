@@ -1,0 +1,34 @@
+.sanus-in-between-waves {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  margin: -270px 0 0px 0;
+}
+
+.sanus-wave {
+  display: block;
+  width: 100%;
+  height: 80px;
+}
+
+.sanus-service-in-between-waves{
+    position: relative;
+}
+
+.sanus-service-in-between-waves.top{
+    margin-bottom: -.5px;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .sanus-in-between-waves {
+    margin: -170px 0 0px 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .sanus-in-between-waves {
+    margin: -145px 0 0px 0;
+  }
+}

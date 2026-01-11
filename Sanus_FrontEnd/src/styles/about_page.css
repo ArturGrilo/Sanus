@@ -105,6 +105,9 @@
     .sanus-about-us-values-grid{
         grid-template-columns: repeat(2, 1fr);
     }
+    .sanus-about-us-values-grid-item {
+        align-items: center;
+    }
 }
 
 @media (max-width: 550px) {

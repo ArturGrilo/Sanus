@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../styles/services.css";
 import ServiceCard from "./service_card";
+import ServiceCardSkeleton from "./skeleton_service_card";
 
 export default function Services() {
   const [services, setServices] = useState([]);
@@ -26,9 +27,13 @@ export default function Services() {
       </header>
 
       <div className="sanus-services-container">
-        {services.length === 0 ? (
-          <p style={{ color: "var(--color-primary-dark)" }}>A carregar serviços…</p>
-        ) : (
+          {services.length === 0 ? (
+            <>
+              <ServiceCardSkeleton />
+              <ServiceCardSkeleton />
+              <ServiceCardSkeleton />
+            </>
+          ) : (
           services.map((service, index) => (
             <ServiceCard
               key={service.id || index}

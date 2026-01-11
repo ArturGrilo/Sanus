@@ -10,8 +10,8 @@
 }
 
 .sanus-footer-2{
-    background-color: var(--color-header);
-    margin-top: -8px;
+    background-color: var(--color-primary-dark);
+    margin-top: -12px;
 }   
 
 .sanus-footer-policies{
@@ -169,10 +169,6 @@
 @media (max-width: 768px) {
   .sanus-location-grid {
     grid-template-columns: 1fr;
-  }
-
-  .sanus-footer-2{
-    margin-top: -8px;
   }
 
   .sanus-location-map {
