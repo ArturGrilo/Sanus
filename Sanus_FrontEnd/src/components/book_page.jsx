@@ -11,9 +11,7 @@ import { useMemo, useState } from "react";
 import "../styles/book_page.css";
 
 // ✅ Substitui estes valores pelos contactos reais
-const CLINIC_PHONE_DISPLAY = "+351 969 303 119";
-const CLINIC_PHONE_TEL = "+351000000000"; // formato tel:
-const WHATSAPP_NUMBER_E164 = "351000000000"; // sem "+" e sem espaços (ex: 351912345678)
+const CLINIC_PHONE_DISPLAY = "+351 928 410 954";
 
 export default function AgendarPage() {
   const [name, setName] = useState("");
@@ -22,7 +20,7 @@ export default function AgendarPage() {
   const [message, setMessage] = useState("");
 
   const whatsappLink = useMemo(() => {
-    const base = `https://wa.me/${WHATSAPP_NUMBER_E164}`;
+    const base = `https://wa.me/${CLINIC_PHONE_DISPLAY}`;
     const text = encodeURIComponent(
       `Olá! Gostaria de agendar.\n\nNome: ${name || "-"}\nContacto: ${
         contact || "-"
@@ -133,7 +131,7 @@ export default function AgendarPage() {
                 Para agendamentos rápidos ou situações urgentes, ligue diretamente.
               </p>
 
-              <a className="btn btn-secundary sv-agendar-btn" href={`tel:${CLINIC_PHONE_TEL}`}>
+              <a className="btn btn-secundary sv-agendar-btn" href={`tel:${CLINIC_PHONE_DISPLAY}`}>
                 Ligar agora
               </a>
 

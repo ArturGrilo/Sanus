@@ -370,15 +370,8 @@ app.post("/recruitment", async (req, res) => {
     // Resend config
     const resendApiKey = process.env.RESEND_API_KEY;
     const toEmail = process.env.RECRUITMENT_TO_EMAIL;
+    const bccEmail = process.env.RECRUITMENT_BCC_EMAIL;
     const fromEmail = process.env.RECRUITMENT_FROM_EMAIL;
-
-    // ✅ LOGS CRÍTICOS para não andarmos às cegas
-    console.log("ENV check:", {
-      hasKey: !!resendApiKey,
-      keyPrefix: String(resendApiKey || "").slice(0, 6),
-      to: toEmail,
-      from: fromEmail,
-    });
 
     if (!resendApiKey || !toEmail || !fromEmail) {
       return res.status(500).json({message: "Configuração de email em falta no servidor."});
@@ -401,6 +394,7 @@ app.post("/recruitment", async (req, res) => {
     const sendResult = await resend.emails.send({
       from: fromEmail,
       to: [toEmail],
+      bcc: [bccEmail],
       subject: `Candidatura — ${name} (${role})`,
       replyTo: email, // <- usa replyTo (camelCase)
       html,
