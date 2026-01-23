@@ -230,14 +230,13 @@
 
 .sanus-contact-checkbox {
   display: flex;
-  align-items: flex-start;
+  justify-content: center;
   gap: 8px;
   font-size: 0.9rem;
   cursor: pointer;
 }
 
 .sanus-contact-checkbox input {
-  margin-top: 5px;
   accent-color: var(--color-primary, #008090);
 }
 

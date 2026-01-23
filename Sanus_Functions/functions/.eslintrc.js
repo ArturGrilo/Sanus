@@ -1,29 +1,31 @@
 module.exports = {
   env: {
-    es6: true,
     node: true,
+    es2021: true,
   },
-  parserOptions: {
-    "ecmaVersion": 2021,
-  },
-  extends: [
-    "eslint:recommended",
-    "google",
-  ],
+  extends: [],
   rules: {
-    "no-restricted-globals": ["error", "name", "length"],
-    "prefer-arrow-callback": "error",
-    "quotes": ["error", "double", {"allowTemplateLiterals": true}],
-    "max-len": ["warn", {"code": 220}],
+    // 🧠 Bugs reais
+    "no-unused-vars": "error",
+    "no-undef": "error",
+    "no-unreachable": "error",
+    "no-return-await": "error",
+    "no-async-promise-executor": "error",
+    "eqeqeq": ["error", "always"],
+    "no-shadow": "error",
+    "no-duplicate-imports": "error",
+
+    // 🧹 Qualidade razoável
+    "no-console": "off", // backend precisa de logs
+    "consistent-return": "off",
+
+    // ❌ Desligar regras de formatação
+    "max-len": "off",
+    "quotes": "off",
+    "indent": "off",
+    "comma-dangle": "off",
+    "object-curly-spacing": "off",
+    "arrow-parens": "off",
+    "operator-linebreak": "off",
   },
-  overrides: [
-    {
-      files: ["**/*.spec.*"],
-      env: {
-        mocha: true,
-      },
-      rules: {},
-    },
-  ],
-  globals: {},
 };

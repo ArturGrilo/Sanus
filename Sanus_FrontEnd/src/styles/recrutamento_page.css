@@ -87,6 +87,7 @@
     position: relative;
     z-index: 10;
     position: relative;
+    align-items: center;
 }
 
 .sanus-recrutamento-form-main-container{
