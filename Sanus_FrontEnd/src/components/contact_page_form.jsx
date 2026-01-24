@@ -6,7 +6,7 @@ function buildEndpoint() {
 
   const base = import.meta.env.VITE_BACKEND_URL;
   if (base && String(base).trim().length > 0) {
-    return String(base).replace(/\/$/, "") + "/contact";
+    return String(base).replace(/\/$/, "") + "/contact-request";
   }
 
   return "";
