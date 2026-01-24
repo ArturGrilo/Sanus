@@ -27,7 +27,7 @@ function buildApp() {
   app.use("/usage", jsonOnly, express.json());
 
   app.use("/contact-request", jsonOnly, express.json());
-  app.use("/appointments", jsonOnly, express.json());
+  app.use("/appointment-request", jsonOnly, express.json());
 
   // Mount routers
   app.use(recruitmentRouter);

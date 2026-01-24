@@ -92,9 +92,9 @@ router.post("/contact-request", async (req, res) => {
     const resendApiKey = process.env.RESEND_API_KEY;
 
     // ✅ Emails Sanus (como pediste)
-    const toEmail = process.env.CONTACT_TO_EMAIL || "sanusvitae2021@gmail.com";
-    const fromEmail = process.env.CONTACT_FROM_EMAIL || process.env.RECRUITMENT_FROM_EMAIL;
-    const bccEmail = process.env.CONTACT_BCC_EMAIL || process.env.RECRUITMENT_BCC_EMAIL || "";
+    const toEmail = process.env.RECRUITMENT_TO_EMAIL;
+    const fromEmail = process.env.RECRUITMENT_FROM_EMAIL;
+    const bccEmail = process.env.RECRUITMENT_BCC_EMAIL || "";
 
     if (!resendApiKey || !toEmail || !fromEmail) {
       return res.status(500).json({message: "Configuração de email em falta no servidor."});
