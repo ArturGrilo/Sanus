@@ -11,7 +11,8 @@ const {servicesRouter} = require("./routes/services.routes");
 const {blogsRouter} = require("./routes/blogs.routes");
 const {feedbacksRouter} = require("./routes/feedbacks.routes");
 const {policiesRouter} = require("./routes/policies.routes");
-const { appointmentsRouter } = require("./routes/appointments.routes");
+const {appointmentsRouter} = require("./routes/appointments.routes");
+const {contactRouter} = require("./routes/contact.routes");
 
 function buildApp() {
   const app = express();
@@ -25,6 +26,9 @@ function buildApp() {
   app.use("/cookies", jsonOnly, express.json());
   app.use("/usage", jsonOnly, express.json());
 
+  app.use("/contact-request", jsonOnly, express.json());
+  app.use("/appointments", jsonOnly, express.json());
+
   // Mount routers
   app.use(recruitmentRouter);
   app.use("/storage", storageRouter);
@@ -33,6 +37,7 @@ function buildApp() {
   app.use(feedbacksRouter);
   app.use(policiesRouter);
   app.use(appointmentsRouter);
+  app.use(contactRouter);
 
   // Error handler (no fim)
   app.use(errorHandler);
