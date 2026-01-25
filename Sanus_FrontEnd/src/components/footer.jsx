@@ -112,6 +112,18 @@ export default function Footer() {
                 </div>
             </div>
         </div>
+        <div className="sanus-footer-credit-container">
+            <p className="sanus-footer-credit">
+                Desenvolvido por{" "}
+                <a
+                href="https://arturgrilo.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >
+                Artur Grilo
+                </a>
+            </p>
+        </div>
     </section>
   );
 }

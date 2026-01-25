@@ -158,6 +158,32 @@
     background: transparent;
 }
 
+.sanus-footer-credit-container{
+    width: 100%;
+    display: flex;
+    padding: 15px 40px;
+    background-color: var(--color-primary-darker);
+}
+
+.sanus-footer-credit {
+    color: var(--color-muted);
+    font-size: 14px;
+    font-family: var(--font-body);
+    text-align: right;
+}
+
+.sanus-footer-credit a {
+    color: var(--color-bg);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.sanus-footer-credit a:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
+
+
 @media (max-width: 1200px){
     .sanus-footer-container {
         flex-direction: column;
@@ -193,5 +219,9 @@
   }
   .sanus-footer-policies{
     padding: 0 20px 40px;
+  }
+  .sanus-footer-credit-container{
+    padding: 15px 20px;
+    justify-content: center;
   }
 }
