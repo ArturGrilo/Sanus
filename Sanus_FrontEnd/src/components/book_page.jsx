@@ -35,30 +35,6 @@ export default function AgendarPage() {
     return base + "?text=" + text;
   }, [name, contact, service, message]);
 
-  // ✅ FAQ curto e premium (sem “em breve” vazio)
-  const faqs = [
-    {
-      question: "Ainda não existe agendamento online?",
-      answer:
-        "Estamos a finalizar o sistema de agendamento online. Até lá, garantimos um agendamento rápido e personalizado através dos nossos canais (telefone, WhatsApp ou pedido de contacto).",
-    },
-    {
-      question: "Quanto tempo demora a confirmação?",
-      answer:
-        "Normalmente confirmamos em até 24h úteis. Em casos urgentes, recomendamos contacto por telefone ou WhatsApp para resposta mais imediata.",
-    },
-    {
-      question: "Posso pedir ajuda para escolher o serviço?",
-      answer:
-        "Sim. Se não tiver a certeza, descreva a sua situação e orientamos a opção mais indicada, com base na sua necessidade e objetivos.",
-    },
-    {
-      question: "Que informação devo enviar para agilizar?",
-      answer:
-        "Nome, contacto, serviço pretendido (se souber) e uma breve descrição da situação. Se tiver exames/referência médica, pode mencionar.",
-    },
-  ];
-
   return (
     <PageTransition>
       <Header />
@@ -197,7 +173,7 @@ export default function AgendarPage() {
 
       {/* FAQ */}
       <section className="sv-agendar-faq">
-        <FAQSection title="Perguntas Frequentes" subtitle="Agendamento" faqs={faqs} />
+        <FAQSection faqKey="agendar" />
       </section>
 
       <Footer />

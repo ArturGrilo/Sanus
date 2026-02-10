@@ -11,6 +11,7 @@
 }
 
 .sanus-contact-cta .sanus-general-title{
+  max-width: 1720px;
     color: var(--color-bg);
     z-index: 11;
     font-size: 2rem;

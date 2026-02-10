@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import ImageUpload from "./ImageUpload";
 import "./BlogForm.css";
+import { authedFetch } from "../lib/authedFetch";
 
 // 🔹 Tiptap (Rich Text Editor)
 import { EditorContent, useEditor } from "@tiptap/react";
@@ -22,6 +23,7 @@ export default function BlogForm() {
   const [content, setContent] = useState(""); // HTML do editor
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState(null);
+
   const [loading, setLoading] = useState(!!id);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -37,7 +39,7 @@ export default function BlogForm() {
     return tmp.textContent || tmp.innerText || "";
   }, [content]);
 
-  // 🔸 Carregar tags
+  // 🔸 Carregar tags (público)
   useEffect(() => {
     fetch(`${API}/tags`)
       .then((r) => r.json())
@@ -45,25 +47,28 @@ export default function BlogForm() {
       .catch((err) => console.error("Erro a carregar tags:", err));
   }, [API]);
 
-  // 🔸 Carregar artigo existente (edição)
+  // 🔸 Carregar artigo existente (edição) — ADMIN
   useEffect(() => {
     if (!id) {
       setLoading(false);
       return;
     }
+
     (async () => {
       try {
-        const res = await fetch(`${API}/blogs/${id}`);
-        if (!res.ok) throw new Error("Erro ao carregar artigo");
-        const data = await res.json();
+        const data = await authedFetch(`${API}/admin/blogs/${id}`, { method: "GET" });
+
         setTitle(data.title || "");
         setAuthor(data.author || "");
         setContent(data.content || ""); // HTML
         setImageUrl(data.imageUrl || "");
-        setSelectedTags(data.tags?.map((t) => t.id || t) || []);
+
+        // aqui no admin guardamos tags como array de ids
+        const ids = Array.isArray(data.tags) ? data.tags : [];
+        setSelectedTags(ids);
       } catch (err) {
         console.error(err);
-        setError("Não foi possível carregar o artigo.");
+        setError(err?.message || "Não foi possível carregar o artigo.");
       } finally {
         setLoading(false);
       }
@@ -73,9 +78,7 @@ export default function BlogForm() {
   // 🔸 Editor Tiptap
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({
-        heading: false, // usamos extensão abaixo com níveis permitidos
-      }),
+      StarterKit.configure({ heading: false }),
       Heading.configure({ levels: [2, 3] }),
       Link.configure({
         openOnClick: true,
@@ -85,8 +88,8 @@ export default function BlogForm() {
     ],
     content: "<p>Escreve o conteúdo do artigo…</p>",
     autofocus: false,
-    onUpdate: ({ editor }) => {
-      setContent(editor.getHTML());
+    onUpdate: ({ editor: ed }) => {
+      setContent(ed.getHTML());
     },
   });
 
@@ -110,8 +113,8 @@ export default function BlogForm() {
     e.preventDefault();
     setError("");
 
-    const clean = (s) => (s || "").trim();
-    // valida campos base
+    const clean = (s) => String(s || "").trim();
+
     if (!clean(title) || !clean(author) || !clean(content)) {
       setError("Preenche Título, Autor e Conteúdo.");
       return;
@@ -121,53 +124,48 @@ export default function BlogForm() {
       setSaving(true);
       let finalImageUrl = imageUrl;
 
-      // 1️⃣ Se há nova imagem, pede URL assinado e faz o upload
+      // 1️⃣ Se há nova imagem, pede URL assinado (PROTEGIDO) e faz o upload
       if (imageFile) {
-        const sigRes = await fetch(`${API}/storage/blog-upload-url`, {
+        const { uploadUrl, publicUrl } = await authedFetch(`${API}/storage/blog-upload-url`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             fileName: imageFile.name,
             contentType: imageFile.type,
             articleId: id || null,
           }),
         });
-        if (!sigRes.ok) throw new Error("Falha ao obter URL assinado");
-        const { uploadUrl, publicUrl } = await sigRes.json();
 
         const putRes = await fetch(uploadUrl, {
           method: "PUT",
           headers: { "Content-Type": imageFile.type },
           body: imageFile,
         });
-        if (!putRes.ok) throw new Error("Falha no upload da imagem");
 
+        if (!putRes.ok) throw new Error("Falha no upload da imagem");
         finalImageUrl = publicUrl;
       }
 
-      // 2️⃣ Envia JSON ao backend
+      // 2️⃣ Envia JSON ao backend (ADMIN)
       const payload = {
         title: clean(title),
         author: clean(author),
-        content: content, // HTML do editor
-        tags: selectedTags,
+        content: content,
+        tags: Array.isArray(selectedTags) ? selectedTags : [],
         imageUrl: finalImageUrl,
       };
 
       const method = id ? "PUT" : "POST";
-      const endpoint = id ? `${API}/blogs/${id}` : `${API}/blogs`;
+      const endpoint = id ? `${API}/admin/blogs/${id}` : `${API}/admin/blogs`;
 
-      const res = await fetch(endpoint, {
+      await authedFetch(endpoint, {
         method,
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error("Erro ao guardar artigo");
 
       navigate("/admin/blog", { replace: true });
     } catch (err) {
       console.error(err);
-      setError(err.message || "Erro ao guardar artigo.");
+      setError(err?.message || "Erro ao guardar artigo.");
     } finally {
       setSaving(false);
     }
@@ -194,12 +192,7 @@ export default function BlogForm() {
             >
               Voltar
             </button>
-            <button
-              form="blogform"
-              type="submit"
-              className="btn btn-primary"
-              disabled={saving}
-            >
+            <button form="blogform" type="submit" className="btn btn-primary" disabled={saving}>
               {saving ? "A guardar…" : "Guardar"}
             </button>
           </div>
@@ -239,9 +232,7 @@ export default function BlogForm() {
                     <button
                       type="button"
                       key={t.id}
-                      className={`service-pill ${
-                        selectedTags.includes(t.id) ? "selected" : ""
-                      }`}
+                      className={`service-pill ${selectedTags.includes(t.id) ? "selected" : ""}`}
                       style={{
                         backgroundColor: selectedTags.includes(t.id)
                           ? t.color || "var(--color-primary)"
@@ -331,12 +322,8 @@ export default function BlogForm() {
                   >
                     “ Citação
                   </button>
-                  
-                  <button
-                    type="button"
-                    onClick={() => run("setHorizontalRule")}
-                    aria-label="Separador"
-                  >
+
+                  <button type="button" onClick={() => run("setHorizontalRule")} aria-label="Separador">
                     — Separador —
                   </button>
 
@@ -348,35 +335,21 @@ export default function BlogForm() {
                     onClick={() => {
                       const url = window.prompt("Insere o link (https://…):");
                       if (!url) return;
-                      editor
-                        ?.chain()
-                        .focus()
-                        .extendMarkRange("link")
-                        .setLink({ href: url })
-                        .run();
+                      editor?.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
                     }}
                   >
                     🔗 Link
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => editor?.chain().focus().unsetLink().run()}
-                  >
+                  <button type="button" onClick={() => editor?.chain().focus().unsetLink().run()}>
                     ❌ Link
                   </button>
 
                   <span className="toolbar-sep" />
 
-                  <button
-                    type="button"
-                    onClick={() => editor?.chain().focus().undo().run()}
-                  >
+                  <button type="button" onClick={() => editor?.chain().focus().undo().run()}>
                     ↺
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => editor?.chain().focus().redo().run()}
-                  >
+                  <button type="button" onClick={() => editor?.chain().focus().redo().run()}>
                     ↻
                   </button>
                 </div>
@@ -387,9 +360,7 @@ export default function BlogForm() {
                 </div>
 
                 <div className="meta-row">
-                  <small>
-                    {plainText.trim().split(/\s+/).filter(Boolean).length} palavras
-                  </small>
+                  <small>{plainText.trim().split(/\s+/).filter(Boolean).length} palavras</small>
                 </div>
               </label>
             </form>
@@ -405,30 +376,22 @@ export default function BlogForm() {
 
                 <div className="preview-body">
                   <h4>{title || "Título do artigo"}</h4>
-                  <p className="preview-author">
-                    {author ? `por ${author}` : "Autor"}
-                  </p>
+                  <p className="preview-author">{author ? `por ${author}` : "Autor"}</p>
 
                   <div className="preview-tags">
                     {selectedTags.map((tagId) => {
                       const t = allTags.find((x) => x.id === tagId);
                       return t ? (
-                        <span
-                          key={tagId}
-                          className="tag"
-                          style={{ backgroundColor: t.color }}
-                        >
+                        <span key={tagId} className="tag" style={{ backgroundColor: t.color }}>
                           {t.name}
                         </span>
                       ) : null;
                     })}
                   </div>
 
-                  {/* Pequeno excerto em texto plano */}
                   <p className="preview-excerpt">
                     {plainText
-                      ? plainText.slice(0, 180) +
-                        (plainText.length > 180 ? "…" : "")
+                      ? plainText.slice(0, 180) + (plainText.length > 180 ? "…" : "")
                       : "Introdução do artigo…"}
                   </p>
                 </div>

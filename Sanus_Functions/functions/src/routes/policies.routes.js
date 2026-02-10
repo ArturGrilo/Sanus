@@ -1,6 +1,6 @@
+/* eslint-disable max-len */
 const express = require("express");
 const { FieldValue } = require("firebase-admin/firestore");
-
 const { getDb } = require("../config/firebase");
 
 const policiesRouter = express.Router();
@@ -17,11 +17,17 @@ function toPolicyResponse(snap) {
   };
 }
 
+function normalizeContent(body) {
+  const raw = body && typeof body === "object" ? body.content : "";
+  const content = String(raw || "").trim();
+  return content;
+}
+
 // ============================================================
-// Privacy
+// PUBLIC (read-only)
+// ============================================================
+
 // GET /privacy
-// PUT /privacy
-// ============================================================
 policiesRouter.get("/privacy", async (req, res) => {
   try {
     const db = getDb();
@@ -33,16 +39,41 @@ policiesRouter.get("/privacy", async (req, res) => {
   }
 });
 
-policiesRouter.put("/privacy", async (req, res) => {
+// GET /cookies
+policiesRouter.get("/cookies", async (req, res) => {
   try {
     const db = getDb();
+    const snap = await db.collection("cookies_policy").doc("main").get();
+    return res.json(toPolicyResponse(snap));
+  } catch (err) {
+    console.error("Erro ao carregar política de cookies:", err);
+    return res.status(500).send("Erro ao carregar política de cookies");
+  }
+});
 
-    const body = req.body || {};
-    const content = body.content;
+// GET /usage
+policiesRouter.get("/usage", async (req, res) => {
+  try {
+    const db = getDb();
+    const snap = await db.collection("usage_policy").doc("main").get();
+    return res.json(toPolicyResponse(snap));
+  } catch (err) {
+    console.error("Erro ao carregar termos de utilização:", err);
+    return res.status(500).send("Erro ao carregar termos de utilização");
+  }
+});
 
-    if (!content) {
-      return res.status(400).send("Conteúdo vazio.");
-    }
+// ============================================================
+// ADMIN (write protected by app.use("/admin", requireAuth))
+// ============================================================
+
+// PUT /admin/privacy
+policiesRouter.put("/admin/privacy", async (req, res) => {
+  try {
+    const db = getDb();
+    const content = normalizeContent(req.body);
+
+    if (!content) return res.status(400).send("Conteúdo vazio.");
 
     await db.collection("privacy_policy").doc("main").set(
       {
@@ -59,32 +90,13 @@ policiesRouter.put("/privacy", async (req, res) => {
   }
 });
 
-// ============================================================
-// Cookies
-// GET /cookies
-// PUT /cookies
-// ============================================================
-policiesRouter.get("/cookies", async (req, res) => {
+// PUT /admin/cookies
+policiesRouter.put("/admin/cookies", async (req, res) => {
   try {
     const db = getDb();
-    const snap = await db.collection("cookies_policy").doc("main").get();
-    return res.json(toPolicyResponse(snap));
-  } catch (err) {
-    console.error("Erro ao carregar política de cookies:", err);
-    return res.status(500).send("Erro ao carregar política de cookies");
-  }
-});
+    const content = normalizeContent(req.body);
 
-policiesRouter.put("/cookies", async (req, res) => {
-  try {
-    const db = getDb();
-
-    const body = req.body || {};
-    const content = body.content;
-
-    if (!content) {
-      return res.status(400).send("Conteúdo vazio.");
-    }
+    if (!content) return res.status(400).send("Conteúdo vazio.");
 
     await db.collection("cookies_policy").doc("main").set(
       {
@@ -101,32 +113,13 @@ policiesRouter.put("/cookies", async (req, res) => {
   }
 });
 
-// ============================================================
-// Usage
-// GET /usage
-// PUT /usage
-// ============================================================
-policiesRouter.get("/usage", async (req, res) => {
+// PUT /admin/usage
+policiesRouter.put("/admin/usage", async (req, res) => {
   try {
     const db = getDb();
-    const snap = await db.collection("usage_policy").doc("main").get();
-    return res.json(toPolicyResponse(snap));
-  } catch (err) {
-    console.error("Erro ao carregar termos de utilização:", err);
-    return res.status(500).send("Erro ao carregar termos de utilização");
-  }
-});
+    const content = normalizeContent(req.body);
 
-policiesRouter.put("/usage", async (req, res) => {
-  try {
-    const db = getDb();
-
-    const body = req.body || {};
-    const content = body.content;
-
-    if (!content) {
-      return res.status(400).send("Conteúdo vazio.");
-    }
+    if (!content) return res.status(400).send("Conteúdo vazio.");
 
     await db.collection("usage_policy").doc("main").set(
       {

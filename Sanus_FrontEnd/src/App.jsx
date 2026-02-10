@@ -44,6 +44,7 @@ import ServicesList from "./admin/ServiceList";
 import ServiceForm from "./admin/ServiceForm";
 import TagsList from "./admin/TagsList";
 import TagForm from "./admin/TagForm";
+import FaqsPage from "./admin/FaqsPage";
 
 export default function App() {
   const location = useLocation();
@@ -121,6 +122,7 @@ export default function App() {
           <Route path="/admin/tags" element={<TagsList />} />
           <Route path="/admin/tags/new" element={<TagForm />} />
           <Route path="/admin/tags/edit/:id" element={<TagForm />} />
+          <Route path="/admin/faqs" element={<FaqsPage />} />
         </Route>
 
         <Route path="/admin/*" element={<Login />} />

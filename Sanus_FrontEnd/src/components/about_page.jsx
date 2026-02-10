@@ -11,24 +11,6 @@ import PageTransition from "./page_transition";
 import SanusHero from "./sanus_hero";
 
 export default function AboutPage() {
-  const faqs = [
-    {
-      question: "Qual é a filosofia de cuidado da Sanus Vitae?",
-      answer:
-        "Acreditamos que cada corpo é único. Por isso, avaliamos de forma rigorosa, definimos objetivos claros e acompanhamos cada pessoa com proximidade, segurança e foco em resultados sustentáveis.",
-    },
-    {
-      question: "Os tratamentos são sempre personalizados?",
-      answer:
-        "Sim. Todos os planos são ajustados à condição clínica, objetivos e contexto de vida de cada pessoa. Não aplicamos protocolos genéricos.",
-    },
-    {
-      question: "Trabalham com evidência científica?",
-      answer:
-        "Sim. As nossas intervenções baseiam-se nas melhores práticas clínicas atuais, aliando conhecimento científico, experiência profissional e evolução contínua.",
-    },
-  ];
-
   const missionCards = [
     {
       id: 1,
@@ -76,13 +58,13 @@ export default function AboutPage() {
             <div className="feedback-comment-list" style={{width: "100%", justifyContent: "center"}}>
                 <h3>
                     <span className="feedback-comment">
-                        De um projeto familiar a uma clínica de referência,
+                        Clínica de fisioterapia que alia 
                     </span>
                     <span className="feedback-comment other-color">
-                        movida por pessoas e pelo cuidado genuíno de tratar pessoas,
+                        experiência, evidência científica e tecnologia
                     </span>
                     <span className="feedback-comment">
-                        não apenas sintomas.
+                        no tratamento de cada pessoa.
                     </span>
                 </h3>
             </div>
@@ -92,7 +74,6 @@ export default function AboutPage() {
                     { value: "★ 4.6/5", label: "avaliações Google" },
                     { value: "20+", label: "anos de experiência" },
                     { value: "7 500+", label: "pacientes acompanhados" },
-                    { value: "3-5", label: "semanas melhoria média" },
                     ].map((stat) => (
                     <div key={stat.value} className="sanus-about-us-values-grid-item">
                         <dt className="sanus-about-us-values-grid-item-value">{stat.value}</dt>
@@ -113,10 +94,9 @@ export default function AboutPage() {
       <div className="sanus-about-us-feedback">
         <Feedback/>
       </div>
-      <ContactCTA/>
-      {/* FAQ (mesmo componente do recrutamento) */}
+      <ContactCTA title="Como podemos ajudar?"/>
       <section className="sv-agendar-faq">
-        <FAQSection title="Perguntas Frequentes" subtitle="Sobre nós" faqs={faqs} />
+        <FAQSection faqKey="quem-somos" />
       </section>
       {/*<Team/>*/}
       <Recrutamento/>

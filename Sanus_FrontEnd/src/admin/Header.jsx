@@ -41,13 +41,6 @@ export default function Header() {
         >
           Blog
         </Link>
-        <Link
-          to="/admin/tags"
-          className={location.pathname.startsWith("/admin/tags") ? "active" : ""}
-          onClick={() => setMenuOpen(false)}
-        >
-          Tags
-        </Link>
 
         {/* 💬 Feedback */}
         <Link
@@ -65,6 +58,22 @@ export default function Header() {
           onClick={() => setMenuOpen(false)}
         >
           Serviços
+        </Link>
+
+        <Link
+          to="/admin/faqs"
+          className={location.pathname.startsWith("/admin/faqs") ? "active" : ""}
+          onClick={() => setMenuOpen(false)}
+        >
+          FAQs
+        </Link>
+
+        <Link
+          to="/admin/tags"
+          className={location.pathname.startsWith("/admin/tags") ? "active" : ""}
+          onClick={() => setMenuOpen(false)}
+        >
+          Tags
         </Link>
 
         {/* 🚪 Logout */}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import "./BlogForm.css";
+import { authedFetch } from "../lib/authedFetch";
 
 // Tiptap
 import { EditorContent, useEditor } from "@tiptap/react";
@@ -18,32 +19,27 @@ export default function UsageForm() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  // Editor Tiptap
   const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Link,
-      Underline,
-    ],
+    extensions: [StarterKit, Link, Underline],
     content: "<p>Carregando…</p>",
-    onUpdate: ({ editor }) => {
-      setContent(editor.getHTML());
-    },
+    autofocus: false,
+    onUpdate: ({ editor: ed }) => setContent(ed.getHTML()),
   });
 
-  // Carregar política existente
+  // GET público /usage
   useEffect(() => {
     (async () => {
       try {
         const res = await fetch(`${API}/usage`);
-        if (!res.ok) throw new Error("Erro ao carregar termos.");
+        if (!res.ok) throw new Error("Erro ao carregar termos de utilização.");
         const data = await res.json();
 
-        setContent(data.content || "<p></p>");
-        editor?.commands.setContent(data.content || "<p></p>");
+        const html = data.content || "<p></p>";
+        setContent(html);
+        if (editor) editor.commands.setContent(html);
       } catch (err) {
         console.error(err);
-        setError("Não foi possível carregar termos.");
+        setError("Não foi possível carregar os termos de utilização.");
       } finally {
         setLoading(false);
       }
@@ -56,44 +52,35 @@ export default function UsageForm() {
     setError("");
 
     try {
-      const res = await fetch(`${API}/usage`, {
+      await authedFetch(`${API}/admin/usage`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content }),
       });
 
-      if (!res.ok) throw new Error("Erro ao guardar termos de utilização.");
-
       navigate("/admin", { replace: true });
     } catch (err) {
-      setError(err.message);
+      console.error(err);
+      setError(err?.message || "Erro ao guardar termos de utilização.");
     } finally {
       setSaving(false);
     }
   }
 
+  const isActive = (name, attrs = {}) => editor?.isActive(name, attrs);
+
   return (
     <div className="blogform-page">
       <Header />
       <main className="blogform-container">
-
         <div className="blogform-header">
-          <h2>Termos de utilização</h2>
+          <h2>Termos de Utilização</h2>
 
           <div className="blogform-actions">
-            <button
-              type="button"
-              className="btn-secundary"
-              onClick={() => navigate("/admin")}
-            >
+            <button type="button" className="btn-secundary" onClick={() => navigate("/admin")}>
               Voltar
             </button>
 
-            <button
-              onClick={handleSave}
-              className="btn btn-primary"
-              disabled={saving}
-            >
+            <button onClick={handleSave} className="btn btn-primary" disabled={saving}>
               {saving ? "A guardar…" : "Guardar"}
             </button>
           </div>
@@ -105,23 +92,46 @@ export default function UsageForm() {
           <div className="skeleton">A carregar…</div>
         ) : (
           <div className="form-card">
-
-            {/* Toolbar */}
             <div className="editor-toolbar">
-              <button onClick={() => editor?.chain().focus().toggleBold().run()}>B</button>
-              <button onClick={() => editor?.chain().focus().toggleItalic().run()}>I</button>
-              <button onClick={() => editor?.chain().focus().toggleUnderline().run()}>U</button>
+              <button
+                type="button"
+                className={isActive("bold") ? "active" : ""}
+                onClick={() => editor?.chain().focus().toggleBold().run()}
+              >
+                B
+              </button>
 
               <button
-                onClick={() => {
-                  const url = prompt("Link:");
-                  if (url) {
-                    editor.chain().focus().setLink({ href: url }).run();
-                  }
-                }}
-              >🔗 Link</button>
+                type="button"
+                className={isActive("italic") ? "active" : ""}
+                onClick={() => editor?.chain().focus().toggleItalic().run()}
+              >
+                I
+              </button>
 
-              <button onClick={() => editor?.chain().focus().unsetLink().run()}>
+              <button
+                type="button"
+                className={isActive("underline") ? "active" : ""}
+                onClick={() => editor?.chain().focus().toggleUnderline().run()}
+              >
+                U
+              </button>
+
+              <span className="toolbar-sep" />
+
+              <button
+                type="button"
+                className={isActive("link") ? "active" : ""}
+                onClick={() => {
+                  const url = window.prompt("Link (https://…):");
+                  if (!url) return;
+                  editor?.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+                }}
+              >
+                🔗 Link
+              </button>
+
+              <button type="button" onClick={() => editor?.chain().focus().unsetLink().run()}>
                 ❌ Link
               </button>
             </div>
@@ -129,7 +139,6 @@ export default function UsageForm() {
             <div className="editor-wrapper">
               <EditorContent editor={editor} />
             </div>
-
           </div>
         )}
       </main>

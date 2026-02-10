@@ -41,7 +41,7 @@
 
 .sanus-about-us-values-grid{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     max-width: 1800px;
     gap: 60px;
@@ -103,7 +103,7 @@
 
 @media (max-width: 990px) {
     .sanus-about-us-values-grid{
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
     .sanus-about-us-values-grid-item {
         align-items: center;

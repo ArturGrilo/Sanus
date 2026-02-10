@@ -14,24 +14,6 @@ export default function ContactPage() {
   const clinicEmail = "sanusvitae2021@gmail.com";
   const whatsappNumber = "351928410954";
 
-  const faqs = [
-    {
-      question: "Preciso de receita médica para marcar fisioterapia?",
-      answer:
-        "Não é obrigatória em todos os casos, mas é sempre recomendável trazer toda a informação clínica disponível (relatórios, exames, etc.).",
-    },
-    {
-      question: "Quanto tempo dura, em média, uma sessão?",
-      answer:
-        "Uma sessão típica dura entre 45 e 60 minutos, dependendo da avaliação inicial e do plano terapêutico definido.",
-    },
-    {
-      question: "Posso enviar exames e relatórios pelo WhatsApp ou email?",
-      answer:
-        "Sim. Pode enviar documentação clínica pelo WhatsApp ou email. Garantimos confidencialidade no tratamento dos seus dados.",
-    },
-  ];
-
   return (
     <PageTransition>
       <Header />
@@ -100,7 +82,7 @@ export default function ContactPage() {
         <Location />
       </div>
 
-      <FAQSection title="Perguntas Frequentes" subtitle="Dúvidas" faqs={faqs} />
+      <FAQSection faqKey="contactos" />
 
       <div className="sanus-about-us-footer">
         <Footer />

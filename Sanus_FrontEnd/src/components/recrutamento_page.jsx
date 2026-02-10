@@ -12,39 +12,6 @@ import FAQSection from "./faq_section";
 import RecruitmentApplicationForm from "./recruitment_application_form";
 
 export default function RecrutamentoPage() {
-  const faqs = [
-    {
-      question: "Qual o perfil de profissional que procuram?",
-      answer:
-        "Valorizamos profissionais empáticos, responsáveis e orientados para resultados, com forte capacidade de comunicação e alinhamento com uma prática clínica moderna e baseada na evidência."
-    },
-    {
-      question: "Aceitam fisioterapeutas recém-licenciados?",
-      answer:
-        "Sim. Temos um programa de integração e mentoria estruturado para apoiar quem está em início de carreira, garantindo desenvolvimento progressivo e acompanhamento próximo."
-    },
-    {
-      question: "Preciso de experiência em alguma área específica?",
-      answer:
-        "A experiência é valorizada, mas não obrigatória. O mais importante é o alinhamento com a cultura da clínica, vontade de aprender e compromisso com a qualidade do atendimento."
-    },
-    {
-      question: "Quanto tempo demora até receber resposta?",
-      answer:
-        "O tempo médio é entre 5 e 10 dias úteis, podendo variar consoante o número de candidaturas. Garantimos resposta a todos os candidatos."
-    },
-    {
-      question: "O que deve incluir o meu CV?",
-      answer:
-        "Formação académica, certificações, experiência relevante, áreas de interesse e contactos atualizados. Portfólio ou relatório de estágio podem ser incluídos."
-    },
-    {
-      question: "Que tipo de contrato oferecem?",
-      answer:
-        "Dependendo da função, oferecemos contratos a termo, sem termo ou colaboração externa. Explicamos todas as condições durante o processo."
-    },
-  ];
-
   const profiles = [
     {
       icon: <UsersThree size={36} weight="regular" color="var(--color-other)" />,
@@ -159,11 +126,7 @@ export default function RecrutamentoPage() {
         buttonLink="/contactos"
       />
       <section style={{ marginBottom: "-80px", marginTop: "40px" }}>
-        <FAQSection 
-          title="Perguntas Frequentes"
-          subtitle="Dúvidas"
-          faqs={faqs}
-        />
+        <FAQSection faqKey="recrutamento" />
       </section>
       <Footer />
     </PageTransition>

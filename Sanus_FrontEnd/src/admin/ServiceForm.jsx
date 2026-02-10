@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import Header from "./Header";
 import "./BlogForm.css";
 import "./ServiceForm.css";
+import { authedFetch } from "../lib/authedFetch";
 
 // Tabs
 import ServiceFormBaseTab from "./ServiceFormBaseTab";
@@ -89,9 +90,8 @@ export default function ServiceForm() {
 
     (async () => {
       try {
-        const res = await fetch(`${API}/admin/services/${id}`);
-        if (!res.ok) throw new Error("Erro ao carregar serviço");
-        const data = await res.json();
+        // ✅ authedFetch já devolve JSON (data)
+        const data = await authedFetch(`${API}/admin/services/${id}`, { method: "GET" });
 
         setTitle(data.title || "");
         setSubtitle(data.subtitle || "");
@@ -119,7 +119,7 @@ export default function ServiceForm() {
         );
       } catch (err) {
         console.error(err);
-        setError("Não foi possível carregar o serviço.");
+        setError(err?.message || "Não foi possível carregar o serviço.");
       } finally {
         setLoading(false);
       }
@@ -208,13 +208,11 @@ export default function ServiceForm() {
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   };
 
-  // ✅ Benefits: [{title, bullets[]}]
   const normalizeBenefits = (arr) => {
     if (!Array.isArray(arr)) return [];
     return arr
       .filter(Boolean)
       .map((b) => ({
-        // id local só para UI -> não enviar
         title: String(b?.title || "").trim(),
         bullets: Array.isArray(b?.bullets)
           ? b.bullets.map((x) => String(x || "").trim()).filter(Boolean)
@@ -223,7 +221,6 @@ export default function ServiceForm() {
       .filter((b) => b.title.length > 0 || b.bullets.length > 0);
   };
 
-  // ✅ FAQs: [{question, answer}]
   const normalizeFaqs = (arr) => {
     if (!Array.isArray(arr)) return [];
     return arr
@@ -235,7 +232,6 @@ export default function ServiceForm() {
       .filter((f) => f.question.length > 0 || f.answer.length > 0);
   };
 
-  // ✅ CTA section: {btn_text, cta_text}
   const normalizeCtaSection = (obj) => {
     const o = obj && typeof obj === "object" ? obj : {};
     return {
@@ -263,20 +259,17 @@ export default function ServiceForm() {
       setSaving(true);
       let finalImageUrl = imageUrl;
 
-      // 1️⃣ Upload imagem principal do serviço
+      // 1️⃣ Upload imagem principal do serviço (signed url -> endpoint interno precisa token)
       if (imageFile) {
-        const sigRes = await fetch(`${API}/storage/service-upload-url`, {
+        // ✅ authedFetch devolve JSON { uploadUrl, publicUrl }
+        const { uploadUrl, publicUrl } = await authedFetch(`${API}/storage/service-upload-url`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             fileName: imageFile.name,
             contentType: imageFile.type,
             serviceId: id || null,
           }),
         });
-
-        if (!sigRes.ok) throw new Error("Falha ao obter URL assinado");
-        const { uploadUrl, publicUrl } = await sigRes.json();
 
         const putRes = await fetch(uploadUrl, {
           method: "PUT",
@@ -292,7 +285,6 @@ export default function ServiceForm() {
       const normalizedTypes = normalizeTreatmentTypes(treatmentTypes);
       const normalizedSpecialties = normalizeSpecialties(specialties);
 
-      // ✅ NOVOS
       const normalizedBenefits = normalizeBenefits(benefits);
       const normalizedFaqs = normalizeFaqs(faqs);
       const normalizedCtaSection = normalizeCtaSection(ctaSection);
@@ -302,22 +294,14 @@ export default function ServiceForm() {
         subtitle: clean(subtitle),
         slug: clean(slug),
         text: clean(text),
-
-        // snake_case sem ESLint: usar keys entre aspas
         "bigger_description": biggerDescription || "",
-
         ctaText: clean(ctaText),
         image: finalImageUrl,
         imageUrl: finalImageUrl,
-
         indications: Array.isArray(indications) ? indications : [],
-
         "treatment_steps": normalizedSteps,
         "treatment_types": normalizedTypes,
-
         specialties: normalizedSpecialties,
-
-        // ✅ NOVOS
         benefits: normalizedBenefits,
         faqs: normalizedFaqs,
         "cta_section": normalizedCtaSection,
@@ -326,13 +310,11 @@ export default function ServiceForm() {
       const method = id ? "PUT" : "POST";
       const endpoint = id ? `${API}/admin/services/${id}` : `${API}/admin/services`;
 
-      const res = await fetch(endpoint, {
+      // ✅ usar authedFetch aqui também
+      await authedFetch(endpoint, {
         method,
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
-      if (!res.ok) throw new Error("Erro ao guardar o serviço");
 
       navigate("/admin/services", { replace: true });
     } catch (err) {
@@ -345,9 +327,6 @@ export default function ServiceForm() {
 
   const previewUrl = imageFile ? URL.createObjectURL(imageFile) : imageUrl || "";
 
-  // ============================================================
-  // 🔹 RENDER
-  // ============================================================
   return (
     <div className="blogform-page">
       <Header />
@@ -380,36 +359,27 @@ export default function ServiceForm() {
                 <button type="button" className="sv-tab" aria-selected={activeTab === "base"} onClick={() => setActiveTab("base")}>
                   Base
                 </button>
-
                 <button type="button" className="sv-tab" aria-selected={activeTab === "content"} onClick={() => setActiveTab("content")}>
                   Conteúdo
                 </button>
-
                 <button type="button" className="sv-tab" aria-selected={activeTab === "types"} onClick={() => setActiveTab("types")}>
                   Técnicas
                 </button>
-
                 <button type="button" className="sv-tab" aria-selected={activeTab === "steps"} onClick={() => setActiveTab("steps")}>
                   Etapas
                 </button>
-
                 <button type="button" className="sv-tab" aria-selected={activeTab === "indications"} onClick={() => setActiveTab("indications")}>
                   Indicações
                 </button>
-
                 <button type="button" className="sv-tab" aria-selected={activeTab === "specialties"} onClick={() => setActiveTab("specialties")}>
                   Especialidades
                 </button>
-
-                {/* ✅ NOVOS */}
                 <button type="button" className="sv-tab" aria-selected={activeTab === "benefits"} onClick={() => setActiveTab("benefits")}>
                   Benefícios
                 </button>
-
                 <button type="button" className="sv-tab" aria-selected={activeTab === "faqs"} onClick={() => setActiveTab("faqs")}>
                   FAQs
                 </button>
-
                 <button type="button" className="sv-tab" aria-selected={activeTab === "cta"} onClick={() => setActiveTab("cta")}>
                   CTA
                 </button>
@@ -477,18 +447,11 @@ export default function ServiceForm() {
                 />
               )}
 
-              {/* ✅ NOVOS */}
-              {activeTab === "benefits" && (
-                <ServiceFormBenefitsTab benefits={benefits} setBenefits={setBenefits} />
-              )}
+              {activeTab === "benefits" && <ServiceFormBenefitsTab benefits={benefits} setBenefits={setBenefits} />}
 
-              {activeTab === "faqs" && (
-                <ServiceFormFaqsTab faqs={faqs} setFaqs={setFaqs} />
-              )}
+              {activeTab === "faqs" && <ServiceFormFaqsTab faqs={faqs} setFaqs={setFaqs} />}
 
-              {activeTab === "cta" && (
-                <ServiceFormCtaSectionTab ctaSection={ctaSection} setCtaSection={setCtaSection} />
-              )}
+              {activeTab === "cta" && <ServiceFormCtaSectionTab ctaSection={ctaSection} setCtaSection={setCtaSection} />}
             </div>
           </form>
         )}

@@ -31,11 +31,6 @@ export default function Dashboard() {
             <p>Adicionar, editar ou eliminar serviços apresentados no site.</p>
           </Link>
 
-          <Link to="/admin/tags" className="dashboard-card">
-            <h3>Gerir Tags</h3>
-            <p>Criar/editar cores e nomes de tags.</p>
-          </Link>
-
           <Link to="/admin/privacy" className="dashboard-card">
             <h3>Política de Privacidade</h3>
             <p>Editar o texto da política apresentada no site.</p>
@@ -44,6 +39,16 @@ export default function Dashboard() {
           <Link to="/admin/cookies" className="dashboard-card">
             <h3>Política de Cookies</h3>
             <p>Editar o texto da política de cookies.</p>
+          </Link>
+
+          <Link to="/admin/faqs" className="dashboard-card">
+            <h3>Gerir FAQs</h3>
+            <p>Editar perguntas e respostas por página.</p>
+          </Link>
+
+          <Link to="/admin/tags" className="dashboard-card">
+            <h3>Gerir Tags</h3>
+            <p>Criar/editar cores e nomes de tags.</p>
           </Link>
 
           <Link to="/admin/usage" className="dashboard-card">
