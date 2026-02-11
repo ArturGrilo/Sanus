@@ -4,24 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import SidebarMenu from "./sidebar_menu";
 
-const SERVICES = [
-  {
-    title: "Fisioterapia",
-    desc: "Planos personalizados para recuperar mobilidade, aliviar dor e melhorar função.",
-    path: "/servicos/fisioterapia",
-  },
-  {
-    title: "Pilates com Equipamentos",
-    desc: "Sessões individuais ou em grupos pequenos com aparelhos e progressão segura.",
-    path: "/servicos/pilates",
-  },
-  {
-    title: "Serviços ao Domicílio",
-    desc: "Fisioterapia ou Pilates em casa, com acompanhamento exclusivo e personalizado.",
-    path: "/servicos/servicos-ao-domicilio",
-  },
-];
-
 export default function Header({ forceScrolled = false }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -30,8 +12,69 @@ export default function Header({ forceScrolled = false }) {
   const [servicesOpen, setServicesOpen] = useState(false);
   const servicesWrapRef = useRef(null);
 
+  // ✅ Serviços vindos do backend (como no componente Services)
+  const [services, setServices] = useState([]);
+  const [servicesLoading, setServicesLoading] = useState(true);
+
   const navigate = useNavigate();
   const location = useLocation();
+
+  // ✅ buscar serviços (frontend -> backend -> firebase)
+  useEffect(() => {
+    let alive = true;
+
+    async function fetchServices() {
+      try {
+        setServicesLoading(true);
+
+        const base = import.meta.env.VITE_BACKEND_URL;
+        if (!base) {
+          console.warn("[Header] VITE_BACKEND_URL não definido. Menu de serviços ficará vazio.");
+          if (alive) setServices([]);
+          return;
+        }
+
+        const res = await fetch(`${base}/services`, {
+          headers: { Accept: "application/json" },
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status} ao carregar /services`);
+        }
+
+        const data = await res.json();
+
+        // Normalização defensiva para o Header:
+        // - precisamos de slug/title/desc para o mega menu
+        const normalized = (Array.isArray(data) ? data : [])
+          .map((s, i) => {
+            const slug = s.slug || s.path?.split("/servicos/")?.[1] || s.id || String(i);
+
+            return {
+              id: s.id || slug || i,
+              title: s.title || "Serviço",
+              desc: s.text || s.desc || s.subtitle || s.card_desc || "",
+              slug,
+              path: `/servicos/${slug}`,
+            };
+          })
+          .filter((s) => Boolean(s.slug) && Boolean(s.title));
+
+        if (alive) setServices(normalized);
+      } catch (error) {
+        console.error("Erro ao carregar serviços (Header):", error);
+        if (alive) setServices([]);
+      } finally {
+        if (alive) setServicesLoading(false);
+      }
+    }
+
+    fetchServices();
+
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   // ✅ scroll behavior
   useEffect(() => {
@@ -132,7 +175,6 @@ export default function Header({ forceScrolled = false }) {
                   </span>
                 </button>
 
-                {/*{servicesOpen && (*/}
                 {servicesOpen && (
                   <div className="mega-menu" role="menu" aria-label="Serviços">
                     <div className="mega-menu-inner">
@@ -140,18 +182,32 @@ export default function Header({ forceScrolled = false }) {
                         <div className="mega-title">Serviços</div>
 
                         <div className="mega-list">
-                          {SERVICES.map((s) => (
-                            <button
-                              key={s.title}
-                              type="button"
-                              className="mega-item"
-                              onClick={() => go(s.path)}
-                              role="menuitem"
-                            >
-                              <div className="mega-item-title">{s.title}</div>
-                              <div className="mega-item-desc">{s.desc}</div>
-                            </button>
-                          ))}
+                          {servicesLoading ? (
+                            <div className="mega-item" role="menuitem" aria-disabled="true">
+                              <div className="mega-item-title">A carregar…</div>
+                              <div className="mega-item-desc">A obter serviços disponíveis.</div>
+                            </div>
+                          ) : services.length === 0 ? (
+                            <div className="mega-item" role="menuitem" aria-disabled="true">
+                              <div className="mega-item-title">Sem serviços</div>
+                              <div className="mega-item-desc">
+                                Tente novamente mais tarde ou consulte a página de serviços.
+                              </div>
+                            </div>
+                          ) : (
+                            services.map((s) => (
+                              <button
+                                key={s.id || s.slug}
+                                type="button"
+                                className="mega-item"
+                                onClick={() => go(s.path)}
+                                role="menuitem"
+                              >
+                                <div className="mega-item-title">{s.title}</div>
+                                {!!s.desc && <div className="mega-item-desc">{s.desc}</div>}
+                              </button>
+                            ))
+                          )}
                         </div>
 
                         <button
@@ -176,7 +232,11 @@ export default function Header({ forceScrolled = false }) {
                           <button type="button" className="btn btn-primary" onClick={goToAgendamento}>
                             Agende Agora
                           </button>
-                          <button type="button" className="btn btn-secundary" onClick={() => go("/contactos")}>
+                          <button
+                            type="button"
+                            className="btn btn-secundary"
+                            onClick={() => go("/contactos")}
+                          >
                             Fale Connosco
                           </button>
                         </div>

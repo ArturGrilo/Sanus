@@ -272,3 +272,9 @@
     padding: 20px 20px;
   }
 }
+
+@media (min-width: 1650px) {
+    .sanus-page-hero-generic {
+        height: 520px !important;
+    }
+}
