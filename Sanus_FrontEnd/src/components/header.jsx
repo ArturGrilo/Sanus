@@ -19,6 +19,11 @@ export default function Header({ forceScrolled = false }) {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // ✅ helpers (is-active)
+  const isActive = (path) => location.pathname === path;
+  const isServicesSection =
+    location.pathname === "/servicos" || location.pathname.startsWith("/servicos/");
+
   // ✅ buscar serviços (frontend -> backend -> firebase)
   useEffect(() => {
     let alive = true;
@@ -44,8 +49,6 @@ export default function Header({ forceScrolled = false }) {
 
         const data = await res.json();
 
-        // Normalização defensiva para o Header:
-        // - precisamos de slug/title/desc para o mega menu
         const normalized = (Array.isArray(data) ? data : [])
           .map((s, i) => {
             const slug = s.slug || s.path?.split("/servicos/")?.[1] || s.id || String(i);
@@ -150,7 +153,11 @@ export default function Header({ forceScrolled = false }) {
           <nav className="sanus-header-nav" aria-label="Navegação principal">
             <ul>
               <li>
-                <button type="button" className="navlink" onClick={() => go("/sobre-nos")}>
+                <button
+                  type="button"
+                  className={`navlink ${isActive("/sobre-nos") ? "is-active" : ""}`}
+                  onClick={() => go("/sobre-nos")}
+                >
                   Quem Somos
                 </button>
               </li>
@@ -164,7 +171,9 @@ export default function Header({ forceScrolled = false }) {
               >
                 <button
                   type="button"
-                  className={`navlink navlink-services ${servicesOpen ? "open" : ""}`}
+                  className={`navlink navlink-services ${servicesOpen ? "open" : ""} ${
+                    isServicesSection ? "is-active" : ""
+                  }`}
                   onClick={() => setServicesOpen((v) => !v)}
                   aria-haspopup="true"
                   aria-expanded={servicesOpen}
@@ -199,7 +208,7 @@ export default function Header({ forceScrolled = false }) {
                               <button
                                 key={s.id || s.slug}
                                 type="button"
-                                className="mega-item"
+                                className={`mega-item ${isActive(s.path) ? "is-active" : ""}`}
                                 onClick={() => go(s.path)}
                                 role="menuitem"
                               >
@@ -212,7 +221,7 @@ export default function Header({ forceScrolled = false }) {
 
                         <button
                           type="button"
-                          className="mega-all"
+                          className={`mega-all ${isActive("/servicos") ? "is-active" : ""}`}
                           onClick={() => go("/servicos")}
                           role="menuitem"
                         >
@@ -247,17 +256,31 @@ export default function Header({ forceScrolled = false }) {
               </li>
 
               <li>
-                <button type="button" className="navlink" onClick={() => go("/blog")}>
+                <button
+                  type="button"
+                  className={`navlink ${isActive("/blog") ? "is-active" : ""}`}
+                  onClick={() => go("/blog")}
+                >
                   Blog
                 </button>
               </li>
+
               <li>
-                <button type="button" className="navlink" onClick={() => go("/recrutamento")}>
+                <button
+                  type="button"
+                  className={`navlink ${isActive("/recrutamento") ? "is-active" : ""}`}
+                  onClick={() => go("/recrutamento")}
+                >
                   Recrutamento
                 </button>
               </li>
+
               <li>
-                <button type="button" className="navlink" onClick={() => go("/contactos")}>
+                <button
+                  type="button"
+                  className={`navlink ${isActive("/contactos") ? "is-active" : ""}`}
+                  onClick={() => go("/contactos")}
+                >
                   Contatos
                 </button>
               </li>

@@ -12,10 +12,21 @@ export default function SidebarMenu({ isOpen, onClose }) {
   const [services, setServices] = useState([]);
   const [servicesLoading, setServicesLoading] = useState(true);
 
+  // ✅ helpers (is-active)
+  const isActive = (path) => location.pathname === path;
+  const isServicesSection =
+    location.pathname === "/servicos" || location.pathname.startsWith("/servicos/");
+
   // ✅ Fecha accordion quando o sidebar fecha
   useEffect(() => {
     if (!isOpen) setServicesOpen(false);
   }, [isOpen]);
+
+  // ✅ Abre automaticamente o accordion se estiver em /servicos...
+  useEffect(() => {
+    if (!isOpen) return;
+    if (isServicesSection) setServicesOpen(true);
+  }, [isOpen, isServicesSection]);
 
   // ✅ Carregar serviços (mesmo padrão do componente Services)
   useEffect(() => {
@@ -70,7 +81,7 @@ export default function SidebarMenu({ isOpen, onClose }) {
     };
   }, []);
 
-  // ✅ Fecha o sidebar quando muda de rota (caso navegação seja disparada por outro sítio)
+  // ✅ Fecha o sidebar quando muda de rota
   useEffect(() => {
     if (isOpen) onClose?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,7 +118,11 @@ export default function SidebarMenu({ isOpen, onClose }) {
         <nav className="sanus-sidebar-nav" aria-label="Menu">
           <ul>
             <li>
-              <button type="button" className="sidebar-link" onClick={() => go("/sobre-nos")}>
+              <button
+                type="button"
+                className={`sidebar-link ${isActive("/sobre-nos") ? "is-active" : ""}`}
+                onClick={() => go("/sobre-nos")}
+              >
                 Quem Somos
               </button>
             </li>
@@ -116,7 +131,7 @@ export default function SidebarMenu({ isOpen, onClose }) {
             <li className={`sidebar-acc ${servicesOpen ? "open" : ""}`}>
               <button
                 type="button"
-                className="sidebar-link sidebar-acc-head"
+                className={`sidebar-link sidebar-acc-head ${isServicesSection ? "is-active" : ""}`}
                 onClick={() => setServicesOpen((v) => !v)}
                 aria-expanded={servicesOpen}
               >
@@ -141,7 +156,7 @@ export default function SidebarMenu({ isOpen, onClose }) {
                       <button
                         key={s.id || s.slug}
                         type="button"
-                        className="sidebar-sublink"
+                        className={`sidebar-sublink ${isActive(s.path) ? "is-active" : ""}`}
                         onClick={() => go(s.path)}
                       >
                         {s.title}
@@ -149,7 +164,11 @@ export default function SidebarMenu({ isOpen, onClose }) {
                     ))
                   )}
 
-                  <button type="button" className="sidebar-sublink all" onClick={() => go("/servicos")}>
+                  <button
+                    type="button"
+                    className={`sidebar-sublink all ${isActive("/servicos") ? "is-active" : ""}`}
+                    onClick={() => go("/servicos")}
+                  >
                     Ver todos os serviços →
                   </button>
                 </div>
@@ -157,19 +176,31 @@ export default function SidebarMenu({ isOpen, onClose }) {
             </li>
 
             <li>
-              <button type="button" className="sidebar-link" onClick={() => go("/blog")}>
+              <button
+                type="button"
+                className={`sidebar-link ${isActive("/blog") ? "is-active" : ""}`}
+                onClick={() => go("/blog")}
+              >
                 Blog
               </button>
             </li>
 
             <li>
-              <button type="button" className="sidebar-link" onClick={() => go("/recrutamento")}>
+              <button
+                type="button"
+                className={`sidebar-link ${isActive("/recrutamento") ? "is-active" : ""}`}
+                onClick={() => go("/recrutamento")}
+              >
                 Recrutamento
               </button>
             </li>
 
             <li>
-              <button type="button" className="sidebar-link" onClick={() => go("/contactos")}>
+              <button
+                type="button"
+                className={`sidebar-link ${isActive("/contactos") ? "is-active" : ""}`}
+                onClick={() => go("/contactos")}
+              >
                 Contatos
               </button>
             </li>
