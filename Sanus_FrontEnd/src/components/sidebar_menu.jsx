@@ -2,21 +2,73 @@ import "../styles/sidebar_menu.css";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const SERVICES = [
-  { title: "Fisioterapia", path: "/servicos/fisioterapia" },
-  { title: "Pilates com Equipamentos", path: "/servicos/pilates" },
-  { title: "Serviços ao Domicílio", path: "/servicos/servicos-ao-domicilio" },
-];
-
 export default function SidebarMenu({ isOpen, onClose }) {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [servicesOpen, setServicesOpen] = useState(false);
 
+  // ✅ Serviços vindos do backend (frontend -> backend -> firebase)
+  const [services, setServices] = useState([]);
+  const [servicesLoading, setServicesLoading] = useState(true);
+
+  // ✅ Fecha accordion quando o sidebar fecha
   useEffect(() => {
     if (!isOpen) setServicesOpen(false);
   }, [isOpen]);
+
+  // ✅ Carregar serviços (mesmo padrão do componente Services)
+  useEffect(() => {
+    let alive = true;
+
+    async function fetchServices() {
+      try {
+        setServicesLoading(true);
+
+        const base = import.meta.env.VITE_BACKEND_URL;
+        if (!base) {
+          console.warn("[SidebarMenu] VITE_BACKEND_URL não definido. Serviços ficarão vazios.");
+          if (alive) setServices([]);
+          return;
+        }
+
+        const res = await fetch(`${base}/services`, {
+          headers: { Accept: "application/json" },
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status} ao carregar /services`);
+        }
+
+        const data = await res.json();
+
+        const normalized = (Array.isArray(data) ? data : [])
+          .map((s, i) => {
+            const slug = s.slug || s.path?.split("/servicos/")?.[1] || s.id || String(i);
+            return {
+              id: s.id || slug || i,
+              title: s.title || "Serviço",
+              slug,
+              path: `/servicos/${slug}`,
+            };
+          })
+          .filter((s) => Boolean(s.slug) && Boolean(s.title));
+
+        if (alive) setServices(normalized);
+      } catch (error) {
+        console.error("Erro ao carregar serviços (SidebarMenu):", error);
+        if (alive) setServices([]);
+      } finally {
+        if (alive) setServicesLoading(false);
+      }
+    }
+
+    fetchServices();
+
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   // ✅ Fecha o sidebar quando muda de rota (caso navegação seja disparada por outro sítio)
   useEffect(() => {
@@ -28,7 +80,7 @@ export default function SidebarMenu({ isOpen, onClose }) {
   useEffect(() => {
     if (!isOpen) return;
     const onKeyDown = (e) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") onClose?.();
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
@@ -36,7 +88,7 @@ export default function SidebarMenu({ isOpen, onClose }) {
 
   const go = (path) => {
     navigate(path);
-    onClose();
+    onClose?.();
   };
 
   return (
@@ -76,16 +128,26 @@ export default function SidebarMenu({ isOpen, onClose }) {
 
               {servicesOpen && (
                 <div className="sidebar-acc-body">
-                  {SERVICES.map((s) => (
-                    <button
-                      key={s.title}
-                      type="button"
-                      className="sidebar-sublink"
-                      onClick={() => go(s.path)}
-                    >
-                      {s.title}
+                  {servicesLoading ? (
+                    <button type="button" className="sidebar-sublink" disabled aria-disabled="true">
+                      A carregar…
                     </button>
-                  ))}
+                  ) : services.length === 0 ? (
+                    <button type="button" className="sidebar-sublink" disabled aria-disabled="true">
+                      Sem serviços disponíveis
+                    </button>
+                  ) : (
+                    services.map((s) => (
+                      <button
+                        key={s.id || s.slug}
+                        type="button"
+                        className="sidebar-sublink"
+                        onClick={() => go(s.path)}
+                      >
+                        {s.title}
+                      </button>
+                    ))
+                  )}
 
                   <button type="button" className="sidebar-sublink all" onClick={() => go("/servicos")}>
                     Ver todos os serviços →

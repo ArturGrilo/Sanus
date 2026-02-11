@@ -102,7 +102,7 @@ body.sidebar-open {
   background: rgba(255,255,255,0.4);
   border: 1px solid rgba(0,0,0,0.04);
   border-radius: var(--border-radius-var);
-  padding: 20px;
+  padding: 10px 20px;
   text-align: left;
   cursor: pointer;
   font-weight: 800;
