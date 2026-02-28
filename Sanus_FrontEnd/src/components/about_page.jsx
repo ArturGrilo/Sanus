@@ -58,10 +58,10 @@ export default function AboutPage() {
             <div className="feedback-comment-list" style={{width: "100%", justifyContent: "center"}}>
                 <h3>
                     <span className="feedback-comment">
-                        Clínica de fisioterapia que alia 
+                        Clínica de fisioterapia que alia experiência,
                     </span>
                     <span className="feedback-comment other-color">
-                        experiência, evidência científica e tecnologia
+                        evidência científica e tecnologia
                     </span>
                     <span className="feedback-comment">
                         no tratamento de cada pessoa.
