@@ -39,9 +39,9 @@ const team = [
     role: "Fisioterapeuta",
     img: profile3,
   }
-];
+];*/
 
-export default function TeamCarousel() {
+/*export default function TeamCarousel() {
   return (
     <section className="sanus-team-carousel">
       <Swiper
@@ -69,3 +69,10 @@ export default function TeamCarousel() {
     </section>
   );
 }*/
+
+export default function TeamCarousel() {
+  return (
+    <section className="sanus-team-carousel">
+      </section>
+  );
+}
