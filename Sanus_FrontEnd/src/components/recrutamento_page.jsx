@@ -22,7 +22,7 @@ export default function RecrutamentoPage() {
     {
       icon: <HandsClapping size={36} weight="regular" color="var(--color-other)" />,
       title: "Receção / Front-Office",
-      desc: "Atendimento humano e organização."
+      desc: "Formação em Reabilitação e Fisioterapia."
     },
 
     {
@@ -87,13 +87,13 @@ export default function RecrutamentoPage() {
           >
             <h3>
               <span className="feedback-comment">
-                Procuramos pessoas extraordinárias,
+                Procuramos pessoas apaixonadas pela fisioterapia, que queiram fazer a diferença,
               </span>
               <span className="feedback-comment other-color">
-                movidas pelo cuidado genuíno,
+                 com vontade de saber sempre mais para prestar o melhor serviço,
               </span>
               <span className="feedback-comment">
-                que querem fazer a diferença todos os dias.
+                que se traduza na reabilitação dos nossos clientes
               </span>
             </h3>
           </div>

@@ -36,4 +36,34 @@ function normalizeCtaSection(raw) {
   };
 }
 
-module.exports = {normalizeFaqs, normalizeBenefits, normalizeCtaSection};
+// ✅ NOVO: treatment_types com imagem
+function normalizeTreatmentTypes(raw) {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter(Boolean)
+    .map((t, idx) => {
+      const id = String(t?.id || "").trim() || String(idx);
+
+      const orderNum = Number(t?.order);
+      const order = Number.isFinite(orderNum) ? orderNum : idx + 1;
+
+      const icon = String(t?.icon || "").trim();
+      const title = String(t?.title || "").trim();
+      const subtitle = String(t?.subtitle || "").trim();
+
+      const imageUrl = String(t?.imageUrl || t?.image || "").trim();
+
+      return {
+        id,
+        order,
+        icon,
+        title,
+        subtitle,
+        imageUrl,
+      };
+    })
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    .filter((x) => x.title.length > 0 || x.subtitle.length > 0 || x.icon.length > 0 || x.imageUrl.length > 0);
+}
+
+module.exports = { normalizeFaqs, normalizeBenefits, normalizeCtaSection, normalizeTreatmentTypes };

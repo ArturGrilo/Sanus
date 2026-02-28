@@ -10,7 +10,7 @@
     text-align: left;
     color: white;
     overflow: visible;
-    margin-top: -114px;
+    margin-top: -140px;
 }
 
 /* Overlay para escurecer a imagem */
@@ -20,10 +20,17 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 30%),
-                /*linear-gradient(90deg, var(--color-primary-dark) 0%, rgba(0,0,0,0) 10%),
-                linear-gradient(90deg, rgba(0,0,0,0) 95%, var(--color-primary-dark) 100%),*/
-                linear-gradient(180deg, rgba(0,0,0,0) 50%, var(--color-primary-dark) 100%);
+    background: 
+        linear-gradient(
+            180deg,
+            #ebf6f2 0%,
+            rgba(235, 246, 242, 0) 30%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0) 50%,
+            var(--color-primary-dark) 100%
+        );
 }
 
 /* Conteúdo */
@@ -46,7 +53,7 @@
     line-height: 1.2;
     color: var(--color-bg);
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.65);
-    max-width: 40%;
+    max-width: 450px;
 }
 
 /* Subtítulo */

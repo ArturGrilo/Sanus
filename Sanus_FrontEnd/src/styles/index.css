@@ -13,35 +13,38 @@
 /*--------------------------------------------*/
 
 :root {
-  /* Tipografia */
-  --font-title: 'Libre Baskerville', serif;
-  --font-body: 'Almarai', sans-serif;
+  /* Tipografia (já tratada) */
+  --font-title: "Cinio Text", serif;
+  --font-body: "Cinio Text", serif;
+  --font-ui: "Gotham", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  /* Cores principais Artur*/
-  --color-primary: #4BCAAD;
-  --color-header: rgba(46, 92, 110, 0.97);
-  --color-primary-alt: rgba(75, 202, 173, 0.3);
-  --color-primary-dark: #2E5C6E;
-  --color-primary-darker: #20404D;
+  /* Paleta oficial (Manual de Marca) */
+  --color-primary: #06b289;          /* verde marca */ /* :contentReference[oaicite:5]{index=5} */
+  --color-primary-dark: #0c3e54;     /* azul marca  */ /* :contentReference[oaicite:6]{index=6} */
+  --color-bg: #ebf6f2;               /* fundo claro */ /* :contentReference[oaicite:7]{index=7} */
+  --color-accent-soft: #b3ffd5;      /* highlight   */ /* :contentReference[oaicite:8]{index=8} */
+
+  /* Derivações (mantém o teu naming para não refatorar) */
+  --color-header: rgba(235, 246, 242, 0.97);       /* #0c3e54 com alpha */
+  --color-primary-alt: rgba(6, 178, 137, 0.30); /* #06b289 com alpha */
+  --color-primary-hover: rgba(6, 178, 137, 0.06);
+  --color-primary-dark-alt: rgba(12, 62, 84, 0.97); /* #06b289 com alpha */
+  --color-primary-darker: #072a39;              /* um step mais escuro do azul (coerente) */
+
+  /* Cores gerais (podes manter) */
+  --color-text: #23323a;
   --color-muted: #7a8b94;
+  --color-border: rgba(12, 62, 84, 0.14);
+  --color-image: rgba(12, 62, 84, 0.18);
+
+  /* Mantém isto se gostas do “coral” como contraste. Se quiseres 100% brand, eu troco depois. */
+  --color-other: #F28C82;
+
   --color-danger: #d64545;
   --color-danger-hover: #b02f2f;
-  
-  /* Cores gerais */
-  --color-text: #333333;
-  --color-bg: #fafafa;
-  --color-primary-hover: rgba(75, 202, 173, 0.05);
-  --color-other: #F28C82;
-  --color-image: rgba(46, 92, 110, 0.2);
-  --color-border: #d8e1df;
+
   --border-radius-var: 4px 20px;
 
-  /* Cores principais Cláudia
-  --color-primary: #bdd82a;
-  --color-primary-dark: #2f6238;
-  --color-primary-alt: rgba(193, 226, 68,0.3);
-  --color-header: rgba(62, 111, 69, 0.97);*/
-  
   text-align: center;
   width: 100%;
   height: 100vh;
@@ -81,7 +84,7 @@ body.sidebar-open {
 
 button, .btn {
   display: inline-block;
-  font-family: var(--font-title);
+  font-family: var(--font-ui);
   font-weight: 600;
   font-size: 20px;
   padding: 12px 25px;

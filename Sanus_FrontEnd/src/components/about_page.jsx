@@ -51,7 +51,7 @@ export default function AboutPage() {
       <SanusHero
         title="Quem Somos"
         subtitle="Muito mais que uma clínica."
-        imageUrl="/Clinica/foto8.jpeg"
+        imageUrl="/Clinica/foto8.png"
       /> 
       <section className="sanus-about-us">
         <div className="sanus-about-us-container">

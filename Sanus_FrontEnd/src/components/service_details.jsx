@@ -43,9 +43,7 @@ export default function ServicoDetalhe() {
         if (!alive) return;
         setServico(null);
       } finally {
-        if (alive) {
-          setLoading(false);
-        }
+        if (alive) setLoading(false);
       }
     }
 
@@ -65,7 +63,6 @@ export default function ServicoDetalhe() {
 
     const hash = location.hash;
 
-    // Sem hash: topo
     if (!hash) {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -128,7 +125,7 @@ export default function ServicoDetalhe() {
     }));
   }, [servico]);
 
-  // ✅ "Como tratamos" (Técnicas) — treatment_types
+  // ✅ "Como tratamos" (Técnicas) — treatment_types (AGORA COM imageUrl)
   const treatmentTypesItems = useMemo(() => {
     const raw = servico?.treatment_types;
     if (!Array.isArray(raw) || raw.length === 0) return [];
@@ -140,6 +137,7 @@ export default function ServicoDetalhe() {
         iconName: String(t.icon || "").trim(),
         title: String(t.title || "").trim(),
         subtitle: String(t.subtitle || "").trim(),
+        imageUrl: String(t.imageUrl || t.image || "").trim(), // ✅ NOVO
       }))
       .filter((t) => t.title.length > 0 || t.subtitle.length > 0)
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
@@ -148,6 +146,7 @@ export default function ServicoDetalhe() {
       iconName: t.iconName,
       title: t.title || "—",
       desc: t.subtitle || "",
+      imageUrl: t.imageUrl || "", // ✅ passa para ProfilesSection
     }));
   }, [servico]);
 
@@ -178,8 +177,7 @@ export default function ServicoDetalhe() {
     return String(servico?.slug || id || "").trim();
   }, [servico, id]);
 
-  // ✅ Benefits -> reaproveitar ProfilesSection
-  // Firestore: benefits: [{title, bullets[]}]
+  // ✅ Benefits
   const benefitsItems = useMemo(() => {
     const raw = servico?.benefits;
     if (!Array.isArray(raw) || raw.length === 0) return [];
@@ -202,7 +200,7 @@ export default function ServicoDetalhe() {
     }));
   }, [servico]);
 
-  // ✅ FAQs (FireStore: faqs: [{ question, answer }])
+  // ✅ FAQs
   const faqsItems = useMemo(() => {
     const raw = servico?.faqs;
     if (!Array.isArray(raw) || raw.length === 0) return [];
@@ -215,7 +213,6 @@ export default function ServicoDetalhe() {
       }))
       .filter((f) => f.question.length > 0 || f.answer.length > 0);
   }, [servico]);
-
 
   // ✅ CTA section
   const ctaSection = useMemo(() => {
@@ -288,7 +285,6 @@ export default function ServicoDetalhe() {
         imageUrl={servico.image || servico.imageUrl || "/Clinica/foto4.jpeg"}
       />
 
-      {/* ✅ Conteúdo principal */}
       <section className="sanus-servico-content">
         <div className="sanus-servico-container">
           <article
@@ -298,14 +294,12 @@ export default function ServicoDetalhe() {
         </div>
       </section>
 
-      {/* ✅ Indicações */}
       {indicationsCards.length > 0 && (
         <section style={{ marginTop: "2.5rem" }} className="sanus-services-indications">
           <SanusCardsSection title="Quando é indicado?" subtitle="" cards={indicationsCards} showWaves={true} />
         </section>
       )}
 
-      {/* ✅ Etapas */}
       {steps.length > 0 && (
         <section style={{ marginTop: "-.5px" }}>
           <ProfilesSection
@@ -319,7 +313,7 @@ export default function ServicoDetalhe() {
 
       <InBetweenWaves />
 
-      {/* ✅ Técnicas */}
+      {/* ✅ Técnicas com BG opcional */}
       {treatmentTypesItems.length > 0 && (
         <section style={{ marginTop: "-.5px", position: "relative", zIndex: 3 }}>
           <ProfilesSection
@@ -334,7 +328,6 @@ export default function ServicoDetalhe() {
 
       <InBetweenWaves color="var(--color-primary-alt)" />
 
-      {/* ✅ Benefits (NOVO) */}
       {benefitsItems.length > 0 && (
         <section id="benefits" style={{ marginTop: "-0.5px" }}>
           <ProfilesSection
@@ -347,23 +340,25 @@ export default function ServicoDetalhe() {
         </section>
       )}
 
-      {/* ✅ Especialidades */}
       {specialtiesList.length > 0 && (
         <div>
-        <InBetweenWaves color="var(--color-primary-dark)" />
-        <section id="specialties" className="sanus-service-specialties" style={{ marginTop: "-.5px", zIndex: 10, position: "relative" }}>
-          <ServiceSpecialties
-            specialties={specialtiesList}
-            loading={false}
-            subtitle="Áreas de intervenção"
-            title="Especialidades"
-            serviceSlug={serviceSlugForSpecialties}
-          />
-        </section>
+          <InBetweenWaves color="var(--color-primary-dark)" />
+          <section
+            id="specialties"
+            className="sanus-service-specialties"
+            style={{ marginTop: "-.5px", zIndex: 10, position: "relative" }}
+          >
+            <ServiceSpecialties
+              specialties={specialtiesList}
+              loading={false}
+              subtitle="Áreas de intervenção"
+              title="Especialidades"
+              serviceSlug={serviceSlugForSpecialties}
+            />
+          </section>
         </div>
       )}
 
-      {/* ✅ CTA Section (NOVO) */}
       {ctaSection && (
         <section style={{ position: "relative" }}>
           <svg
@@ -378,21 +373,17 @@ export default function ServicoDetalhe() {
               d="M0,128L120,154.7C240,181,480,235,720,261.3C960,288,1200,288,1320,288L1440,288L1440,320L0,320Z"
             />
           </svg>
-  
-          {/* CTA */}
-          <div style={{ position: "relative", zIndex: 12, marginTop: "-2px"}} className="sanus-services-page-cta-container">
-            <ContactCTA
-              title= {ctaSection.ctaText}
-              buttonText={ctaSection.btnText}
-              buttonLink="/agendar"
-            />
+
+          <div style={{ position: "relative", zIndex: 12, marginTop: "-2px" }} className="sanus-services-page-cta-container">
+            <ContactCTA title={ctaSection.ctaText} buttonText={ctaSection.btnText} buttonLink="/agendar" />
           </div>
         </section>
       )}
-      {/* ✅ FAQ (mesmo padrão do recrutamento) */}
+
       <section style={{ marginBottom: "-80px", marginTop: "40px" }}>
         <FAQSection title="Perguntas Frequentes" subtitle="Serviços" faqs={faqsItems} />
       </section>
+
       <div className="sanus-about-us-footer">
         <Footer />
       </div>

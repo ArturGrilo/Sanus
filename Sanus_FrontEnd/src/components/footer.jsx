@@ -4,7 +4,7 @@ import ClinicaSanusVitaeBarreiro2 from '../images/Footer/ClinicaSanusVitaeBarrei
 import ClinicaSanusVitaeBarreiro3 from '../images/Footer/ClinicaSanusVitaeBarreiro_3.jpeg'
 import ClinicaSanusVitaeBarreiro4 from '../images/Footer/ClinicaSanusVitaeBarreiroMap.png'
 import { MapPin, Clock, Phone, Envelope, FacebookLogo, InstagramLogo } from "phosphor-react"
-import SanusVitaeLogo from '../images/Logo/SanusVitaeLogo.png';
+import SanusVitaeLogo from '../images/Logo/SanusVitaeLogo_White.png';
 import { Link } from "react-router-dom";
 
 export default function Footer() {
@@ -24,7 +24,6 @@ export default function Footer() {
             <div className="sanus-footer-container">
                 <div className="sanus-footer-logo-column">
                     <img src={SanusVitaeLogo} className="sanus-header-logo" alt="Sanus Vitae logo" />
-                    <p className="sanus-general-text alt">clínica fisiátrica</p>
                     <div className="sanus-footer-item">
                         <a
                             href={facebookUrl}

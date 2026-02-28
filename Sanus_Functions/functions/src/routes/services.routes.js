@@ -2,7 +2,12 @@ const express = require("express");
 const { FieldValue } = require("firebase-admin/firestore");
 
 const { getDb } = require("../config/firebase");
-const { normalizeFaqs, normalizeBenefits, normalizeCtaSection } = require("../utils/normalize");
+const {
+  normalizeFaqs,
+  normalizeBenefits,
+  normalizeCtaSection,
+  normalizeTreatmentTypes,
+} = require("../utils/normalize");
 
 const servicesRouter = express.Router();
 
@@ -91,9 +96,10 @@ servicesRouter.post("/admin/services", async (req, res) => {
       ? body.treatment_steps
       : (Array.isArray(body.treatmentSteps) ? body.treatmentSteps : []);
 
-    const treatmentTypes = Array.isArray(body.treatment_types)
+    const treatmentTypesRaw = Array.isArray(body.treatment_types)
       ? body.treatment_types
       : (Array.isArray(body.treatmentTypes) ? body.treatmentTypes : []);
+    const treatmentTypes = normalizeTreatmentTypes(treatmentTypesRaw);
 
     const specialties = Array.isArray(body.specialties) ? body.specialties : [];
 
@@ -162,9 +168,10 @@ servicesRouter.put("/admin/services/:id", async (req, res) => {
       ? body.treatment_steps
       : (Array.isArray(body.treatmentSteps) ? body.treatmentSteps : []);
 
-    const treatmentTypes = Array.isArray(body.treatment_types)
+    const treatmentTypesRaw = Array.isArray(body.treatment_types)
       ? body.treatment_types
       : (Array.isArray(body.treatmentTypes) ? body.treatmentTypes : []);
+    const treatmentTypes = normalizeTreatmentTypes(treatmentTypesRaw);
 
     const specialties = Array.isArray(body.specialties) ? body.specialties : [];
 

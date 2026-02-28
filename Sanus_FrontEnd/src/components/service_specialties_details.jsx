@@ -61,9 +61,7 @@ export default function ServiceSpecialtyDetail() {
         setService(null);
         setSpecialty(null);
       } finally {
-        if (alive) {
-          setLoading(false);
-        }
+        if (alive) setLoading(false);
       }
     }
 
@@ -87,17 +85,35 @@ export default function ServiceSpecialtyDetail() {
     return specialty.subtitle || (service?.title ? `Serviço: ${service.title}` : "");
   }, [loading, specialty, service]);
 
+  /**
+   * ✅ Escolha da imagem do hero (nova realidade):
+   * 1) specialty.imageUrl (novo, vindo do upload no BO)
+   * 2) specialty.image (retrocompat)
+   * 3) service.imageUrl / service.image
+   * 4) fallback local
+   *
+   * Extra: cache-bust leve para evitar browser “agarrar” imagem antiga
+   * quando substituis o ficheiro no Supabase.
+   */
   const heroImage = useMemo(() => {
     if (loading) return "/Clinica/foto8.jpeg";
     if (!specialty) return "/Clinica/foto4.jpeg";
 
-    return (
-      specialty.image ||
-      specialty.imageUrl ||
-      service?.image ||
-      service?.imageUrl ||
-      "/Clinica/foto4.jpeg"
-    );
+    const raw =
+      String(specialty?.imageUrl || "").trim() ||
+      String(specialty?.image || "").trim() ||
+      String(service?.imageUrl || "").trim() ||
+      String(service?.image || "").trim() ||
+      "/Clinica/foto4.jpeg";
+
+    // ✅ cache-bust: só aplica se for URL http(s)
+    // (se for path local /Clinica/.. não mexe)
+    if (/^https?:\/\//i.test(raw)) {
+      const sep = raw.includes("?") ? "&" : "?";
+      return `${raw}${sep}v=${Date.now()}`;
+    }
+
+    return raw;
   }, [loading, specialty, service]);
 
   if (loading) {

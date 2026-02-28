@@ -36,7 +36,7 @@ const HeadingWithHeader = Heading.extend({
 });
 
 export default function ServiceForm() {
-  const { id } = useParams();
+  const { id } = useParams(); // ✅ docId do Firestore
   const navigate = useNavigate();
   const API = import.meta.env.VITE_BACKEND_URL;
 
@@ -178,6 +178,7 @@ export default function ServiceForm() {
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   };
 
+  // ✅ FIX: preservar imageUrl (e retrocompat image)
   const normalizeTreatmentTypes = (arr) => {
     if (!Array.isArray(arr)) return [];
     return arr
@@ -187,6 +188,8 @@ export default function ServiceForm() {
         icon: String(t?.icon || "").trim(),
         title: String(t?.title || "").trim(),
         subtitle: String(t?.subtitle || "").trim(),
+        imageUrl: String(t?.imageUrl || t?.image || "").trim(), // ✅ novo
+        image: String(t?.image || t?.imageUrl || "").trim(),     // ✅ retrocompat (opcional)
       }))
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   };
@@ -259,9 +262,8 @@ export default function ServiceForm() {
       setSaving(true);
       let finalImageUrl = imageUrl;
 
-      // 1️⃣ Upload imagem principal do serviço (signed url -> endpoint interno precisa token)
+      // 1️⃣ Upload imagem principal do serviço
       if (imageFile) {
-        // ✅ authedFetch devolve JSON { uploadUrl, publicUrl }
         const { uploadUrl, publicUrl } = await authedFetch(`${API}/storage/service-upload-url`, {
           method: "POST",
           body: JSON.stringify({
@@ -294,23 +296,25 @@ export default function ServiceForm() {
         subtitle: clean(subtitle),
         slug: clean(slug),
         text: clean(text),
-        "bigger_description": biggerDescription || "",
+        bigger_description: biggerDescription || "",
         ctaText: clean(ctaText),
+
         image: finalImageUrl,
         imageUrl: finalImageUrl,
+
         indications: Array.isArray(indications) ? indications : [],
-        "treatment_steps": normalizedSteps,
-        "treatment_types": normalizedTypes,
+        treatment_steps: normalizedSteps,
+        treatment_types: normalizedTypes,
         specialties: normalizedSpecialties,
+
         benefits: normalizedBenefits,
         faqs: normalizedFaqs,
-        "cta_section": normalizedCtaSection,
+        cta_section: normalizedCtaSection,
       };
 
       const method = id ? "PUT" : "POST";
       const endpoint = id ? `${API}/admin/services/${id}` : `${API}/admin/services`;
 
-      // ✅ usar authedFetch aqui também
       await authedFetch(endpoint, {
         method,
         body: JSON.stringify(payload),
@@ -356,31 +360,76 @@ export default function ServiceForm() {
           <form id="serviceform" onSubmit={handleSubmit} className="form-card">
             <div className="sv-tabs">
               <div className="sv-tablist">
-                <button type="button" className="sv-tab" aria-selected={activeTab === "base"} onClick={() => setActiveTab("base")}>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "base"}
+                  onClick={() => setActiveTab("base")}
+                >
                   Base
                 </button>
-                <button type="button" className="sv-tab" aria-selected={activeTab === "content"} onClick={() => setActiveTab("content")}>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "content"}
+                  onClick={() => setActiveTab("content")}
+                >
                   Conteúdo
                 </button>
-                <button type="button" className="sv-tab" aria-selected={activeTab === "types"} onClick={() => setActiveTab("types")}>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "types"}
+                  onClick={() => setActiveTab("types")}
+                >
                   Técnicas
                 </button>
-                <button type="button" className="sv-tab" aria-selected={activeTab === "steps"} onClick={() => setActiveTab("steps")}>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "steps"}
+                  onClick={() => setActiveTab("steps")}
+                >
                   Etapas
                 </button>
-                <button type="button" className="sv-tab" aria-selected={activeTab === "indications"} onClick={() => setActiveTab("indications")}>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "indications"}
+                  onClick={() => setActiveTab("indications")}
+                >
                   Indicações
                 </button>
-                <button type="button" className="sv-tab" aria-selected={activeTab === "specialties"} onClick={() => setActiveTab("specialties")}>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "specialties"}
+                  onClick={() => setActiveTab("specialties")}
+                >
                   Especialidades
                 </button>
-                <button type="button" className="sv-tab" aria-selected={activeTab === "benefits"} onClick={() => setActiveTab("benefits")}>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "benefits"}
+                  onClick={() => setActiveTab("benefits")}
+                >
                   Benefícios
                 </button>
-                <button type="button" className="sv-tab" aria-selected={activeTab === "faqs"} onClick={() => setActiveTab("faqs")}>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "faqs"}
+                  onClick={() => setActiveTab("faqs")}
+                >
                   FAQs
                 </button>
-                <button type="button" className="sv-tab" aria-selected={activeTab === "cta"} onClick={() => setActiveTab("cta")}>
+                <button
+                  type="button"
+                  className="sv-tab"
+                  aria-selected={activeTab === "cta"}
+                  onClick={() => setActiveTab("cta")}
+                >
                   CTA
                 </button>
               </div>
@@ -414,6 +463,8 @@ export default function ServiceForm() {
 
               {activeTab === "types" && (
                 <ServiceFormTreatmentTypesTab
+                  API={API}
+                  serviceId={id} // ✅ FIX: agora o upload sabe que serviço é
                   treatmentTypes={treatmentTypes}
                   setTreatmentTypes={setTreatmentTypes}
                   error={error}
@@ -447,11 +498,15 @@ export default function ServiceForm() {
                 />
               )}
 
-              {activeTab === "benefits" && <ServiceFormBenefitsTab benefits={benefits} setBenefits={setBenefits} />}
+              {activeTab === "benefits" && (
+                <ServiceFormBenefitsTab benefits={benefits} setBenefits={setBenefits} />
+              )}
 
               {activeTab === "faqs" && <ServiceFormFaqsTab faqs={faqs} setFaqs={setFaqs} />}
 
-              {activeTab === "cta" && <ServiceFormCtaSectionTab ctaSection={ctaSection} setCtaSection={setCtaSection} />}
+              {activeTab === "cta" && (
+                <ServiceFormCtaSectionTab ctaSection={ctaSection} setCtaSection={setCtaSection} />
+              )}
             </div>
           </form>
         )}

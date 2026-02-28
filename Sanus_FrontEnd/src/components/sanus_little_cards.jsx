@@ -54,7 +54,7 @@ export default function SanusCardsSection({
             viewBox="0 0 1440 320"
           >
             <path
-              fill="#4BCAAD"
+              fill="var(--color-primary)"
               fillOpacity="0.3"
               d="M0,128L120,154.7C240,181,480,235,720,261.3C960,288,1200,288,1320,288L1440,288V320H0Z"
             ></path>

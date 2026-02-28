@@ -15,8 +15,8 @@ export default function Insurance() {
         <defs>
           <pattern id="pattern-fisio" width="40" height="40" patternTransform="scale(2)" patternUnits="userSpaceOnUse">
             <rect width="100%" height="100%" fill="rgba(75, 202, 173, 0.1)"/>
-            <path fill="none" stroke="#2f5d6f" strokeLinecap="square" d="M20-5V5m0 30v10m20-30v10M0 15v10"/>
-            <path fill="none" stroke="#4BCAAD" strokeLinecap="square" d="M-5 40H5M-5 0H5m30 0h10M35 40h10M15 20h10"/>
+            <path fill="none" stroke="var(--color-primary-dark)" strokeLinecap="square" d="M20-5V5m0 30v10m20-30v10M0 15v10"/>
+            <path fill="none" stroke="var(--color-primary)" strokeLinecap="square" d="M-5 40H5M-5 0H5m30 0h10M35 40h10M15 20h10"/>
           </pattern>
         </defs>
         <rect width="800%" height="800%" fill="url(#pattern-fisio)"/>
@@ -51,7 +51,7 @@ export default function Insurance() {
       </div>
 
       <svg className="sanus-insurance-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffffff" fillOpacity="1" d="M0,128L120,138.7C240,149,480,171,720,170.7C960,171,1200,149,1320,138.7L1440,128L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg>
-      <svg className="sanus-insurance-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#4BCAAD" fillOpacity="0.3" d="M0,128L120,138.7C240,149,480,171,720,170.7C960,171,1200,149,1320,138.7L1440,128L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg>
+      <svg className="sanus-insurance-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="var(--color-primary)" fillOpacity="0.3" d="M0,128L120,138.7C240,149,480,171,720,170.7C960,171,1200,149,1320,138.7L1440,128L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg>
     </section>
   );
 }

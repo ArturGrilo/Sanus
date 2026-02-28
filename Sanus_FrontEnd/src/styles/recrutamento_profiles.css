@@ -300,6 +300,57 @@
   }
 }
 
+/* =========================================
+   NOVA REALIDADE: Cards com background image
+   (usa item.imageUrl vindo do BO)
+   ========================================= */
 
+.sanus-profile-card.has-bg{
+  position: relative;
+  overflow: hidden;
+  color: rgba(255,255,255,.92);
+}
 
+/* overlay para legibilidade */
+.sanus-profile-card.has-bg .sanus-profile-card-overlay{
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 360px at 10% 0%, rgba(75,202,173,.18), transparent 55%),
+    linear-gradient(to top, rgba(12, 62, 84, 0.86), rgba(12, 62, 84, 0.22));
+  z-index: 0;
+}
 
+/* conteúdo acima do overlay */
+.sanus-profile-card.has-bg .sanus-profile-card-inner{
+  position: relative;
+  z-index: 1;
+}
+
+/* texto em branco */
+.sanus-profile-card.has-bg .sanus-profile-title,
+.sanus-profile-card.has-bg .sanus-profile-desc,
+.sanus-profile-card.has-bg .sanus-profile-bullets,
+.sanus-profile-card.has-bg .sanus-profile-bullets li{
+  color: rgba(255,255,255,.92);
+  opacity: 1;
+}
+
+/* badge do ícone em "glass" */
+.sanus-profile-card.has-bg .sanus-profile-icon{
+  background: rgba(255,255,255,.14);
+  border-color: rgba(255,255,255,.22);
+  color: rgba(255,255,255,.92);
+}
+
+/* bullets box adaptada */
+.sanus-profile-card.has-bg .sanus-profile-bullets{
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.16);
+}
+
+/* marcador check em branco/teal */
+.sanus-profile-card.has-bg .sanus-profile-bullets li::before{
+  color: rgba(255,255,255,.92);
+  opacity: .95;
+}

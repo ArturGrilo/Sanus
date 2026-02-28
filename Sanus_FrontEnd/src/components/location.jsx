@@ -1,7 +1,7 @@
 import "../styles/location.css";
 import locationimage from '../images/Location/location.png';
 import locationimage_mobile from '../images/Location/location_mobile.png';
-import clinicaimage from '../images/Clinica/SanusVitae.jpeg';
+import clinicaimage from '../images/Clinica/sanus_clinica_exterior.jpeg';
 import { Clock, MapPin } from "phosphor-react"
 import { useNavigate } from "react-router-dom";
 

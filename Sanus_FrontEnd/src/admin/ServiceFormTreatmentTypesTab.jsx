@@ -1,11 +1,22 @@
-// TreatmentTypesTab.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import IconPicker from "./IconPicker";
 
-export default function TreatmentTypesTab({ treatmentTypes, setTreatmentTypes, error }) {
-  // ✅ Accordion: guarda o id aberto
+export default function TreatmentTypesTab({
+  serviceId, // ✅ precisa do docId do serviço
+  treatmentTypes,
+  setTreatmentTypes,
+  error,
+  API: APIFromProps, // ✅ opcional (se passares do ServiceForm)
+}) {
   const [openId, setOpenId] = useState(null);
+  const [uploadingId, setUploadingId] = useState(null);
+
+  // ✅ refs por item (porque há vários inputs na lista)
+  const fileInputRefs = useRef({});
+
+  // ✅ suporta ambos: prop API ou env
+  const API = APIFromProps || import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     if (!openId) return;
@@ -35,13 +46,111 @@ export default function TreatmentTypesTab({ treatmentTypes, setTreatmentTypes, e
   };
 
   const add = () => {
-    const id = uuidv4();
+    const newId = uuidv4();
     setTreatmentTypes([
       ...treatmentTypes,
-      { id, order: treatmentTypes.length + 1, icon: "", title: "", subtitle: "" },
+      { id: newId, order: treatmentTypes.length + 1, icon: "", title: "", subtitle: "", imageUrl: "" },
     ]);
-    setOpenId(id); // ✅ abre o novo
+    setOpenId(newId);
   };
+
+  async function doUpload(index, file) {
+    if (!serviceId) {
+      alert("Guarda o serviço primeiro (precisamos do ID do serviço).");
+      return;
+    }
+    if (!file) return;
+
+    const mime = file.type;
+    const okMime = ["image/jpeg", "image/png", "image/webp"].includes(mime);
+    if (!okMime) {
+      alert("Formato não suportado. Usa JPG, PNG ou WEBP.");
+      return;
+    }
+
+    const maxMb = 4;
+    if (file.size > maxMb * 1024 * 1024) {
+      alert(`Imagem muito grande. Máx. ${maxMb}MB.`);
+      return;
+    }
+
+    const current = treatmentTypes[index];
+    const itemId = String(current?.id || index);
+    const previousUrl = String(current?.imageUrl || "").trim();
+
+    setUploadingId(itemId);
+
+    try {
+      // 1) pedir signed upload url ao storage.routes.js
+      const res = await fetch(`${API}/storage/service-treatment-type-upload-url`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fileName: file.name,
+          contentType: mime,
+          serviceId,
+          itemId,
+          previousUrl, // ajuda a apagar logo a antiga
+        }),
+      });
+
+      if (!res.ok) {
+        const msg = await res.text().catch(() => "");
+        throw new Error(msg || `HTTP ${res.status}`);
+      }
+
+      const data = await res.json();
+      const uploadUrl = data?.uploadUrl;
+      const publicUrl = data?.publicUrl;
+
+      if (!uploadUrl || !publicUrl) {
+        throw new Error("Resposta inválida do endpoint de upload (faltam uploadUrl/publicUrl).");
+      }
+
+      // 2) upload binário
+      const put = await fetch(uploadUrl, {
+        method: "PUT",
+        headers: { "Content-Type": mime },
+        body: file,
+      });
+
+      if (!put.ok) {
+        const msg = await put.text().catch(() => "");
+        throw new Error(msg || `Upload falhou (HTTP ${put.status})`);
+      }
+
+      // 3) gravar publicUrl no item
+      updateType(index, { imageUrl: publicUrl });
+
+      // 4) limpar o input para permitir re-upload do mesmo ficheiro
+      const el = fileInputRefs.current[itemId];
+      if (el) el.value = "";
+    } catch (e) {
+      console.error(e);
+      alert(`Erro no upload: ${e.message || e}`);
+    } finally {
+      setUploadingId(null);
+    }
+  }
+
+  const hint = useMemo(() => {
+    return (
+      <div
+        className="alert-info"
+        style={{
+          marginTop: 12,
+          textAlign: "left",
+          padding: 12,
+          borderRadius: 12,
+          background: "rgba(12, 62, 84, 0.06)",
+          border: "1px solid rgba(12, 62, 84, 0.12)",
+        }}
+      >
+        <strong>Imagens:</strong> faz upload aqui. No site público, o card pode usar esta imagem como{" "}
+        <strong>background</strong>.
+      </div>
+    );
+  }, []);
 
   return (
     <section className="sv-tabpanel">
@@ -52,16 +161,21 @@ export default function TreatmentTypesTab({ treatmentTypes, setTreatmentTypes, e
         </div>
 
         {error ? <div className="alert-error">{error}</div> : null}
+        {hint}
 
         <div className="indications-admin-list">
           {treatmentTypes.map((t, index) => {
-            const id = t.id || String(index);
+            const id = String(t.id || index);
             const isOpen = openId === id;
 
             const orderLabel = t.order ?? index + 1;
             const titleLabel = t.title?.trim() ? t.title : "Nova técnica";
             const subtitleLabel = t.subtitle?.trim() ? t.subtitle : "subtítulo por definir";
             const iconStatus = t.icon?.trim() ? "com ícone" : "sem ícone";
+
+            const img = String(t.imageUrl || "").trim();
+            const hasImg = !!img;
+            const isUploading = uploadingId === id;
 
             return (
               <div key={id} className={`indication-admin-card ${isOpen ? "is-open" : ""}`}>
@@ -79,6 +193,8 @@ export default function TreatmentTypesTab({ treatmentTypes, setTreatmentTypes, e
                       <div className="sv-acc-title">{titleLabel}</div>
                       <div className="sv-acc-sub">
                         {subtitleLabel} • {iconStatus}
+                        {hasImg ? " • com imagem" : " • sem imagem"}
+                        {isUploading ? " • a enviar..." : ""}
                       </div>
                     </div>
                   </div>
@@ -135,12 +251,88 @@ export default function TreatmentTypesTab({ treatmentTypes, setTreatmentTypes, e
                       </label>
                     </div>
 
-                    <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                    {/* ✅ Upload (thumbnail pequeno, sem background no BO) */}
+                    <div style={{ marginTop: 12, textAlign: "left" }}>
+                      <div style={{ fontSize: 12, fontWeight: 700, opacity: 0.75, marginBottom: 6 }}>
+                        Imagem do card
+                      </div>
+
+                      {hasImg ? (
+                        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                          <img
+                            src={img}
+                            alt=""
+                            style={{
+                              width: 92,
+                              height: 64,
+                              objectFit: "cover",
+                              borderRadius: 10,
+                              border: "1px solid rgba(12,62,84,.15)",
+                            }}
+                          />
+
+                          {/* manter label aqui é ok (é só para abrir picker) */}
+                          <button
+                            className="btn btn-secundary"
+                            style={{ cursor: isUploading ? "not-allowed" : "pointer" }}
+                          >
+                            {isUploading ? "A enviar..." : "Trocar imagem"}
+                            <input
+                              ref={(el) => {
+                                fileInputRefs.current[id] = el;
+                              }}
+                              type="file"
+                              accept="image/jpeg,image/png,image/webp"
+                              disabled={isUploading}
+                              style={{ display: "none" }}
+                              onChange={(e) => doUpload(index, e.target.files?.[0])}
+                            />
+                          </button>
+
+                          <button
+                            type="button"
+                            className="btn btn-outline"
+                            disabled={isUploading}
+                            onClick={() => updateType(index, { imageUrl: "" })}
+                          >
+                            Remover imagem
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          <button
+                            type="button"
+                            className="btn btn-secundary"
+                            onClick={() => fileInputRefs.current[id]?.click()}
+                            disabled={isUploading}
+                          >
+                            {isUploading ? "A enviar..." : "Upload imagem"}
+                          </button>
+
+                          <input
+                            ref={(el) => {
+                              fileInputRefs.current[id] = el;
+                            }}
+                            type="file"
+                            accept="image/jpeg,image/png,image/webp"
+                            disabled={isUploading}
+                            style={{ display: "none" }}
+                            onChange={(e) => doUpload(index, e.target.files?.[0])}
+                          />
+                        </>
+                      )}
+
+                      <div style={{ fontSize: 12, opacity: 0.7, marginTop: 6 }}>
+                        JPG/PNG/WEBP até 4MB. No site público, esta imagem pode ser usada como background no card.
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
                       <button
                         type="button"
                         className="btn btn-secundary"
                         onClick={() => move(index, index - 1)}
-                        disabled={index === 0}
+                        disabled={index === 0 || isUploading}
                       >
                         ↑
                       </button>
@@ -149,12 +341,17 @@ export default function TreatmentTypesTab({ treatmentTypes, setTreatmentTypes, e
                         type="button"
                         className="btn btn-secundary"
                         onClick={() => move(index, index + 1)}
-                        disabled={index === treatmentTypes.length - 1}
+                        disabled={index === treatmentTypes.length - 1 || isUploading}
                       >
                         ↓
                       </button>
 
-                      <button type="button" className="btn btn-danger" onClick={() => remove(index)}>
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={() => remove(index)}
+                        disabled={isUploading}
+                      >
                         Remover
                       </button>
                     </div>

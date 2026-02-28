@@ -99,34 +99,47 @@ export default function ProfilesSection({
 
             const iconNode = renderIconFromItem(item, iconFallback);
 
+            // ✅ NOVO: background por item (técnicas)
+            const img = String(item?.imageUrl || "").trim();
+            const hasBg = !!img;
+
+            const cardStyle = hasBg
+              ? {
+                  backgroundImage: `url("${img}")`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                }
+              : undefined;
+
             return (
               <div
                 key={item.id || item.title || index}
-                className="sanus-profile-card"
-                initial={{ opacity: 0, y: 40 }}
-                transition={{
-                  ease: "easeOut",
-                  duration: 0.45,
-                  delay: index * 0.08,
-                }}
-                viewport={{ once: true }}
+                className={`sanus-profile-card ${hasBg ? "has-bg" : ""}`}
+                style={cardStyle}
               >
-                <div className="sanus-profile-icon">{iconNode}</div>
+                {/* ✅ overlay só quando há bg */}
+                {hasBg && <div className="sanus-profile-card-overlay" aria-hidden="true" />}
 
-                <h3 className="sanus-profile-title">{item.title}</h3>
+                {/* ✅ conteúdo acima do overlay */}
+                <div className="sanus-profile-card-inner">
+                  <div className="sanus-profile-icon">{iconNode}</div>
 
-                {hasBullets ? (
-                  <div className="sanus-profile-body">
-                    {hasDesc && <p className="sanus-profile-desc">{item.desc}</p>}
-                    <ul className="sanus-profile-bullets">
-                      {bullets.map((b, i) => (
-                        <li key={`${item.id || item.title || index}-b-${i}`}>{b}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <p className="sanus-profile-desc">{item.desc}</p>
-                )}
+                  <h3 className="sanus-profile-title">{item.title}</h3>
+
+                  {hasBullets ? (
+                    <div className="sanus-profile-body">
+                      {hasDesc && <p className="sanus-profile-desc">{item.desc}</p>}
+                      <ul className="sanus-profile-bullets">
+                        {bullets.map((b, i) => (
+                          <li key={`${item.id || item.title || index}-b-${i}`}>{b}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p className="sanus-profile-desc">{item.desc}</p>
+                  )}
+                </div>
               </div>
             );
           })}
@@ -145,7 +158,7 @@ export default function ProfilesSection({
             <rect width="100%" height="100%" fill="#fff" />
             <path
               fill="none"
-              stroke="#49caac"
+              stroke="var(--color-primary)"
               strokeLinecap="square"
               d="M20-5V5m0 30v10m20-30v10M0 15v10"
             />
