@@ -226,7 +226,7 @@
 .sanus-header-hamburger span {
   width: 25px;
   height: 3px;
-  background: var(--color-bg);
+  background: var(--color-primary-dark);
   border-radius: 2px;
   transition: 0.3s;
 }

@@ -38,6 +38,7 @@
 }
 
 .sanus-recrutamento-img-column {
+    opacity: 0;
     width: 70%;
     aspect-ratio: 2 / 1; /* quase a altura do ecrã */
     background: url('/Clinica/equipa.png') center/cover no-repeat;
@@ -97,12 +98,15 @@
     .sanus-recrutamento-text-column{
         padding-bottom: 0;
     }
+
     .sanus-recrutamento-img-column {
+        height: 30px;
         bottom: 0;
         width: 100%;
     }
     .sanus-recrutamento .sanus-pattern {
         height: 50%;
+        height: 0%;
         width: 90%;
         -webkit-mask-image: linear-gradient(to top left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
         -webkit-mask-repeat: no-repeat;

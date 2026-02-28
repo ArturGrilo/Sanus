@@ -25,12 +25,11 @@ body.sidebar-open {
   opacity: 1;
 }
 
-/* Decorative wave */
 .sanus-sidebar-wave {
   position: absolute;
   top: 0;
   left: 0;
-  height: 180px;
+  width: 100%;
   pointer-events: none;
   z-index: 12;
 }
@@ -52,9 +51,7 @@ body.sidebar-open {
 
   /* Minimal: one brand rail + very light tone */
   background:
-    linear-gradient(90deg, rgba(75,202,173,0.10) 0 1px, rgba(0,0,0,0) 1px 100%),
-    radial-gradient(900px 620px at 18% 12%, rgba(46,92,110,0.05) 0%, rgba(46,92,110,0) 62%),
-    linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.015) 100%);
+    var(--color-primary-alt);
 
   scrollbar-width: none;
 }
@@ -100,7 +97,7 @@ body.sidebar-open {
   cursor: pointer;
 
   /* UX: targets confortáveis */
-  min-height: 52px;
+  min-height: 80px;
   padding: 14px 8px 14px 18px;
 
   font-family: var(--font-title);
@@ -138,13 +135,13 @@ body.sidebar-open {
   right: 0;
   top: 8px;
   bottom: 8px;
-  border-radius: 14px;
+  border-radius: var(--border-radius-var);
 
   /* highlight editorial (muito subtil) */
   background: linear-gradient(
     90deg,
     rgba(75,202,173,0.10) 0%,
-    rgba(75,202,173,0.06) 28%,
+    rgba(75,202,173,0.6) 28%,
     rgba(75,202,173,0.00) 72%
   );
 
@@ -228,29 +225,12 @@ body.sidebar-open {
 
 .sidebar-acc-body {
   margin-top: 6px;
-  padding: 10px 0 8px 26px; /* mais alinhado com rail */
+  padding: 10px 0 8px 6px; /* mais alinhado com rail */
+  margin-left: 20px;
   display: grid;
   gap: 6px;
 
-  position: relative;
-  border-left: 1px solid rgba(0,0,0,0.10);
-}
-
-/* accent rail dentro do accordion (minimal) */
-.sidebar-acc-body::before {
-  content: "";
-  position: absolute;
-  left: -1px;
-  top: 10px;
-  bottom: 10px;
-  width: 1px;
-  background: linear-gradient(
-    180deg,
-    rgba(75,202,173,0.00),
-    rgba(75,202,173,0.50),
-    rgba(75,202,173,0.00)
-  );
-  opacity: 0.85;
+  position: relative; 
 }
 
 /* =============================== */
@@ -344,6 +324,13 @@ body.sidebar-open {
   .sidebar-caret,
   .sidebar-cta {
     transition: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .sanus-sidebar-wave {
+    height: 200px;
+    width: auto;
   }
 }
 
