@@ -24,7 +24,6 @@ export default function RecrutamentoPage() {
       title: "Receção / Front-Office",
       desc: "Formação em Reabilitação e Fisioterapia."
     },
-
     {
       icon: <GraduationCap size={36} weight="regular" color="var(--color-other)" />,
       title: "Estágio Curricular",
@@ -34,7 +33,18 @@ export default function RecrutamentoPage() {
     {
       icon: <HandHeartIcon size={36} weight="regular" color="var(--color-other)" />,
       title: "Profissional Externo",
-      desc: "Massagem, Pilates e terapias complementares."
+      desc: "Massagem e terapias complementares."
+    },
+    {
+      icon: <GraduationCap size={36} weight="regular" color="var(--color-other)" />,
+      title: "Instrutor de Pilates",
+      desc: "Formação em Fisioterapia."
+    },
+
+    {
+      icon: <HandHeartIcon size={36} weight="regular" color="var(--color-other)" />,
+      title: "Osteopata",
+      desc: "Formação em Fisioterapia."
     },
   ];
 

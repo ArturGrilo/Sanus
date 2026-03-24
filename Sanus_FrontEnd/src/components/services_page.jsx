@@ -27,11 +27,6 @@ export default function ServicesPage() {
         "Se tiver dor, limitação de movimento ou estiver em recuperação, a Fisioterapia é geralmente o ponto de partida. Se o objetivo for melhorar postura, força e controlo do movimento, o Pilates com Equipamentos é uma excelente opção. Se prefere cuidados no conforto da sua casa, os Serviços ao Domicílio permitem acompanhar o seu plano com segurança e personalização. Se tiver dúvidas, contacte-nos e ajudamos a orientar."
     },
     {
-      question: "Preciso de prescrição médica para iniciar?",
-      answer:
-        "Não é obrigatório na maioria dos casos. Pode agendar diretamente e será realizada uma avaliação inicial para definir o plano. Se existir prescrição ou exames, pode trazer — ajudam a contextualizar."
-    },
-    {
       question: "Os tratamentos são personalizados?",
       answer:
         "Sim. Cada plano é ajustado à sua condição clínica, objetivos e contexto de vida. A abordagem é baseada em evidência e a progressão é revista ao longo do acompanhamento."

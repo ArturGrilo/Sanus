@@ -25,6 +25,7 @@ import ServiceSpecialtyDetail from "./components/service_specialties_details";
 import ServicesPage from "./components/services_page";
 import AgendarPage from "./components/book_page";
 import CookieBanner from "./components/cookie_banner";
+import ClinicPage from "./components/clinic_page";
 
 // Páginas do back office
 import Login from "./admin/Login";
@@ -81,9 +82,9 @@ export default function App() {
                 </div>
               </section>
               {/*<Team />*/}
-              <Recrutamento />
-              <Feedback />
               <Insurance />
+              <Feedback />
+              <Recrutamento />
               <Location />
               <BlogSection variant="home" limit={3} />
               <Footer />
@@ -102,6 +103,7 @@ export default function App() {
         <Route path="/servicos/:id" element={<ServicoDetalhe />} />
         <Route path="/servicos/:serviceSlug/:specialtySlug" element={<ServiceSpecialtyDetail />} />
         <Route path="/agendar" element={<AgendarPage />} />
+        <Route path="/clinica" element={<ClinicPage />} />
 
         {/* 🔐 Back Office */}
         <Route path="/login" element={<Login />} />

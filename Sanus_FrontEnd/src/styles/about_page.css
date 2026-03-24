@@ -92,6 +92,14 @@
   fill-opacity: 1;
 }
 
+.about-us-cta-container{
+    display: flex;
+    flex-direction: column;
+    margin-top: -15%;
+    position: relative;
+    z-index: 10;
+}
+
 @media (max-width: 1500px) {
     .feedback-comment {
         font-size: 2rem;

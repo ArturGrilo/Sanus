@@ -1,11 +1,25 @@
+.sanus-insurance-main{
+  margin: -200px 0 0px 0;
+  position: relative;
+  z-index: 100;
+}
 .sanus-insurance {   
-    background: var(--color-primary-alt);   
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 10;
-    padding-bottom: 50px;
     position: relative;
+    background-color: white;
+}
+
+.sanus-insurance-sub{
+    padding-top: 10px;
+    position: relative;
+    display: flex;
+    width: 100%;
+    background: var(--color-primary-dark);
+    fill-opacity: .5;
+    justify-content: center;
 }
 
 .sanus-insurance-container {
@@ -28,7 +42,7 @@
 
 .sanus-insurance-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
     order: 1;
     width: 100%;
@@ -52,40 +66,11 @@
     gap: 60px;
 }
 
-.sanus-insurance-item-icon{
-    color: var(--color-primary-dark);
-    height: 150px;
-    width: 150px;
-    padding-left: 20px;
-    position: relative;
-    border-radius: 3px 25px;
-    border-top: 14px solid var(--color-primary-dark);
-    border-left: 13px solid var(--color-primary);
-}
-
 .sanus-insurance-item-details{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
-}
-
-.sanus-insurance-item-details h2 {
-    font-family: var(--font-title);
-    color: var(--color-primary-dark);
-    font-size: 2.5rem;
-}
-
-/* Ícone topo do card */
-.sanus-insurance-icon {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  font-size: 20px;
-  border-radius: 10px;
-  background: #e8f3e3;            
-  color: var(--color-primary-dark);
 }
 
 /* Lista de logos (opcional) */
@@ -105,12 +90,6 @@
     font-family: var(--font-text);
     font-size: 20px;
     gap: 10px;
-}
-
-.sanus-insurance-item-details p{
-    font-family: var(--font-text);
-    font-size: 20px;
-    text-align: left;
 }
 
 /* Card "nota" com destaque suave */
@@ -135,17 +114,26 @@
   background: var(--color-primary-dark);
 }
 
-.sanus-insurance-wave{
-  position: absolute;
-  top: calc(100% - 150px);
-  left: 0;
+.sanus-insurance-wave-top{
   width: 100%;
+  margin-bottom: -15px;
+}
+
+.sanus-insurance-wave{
+  width: 100%;
+  margin-top: -10px;
+}
+
+.sanus-insurance .sanus-pattern{
+    height: 120% !important;
+    bottom: -20%;
+    background-color: transparent
 }
 
 /* Responsivo */
 @media (max-width: 1650px) {
   .sanus-insurance-wave {
-    top: calc(100% - 100px);
+    top: calc(100%);
   }
 }
 
@@ -164,6 +152,10 @@
 }
 
 @media (max-width: 1200px) {
+  .sanus-insurance .sanus-pattern{
+    height: 120% !important;
+    bottom: -10%;
+  }
   .sanus-insurance-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -174,7 +166,10 @@
     object-fit: contain;
   }
   .sanus-insurance-wave {
-    top: calc(100% - 70px);
+    top: calc(100% );
+  }
+  .sanus-insurance-main{
+    margin-top: -100px;
   }
 }
 
@@ -185,6 +180,9 @@
 }
 
 @media (max-width: 840px) {
+  .sanus-insurance-sub{
+    padding-top: 60px;
+  }
   .sanus-insurance-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -198,12 +196,10 @@
     font-size: 1.6rem;
   }
   .sanus-insurance {
-    background: var(--color-primary-alt);
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 10;
-    padding: 50px 0;
     position: relative;
   }
   .sanus-insurance-container {

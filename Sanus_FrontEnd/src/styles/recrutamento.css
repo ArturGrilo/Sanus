@@ -1,18 +1,24 @@
 .sanus-recrutamento {
-    background: #fff;
     position: relative;    
     margin-top: -220px;
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 0;
+    z-index: 10;
+    margin-bottom: 00px;
 }
 
 .sanus-recrutamento-2{
-    margin-top: -1px;
-    background-color: var(--color-primary-dark);
+    margin-top: 0px;
+    background-color: var(--color-primary-alt);
     overflow: hidden;
-}   
+}  
+
+.sanus-recrutamento .sanus-pattern {
+    bottom: 20%;
+    height: 50%;
+}
 
 .sanus-recrutamento-container {
     max-width: 1800px;
@@ -21,7 +27,6 @@
     justify-content: space-between;
     display: flex;
     gap: 60px;
-    padding-bottom: 80px;
     text-align: start;
     position: relative;
 }
@@ -30,7 +35,6 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    padding-bottom: 80px;
 }
 
 .sanus-recrutamento-text-column .btn{

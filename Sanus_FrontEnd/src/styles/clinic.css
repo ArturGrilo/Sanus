@@ -1,0 +1,218 @@
+/* =========================================================
+   CLINIC PAGE — OVERRIDES PREMIUM (ANTI-CSS GLOBAL)
+   ========================================================= */
+
+.sanus-clinic {
+  background: #fff;
+}
+
+/* Seções com respiro premium */
+.sanus-clinic .sanus-section {
+  padding: clamp(56px, 7vw, 110px) 0;
+}
+
+/* Head central limpo */
+.sanus-clinic .sanus-section__head {
+  max-width: 860px;
+  margin: 0 auto 26px auto;
+  text-align: center;
+}
+
+.sanus-clinic .sanus-section__head h2 {
+  font-size: clamp(24px, 3.2vw, 38px);
+  letter-spacing: -0.02em;
+  margin: 0 0 10px 0;
+}
+
+.sanus-clinic .sanus-section__head p {
+  margin: 0 auto;
+  max-width: 66ch;
+  line-height: 1.65;
+  opacity: 0.86;
+}
+
+/* Intro grid */
+.sanus-clinic .sanus-clinic__introGrid {
+  display: grid !important;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: clamp(20px, 4vw, 64px);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .sanus-clinic .sanus-clinic__introGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sanus-clinic .sanus-clinic__introText h2 {
+  font-size: clamp(24px, 3vw, 36px);
+  letter-spacing: -0.02em;
+  margin: 0 0 14px 0;
+}
+
+.sanus-clinic .sanus-clinic__introText p {
+  line-height: 1.75;
+  opacity: 0.9;
+  margin: 0 0 14px 0;
+}
+
+/* Card */
+.sanus-clinic .sanus-clinic__introCard {
+  background: rgba(246, 250, 251, 0.95);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 18px 48px rgba(0,0,0,0.07);
+}
+
+.sanus-clinic .sanus-clinic__pill {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.72;
+  margin: 0 0 14px 0;
+}
+
+/* anti “listas feias” globais */
+.sanus-clinic .sanus-clinic__bullets {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: grid;
+  gap: 12px;
+}
+
+.sanus-clinic .sanus-clinic__bullets li {
+  position: relative;
+  padding-left: 28px;
+  line-height: 1.55;
+  opacity: 0.92;
+}
+
+.sanus-clinic .sanus-clinic__bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.36em;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(0, 140, 160, 0.14);
+  border: 1px solid rgba(0, 140, 160, 0.22);
+}
+
+/* =========================================================
+   GALERIA — AQUI ESTÁ O FIX REAL
+   ========================================================= */
+
+.sanus-clinic .sanus-mediaGrid {
+  display: grid !important;               /* derrota CSS global */
+  grid-template-columns: repeat(12, 1fr) !important;
+  gap: 14px !important;
+  align-items: stretch;
+}
+
+@media (max-width: 980px) {
+  .sanus-clinic .sanus-mediaGrid {
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .sanus-clinic .sanus-mediaGrid {
+    grid-template-columns: repeat(2, 1fr) !important; /* 2 colunas mobile */
+    gap: 10px !important;
+  }
+}
+
+.sanus-clinic .sanus-mediaCard {
+  margin: 0 !important;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 20px 55px rgba(0,0,0,0.09);
+  transform: translateZ(0);
+}
+
+/* Wrapper que controla o tamanho (não depende do figure) */
+.sanus-clinic .sanus-mediaFrame {
+  width: 100%;
+  overflow: hidden;
+  background: #f6fafb;
+}
+
+/* A imagem agora respeita o frame */
+.sanus-clinic .sanus-mediaFrame img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  transform: scale(1.02);
+  filter: saturate(1.02) contrast(1.03);
+}
+
+/* Variantes — definem o aspecto e “mudam o corte” mesmo com a mesma imagem */
+.sanus-clinic .sanus-mediaCard--wide { grid-column: span 6 !important; }
+.sanus-clinic .sanus-mediaCard--wide .sanus-mediaFrame { aspect-ratio: 16 / 9; }
+
+.sanus-clinic .sanus-mediaCard--tall { grid-column: span 6 !important; }
+.sanus-clinic .sanus-mediaCard--tall .sanus-mediaFrame { aspect-ratio: 3 / 4; }
+.sanus-clinic .sanus-mediaCard--tall img { object-position: 50% 35% !important; }
+
+.sanus-clinic .sanus-mediaCard--square { grid-column: span 6 !important; }
+.sanus-clinic .sanus-mediaCard--square .sanus-mediaFrame { aspect-ratio: 1 / 1; }
+.sanus-clinic .sanus-mediaCard--square img { object-position: 50% 60% !important; }
+
+.sanus-clinic .sanus-mediaCard--tallSoft { grid-column: span 6 !important; }
+.sanus-clinic .sanus-mediaCard--tallSoft .sanus-mediaFrame { aspect-ratio: 4 / 5; }
+.sanus-clinic .sanus-mediaCard--tallSoft img { object-position: 50% 45% !important; }
+
+@media (max-width: 520px) {
+  .sanus-clinic .sanus-mediaCard {
+    grid-column: span 2 !important; /* 1 card por linha em 2-col grid = fica perfeito */
+  }
+}
+
+/* Caption */
+.sanus-clinic .sanus-mediaCaption {
+  padding: 12px 16px 16px;
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: 0.86;
+}
+
+/* =========================================================
+   CTA premium
+   ========================================================= */
+
+.sanus-clinic .sanus-clinic__ctaBox {
+  border-radius: 28px;
+  padding: clamp(22px, 3.2vw, 52px);
+  background: linear-gradient(135deg, rgba(246,250,251,0.95), rgba(255,255,255,0.9));
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 28px 80px rgba(0,0,0,0.10);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.sanus-clinic .sanus-clinic__ctaBox h3 {
+  margin: 0 0 8px 0;
+  letter-spacing: -0.02em;
+}
+
+.sanus-clinic .sanus-clinic__ctaBox p {
+  margin: 0;
+  opacity: 0.86;
+  line-height: 1.6;
+}
+
+.sanus-clinic .sanus-clinic__ctaActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
