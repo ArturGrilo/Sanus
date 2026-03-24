@@ -6,8 +6,8 @@ import PageTransition from "./page_transition";
 import ContactCTA from "./contact_cta_break_section";
 import SanusBenefits from "./recrutamento_benefits";
 import ProfilesSection from "./recrutamento_profiles";
-import {HandsClapping, UsersThree, GraduationCap} from "phosphor-react";
-import { HandHeartIcon } from "@phosphor-icons/react";
+import { UsersThree, GraduationCap } from "phosphor-react";
+import { HandHeartIcon, PersonSimpleRunIcon, HandPalmIcon, UserIcon } from "@phosphor-icons/react";
 import FAQSection from "./faq_section";
 import RecruitmentApplicationForm from "./recruitment_application_form";
 
@@ -20,7 +20,7 @@ export default function RecrutamentoPage() {
     },
 
     {
-      icon: <HandsClapping size={36} weight="regular" color="var(--color-other)" />,
+      icon: <UserIcon size={36} weight="regular" color="var(--color-other)" />,
       title: "Receção / Front-Office",
       desc: "Formação em Reabilitação e Fisioterapia."
     },
@@ -36,13 +36,13 @@ export default function RecrutamentoPage() {
       desc: "Massagem e terapias complementares."
     },
     {
-      icon: <GraduationCap size={36} weight="regular" color="var(--color-other)" />,
+      icon: <PersonSimpleRunIcon size={36} weight="regular" color="var(--color-other)" />,
       title: "Instrutor de Pilates",
       desc: "Formação em Fisioterapia."
     },
 
     {
-      icon: <HandHeartIcon size={36} weight="regular" color="var(--color-other)" />,
+      icon: <HandPalmIcon size={36} weight="regular" color="var(--color-other)" />,
       title: "Osteopata",
       desc: "Formação em Fisioterapia."
     },
