@@ -6,21 +6,32 @@ export default function BlogCard({ image, title, author, date, id, tags = [] }) 
   const formatDate = (dateObj) => {
     if (!dateObj) return "";
 
-    const dateInstance =
-      dateObj instanceof Date
-        ? dateObj
-        : new Date(dateObj.seconds ? dateObj.seconds * 1000 : dateObj);
+    let dateInstance = null;
+
+    if (dateObj instanceof Date) {
+      dateInstance = dateObj;
+    } else if (typeof dateObj?.toDate === "function") {
+      dateInstance = dateObj.toDate();
+    } else if (typeof dateObj?.seconds === "number") {
+      dateInstance = new Date(dateObj.seconds * 1000);
+    } else if (typeof dateObj?._seconds === "number") {
+      dateInstance = new Date(dateObj._seconds * 1000);
+    } else if (typeof dateObj === "string" || typeof dateObj === "number") {
+      dateInstance = new Date(dateObj);
+    }
+
+    if (!dateInstance || Number.isNaN(dateInstance.getTime())) {
+      return "";
+    }
 
     const agora = new Date();
     const diffMs = agora - dateInstance;
     const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-    // ⏱️ Fallback relativo: há X dias
     if (diffDias === 0) return "Hoje";
     if (diffDias === 1) return "Ontem";
-    if (diffDias < 7) return `Há ${diffDias} dias`;
+    if (diffDias > 1 && diffDias < 7) return `Há ${diffDias} dias`;
 
-    // 🗓️ Formato curto e elegante em PT
     return dateInstance.toLocaleDateString("pt-PT", {
       day: "2-digit",
       month: "short",
