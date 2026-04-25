@@ -19,7 +19,7 @@
     "@tiptap/react": "^3.10.7",
     "@tiptap/starter-kit": "^3.10.7",
     "firebase": "^12.4.0",
-    "framer-motion": "^12.23.24",
+    "framer-motion": "^12.38.0",
     "gsap": "^3.13.0",
     "phosphor-react": "^1.4.1",
     "react": "^19.1.1",
