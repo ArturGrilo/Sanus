@@ -52,7 +52,6 @@ body.sv-modal-open {
   font-family: var(--font-title);
   font-weight: 900;
   font-size: 18px;
-  color: var(--color-header);
   margin-bottom: 6px;
 }
 
@@ -73,7 +72,6 @@ body.sv-modal-open {
 }
 
 .sv-cookie-link {
-  color: var(--color-header);
   opacity: 0.75;
   font-weight: 800;
   text-decoration: none;
@@ -140,7 +138,6 @@ body.sv-modal-open {
   font-family: var(--font-title);
   font-weight: 900;
   font-size: 20px;
-  color: var(--color-header);
   margin-top: 4px;
 }
 
@@ -176,7 +173,6 @@ body.sv-modal-open {
 
 .sv-consent-title {
   font-weight: 900;
-  color: var(--color-header);
   margin-bottom: 4px;
 }
 

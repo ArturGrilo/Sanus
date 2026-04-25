@@ -2,12 +2,10 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 
-// Páginas do site
 import Header from "./components/header";
 import Hero from "./components/hero";
 import Services from "./components/services";
 import Mission from "./components/mission";
-import Team from "./components/team";
 import Recrutamento from "./components/recrutamento";
 import Feedback from "./components/feedback";
 import Insurance from "./components/insurance";
@@ -28,7 +26,6 @@ import AgendarPage from "./components/book_page";
 import CookieBanner from "./components/cookie_banner";
 import ClinicPage from "./components/clinic_page";
 
-// Páginas do back office
 import Login from "./admin/Login";
 import Dashboard from "./admin/Dashboard";
 import RequireAuth from "./admin/RequireAuth";
@@ -54,108 +51,174 @@ export default function App() {
   const isAdminRoute =
     location.pathname.startsWith("/admin") || location.pathname === "/login";
 
+  const homepageSchema = {
+    "@context": "https://schema.org",
+    "@type": "MedicalClinic",
+    name: "Sanus Vitae",
+    url: "https://sanus.pt/",
+    image: "https://sanus.pt/Clinica/ClinicaSanusVitaeBarreiro_2.jpeg",
+    description:
+      "Clínica de fisioterapia no Barreiro com acompanhamento personalizado, Pilates com equipamentos, serviços ao domicílio e uma abordagem centrada na pessoa.",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Barreiro",
+      addressCountry: "PT",
+    },
+    areaServed: {
+      "@type": "City",
+      name: "Barreiro",
+    },
+    medicalSpecialty: [
+      "Fisioterapia",
+      "Reabilitação",
+      "Pilates clínico",
+    ],
+  };
+
   return (
-    <AnimatePresence mode="wait">
-      {!isAdminRoute && <CookieBanner /> && <WhatsappButton />}
+    <>
+      {!isAdminRoute && (
+        <>
+          <CookieBanner />
+          <WhatsappButton />
+        </>
+      )}
 
-      <Routes location={location} key={location.pathname}>
-        <Route
-          path="/"
-          element={
-            <>
-              <Helmet>
-                <title>Sanus Vitae | Clínica de Fisioterapia no Barreiro</title>
-                <meta
-                  name="description"
-                  content="Clínica de fisioterapia no Barreiro com acompanhamento personalizado, Pilates com equipamentos, serviços ao domicílio e uma abordagem centrada na pessoa."
-                />
-                <meta name="robots" content="index, follow" />
-                <link rel="canonical" href="https://sanus.pt/" />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route
+            path="/"
+            element={
+              <>
+                <Helmet>
+                  <title>Fisioterapia no Barreiro | Clínica Sanus Vitae</title>
+                  <meta
+                    name="description"
+                    content="Clínica de fisioterapia no Barreiro especializada em reabilitação, Pilates com equipamentos, serviços ao domicílio e cuidados personalizados."
+                  />
+                  <meta
+                    name="keywords"
+                    content="fisioterapia Barreiro, clínica de fisioterapia Barreiro, pilates clínico Barreiro, reabilitação Barreiro, Sanus Vitae"
+                  />
+                  <meta name="robots" content="index, follow" />
+                  <link rel="canonical" href="https://sanus.pt/" />
 
-                <meta property="og:type" content="website" />
-                <meta property="og:locale" content="pt_PT" />
-                <meta property="og:site_name" content="Sanus Vitae" />
-                <meta property="og:title" content="Sanus Vitae | Clínica de Fisioterapia no Barreiro" />
-                <meta
-                  property="og:description"
-                  content="Fisioterapia, Pilates com equipamentos e cuidados personalizados no Barreiro."
-                />
-                <meta property="og:url" content="https://sanus.pt/" />
-                <meta
-                  property="og:image"
-                  content="https://sanus.pt/Clinica/ClinicaSanusVitaeBarreiro_2.jpeg"
-                />
-              </Helmet>
+                  <meta property="og:type" content="website" />
+                  <meta property="og:locale" content="pt_PT" />
+                  <meta property="og:site_name" content="Sanus Vitae" />
+                  <meta
+                    property="og:title"
+                    content="Fisioterapia no Barreiro | Clínica Sanus Vitae"
+                  />
+                  <meta
+                    property="og:description"
+                    content="Fisioterapia, Pilates com equipamentos e cuidados personalizados no Barreiro."
+                  />
+                  <meta property="og:url" content="https://sanus.pt/" />
+                  <meta
+                    property="og:image"
+                    content="https://sanus.pt/Clinica/ClinicaSanusVitaeBarreiro_2.jpeg"
+                  />
 
-              <PageTransition>
-                <Header />
-                <Hero />
-                <Services />
-                <Mission />
-                <section className="sanus-about-us" style={{ marginTop: "160px", marginBottom: "100px" }}>
-                  <div className="sanus-about-us-container">
-                    <div className="feedback-comment-list" style={{ width: "100%", justifyContent: "center" }}>
-                      <h3>
-                        <span className="feedback-comment">
-                          Aqui, não tratamos apenas o corpo.
-                        </span>
-                        <span className="feedback-comment other-color">
-                          Cuidamos da pessoa.
-                        </span>
-                      </h3>
+                  <meta name="twitter:card" content="summary_large_image" />
+                  <meta
+                    name="twitter:title"
+                    content="Fisioterapia no Barreiro | Clínica Sanus Vitae"
+                  />
+                  <meta
+                    name="twitter:description"
+                    content="Fisioterapia, Pilates com equipamentos e cuidados personalizados no Barreiro."
+                  />
+                  <meta
+                    name="twitter:image"
+                    content="https://sanus.pt/Clinica/ClinicaSanusVitaeBarreiro_2.jpeg"
+                  />
+
+                  <script type="application/ld+json">
+                    {JSON.stringify(homepageSchema)}
+                  </script>
+                </Helmet>
+
+                <PageTransition>
+                  <Header />
+                  <Hero />
+                  <Services />
+                  <Mission />
+
+                  <section
+                    className="sanus-about-us"
+                    style={{ marginTop: "160px", marginBottom: "100px" }}
+                  >
+                    <div className="sanus-about-us-container">
+                      <div
+                        className="feedback-comment-list"
+                        style={{ width: "100%", justifyContent: "center" }}
+                      >
+                        <h2>
+                          <span className="feedback-comment">
+                            Aqui, não tratamos apenas o corpo.
+                          </span>
+                          <span className="feedback-comment other-color">
+                            Cuidamos da pessoa.
+                          </span>
+                        </h2>
+                      </div>
                     </div>
-                  </div>
-                </section>
-                {/*<Team />*/}
-                <Insurance />
-                <Feedback />
-                <Recrutamento />
-                <Location />
-                <BlogSection variant="home" limit={3} />
-                <Footer />
-              </PageTransition>
-            </>
-          }
-        />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/sobre-nos" element={<AboutPage />} />
-        <Route path="/blog/:id" element={<BlogDetail />} />
-        <Route path="/contactos" element={<ContactPage />} />
-        <Route path="/politica-de-privacidade" element={<PrivacyPage />} />
-        <Route path="/politica-de-cookies" element={<CookiesPage />} />
-        <Route path="/termos-de-utilizacao" element={<UsagePage />} />
-        <Route path="/recrutamento" element={<RecrutamentoPage />} />
-        <Route path="/servicos" element={<ServicesPage />} />
-        <Route path="/servicos/:id" element={<ServicoDetalhe />} />
-        <Route path="/servicos/:serviceSlug/:specialtySlug" element={<ServiceSpecialtyDetail />} />
-        <Route path="/agendar" element={<AgendarPage />} />
-        <Route path="/clinica" element={<ClinicPage />} />
+                  </section>
 
-        {/* 🔐 Back Office */}
-        <Route path="/login" element={<Login />} />
-        <Route element={<RequireAuth />}>
-          <Route path="/admin" element={<Dashboard />} />
-          <Route path="/admin/blog" element={<BlogList />} />
-          <Route path="/admin/blog/new" element={<BlogForm />} />
-          <Route path="/admin/blog/edit/:id" element={<BlogForm />} />
-          <Route path="/admin/feedback" element={<FeedbackList />} />
-          <Route path="/admin/feedback/new" element={<FeedbackForm />} />
-          <Route path="/admin/feedback/edit/:id" element={<FeedbackForm />} />
-          <Route path="/admin/privacy" element={<PrivacyForm />} />
-          <Route path="/admin/cookies" element={<CookiesForm />} />
-          <Route path="/admin/usage" element={<UsageForm />} />
-          <Route path="/admin/services" element={<ServicesList />} />
-          <Route path="/admin/services/new" element={<ServiceForm />} />
-          <Route path="/admin/services/edit/:id" element={<ServiceForm />} />
-          <Route path="/admin/tags" element={<TagsList />} />
-          <Route path="/admin/tags/new" element={<TagForm />} />
-          <Route path="/admin/tags/edit/:id" element={<TagForm />} />
-          <Route path="/admin/faqs" element={<FaqsPage />} />
-        </Route>
+                  <Insurance />
+                  <Feedback />
+                  <Recrutamento />
+                  <Location />
+                  <BlogSection variant="home" limit={3} />
+                  <Footer />
+                </PageTransition>
+              </>
+            }
+          />
 
-        <Route path="/admin/*" element={<Login />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </AnimatePresence>
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/sobre-nos" element={<AboutPage />} />
+          <Route path="/blog/:id" element={<BlogDetail />} />
+          <Route path="/contactos" element={<ContactPage />} />
+          <Route path="/politica-de-privacidade" element={<PrivacyPage />} />
+          <Route path="/politica-de-cookies" element={<CookiesPage />} />
+          <Route path="/termos-de-utilizacao" element={<UsagePage />} />
+          <Route path="/recrutamento" element={<RecrutamentoPage />} />
+          <Route path="/servicos" element={<ServicesPage />} />
+          <Route path="/servicos/:id" element={<ServicoDetalhe />} />
+          <Route
+            path="/servicos/:serviceSlug/:specialtySlug"
+            element={<ServiceSpecialtyDetail />}
+          />
+          <Route path="/agendar" element={<AgendarPage />} />
+          <Route path="/clinica" element={<ClinicPage />} />
+
+          <Route path="/login" element={<Login />} />
+          <Route element={<RequireAuth />}>
+            <Route path="/admin" element={<Dashboard />} />
+            <Route path="/admin/blog" element={<BlogList />} />
+            <Route path="/admin/blog/new" element={<BlogForm />} />
+            <Route path="/admin/blog/edit/:id" element={<BlogForm />} />
+            <Route path="/admin/feedback" element={<FeedbackList />} />
+            <Route path="/admin/feedback/new" element={<FeedbackForm />} />
+            <Route path="/admin/feedback/edit/:id" element={<FeedbackForm />} />
+            <Route path="/admin/privacy" element={<PrivacyForm />} />
+            <Route path="/admin/cookies" element={<CookiesForm />} />
+            <Route path="/admin/usage" element={<UsageForm />} />
+            <Route path="/admin/services" element={<ServicesList />} />
+            <Route path="/admin/services/new" element={<ServiceForm />} />
+            <Route path="/admin/services/edit/:id" element={<ServiceForm />} />
+            <Route path="/admin/tags" element={<TagsList />} />
+            <Route path="/admin/tags/new" element={<TagForm />} />
+            <Route path="/admin/tags/edit/:id" element={<TagForm />} />
+            <Route path="/admin/faqs" element={<FaqsPage />} />
+          </Route>
+
+          <Route path="/admin/*" element={<Login />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AnimatePresence>
+    </>
   );
 }
