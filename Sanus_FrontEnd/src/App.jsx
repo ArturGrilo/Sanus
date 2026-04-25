@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 // Páginas do site
 import Header from "./components/header";
@@ -58,37 +59,62 @@ export default function App() {
       {!isAdminRoute && <CookieBanner /> && <WhatsappButton />}
 
       <Routes location={location} key={location.pathname}>
-        {/* 🌐 Site principal */}
         <Route
           path="/"
           element={
-            <PageTransition>
-              <Header />
-              <Hero />
-              <Services />
-              <Mission />
-              <section className="sanus-about-us" style={{marginTop:"160px", marginBottom:"100px"}}>
-                <div className="sanus-about-us-container">
-                    <div className="feedback-comment-list" style={{width: "100%", justifyContent: "center"}}>
-                        <h3>
-                            <span className="feedback-comment">
-                                Aqui, não tratamos apenas o corpo.
-                            </span>
-                            <span className="feedback-comment other-color">
-                                Cuidamos da pessoa.
-                            </span>
-                        </h3>
+            <>
+              <Helmet>
+                <title>Sanus Vitae | Clínica de Fisioterapia no Barreiro</title>
+                <meta
+                  name="description"
+                  content="Clínica de fisioterapia no Barreiro com acompanhamento personalizado, Pilates com equipamentos, serviços ao domicílio e uma abordagem centrada na pessoa."
+                />
+                <meta name="robots" content="index, follow" />
+                <link rel="canonical" href="https://sanus.pt/" />
+
+                <meta property="og:type" content="website" />
+                <meta property="og:locale" content="pt_PT" />
+                <meta property="og:site_name" content="Sanus Vitae" />
+                <meta property="og:title" content="Sanus Vitae | Clínica de Fisioterapia no Barreiro" />
+                <meta
+                  property="og:description"
+                  content="Fisioterapia, Pilates com equipamentos e cuidados personalizados no Barreiro."
+                />
+                <meta property="og:url" content="https://sanus.pt/" />
+                <meta
+                  property="og:image"
+                  content="https://sanus.pt/Clinica/ClinicaSanusVitaeBarreiro_2.jpeg"
+                />
+              </Helmet>
+
+              <PageTransition>
+                <Header />
+                <Hero />
+                <Services />
+                <Mission />
+                <section className="sanus-about-us" style={{ marginTop: "160px", marginBottom: "100px" }}>
+                  <div className="sanus-about-us-container">
+                    <div className="feedback-comment-list" style={{ width: "100%", justifyContent: "center" }}>
+                      <h3>
+                        <span className="feedback-comment">
+                          Aqui, não tratamos apenas o corpo.
+                        </span>
+                        <span className="feedback-comment other-color">
+                          Cuidamos da pessoa.
+                        </span>
+                      </h3>
                     </div>
-                </div>
-              </section>
-              {/*<Team />*/}
-              <Insurance />
-              <Feedback />
-              <Recrutamento />
-              <Location />
-              <BlogSection variant="home" limit={3} />
-              <Footer />
-            </PageTransition>
+                  </div>
+                </section>
+                {/*<Team />*/}
+                <Insurance />
+                <Feedback />
+                <Recrutamento />
+                <Location />
+                <BlogSection variant="home" limit={3} />
+                <Footer />
+              </PageTransition>
+            </>
           }
         />
         <Route path="/blog" element={<BlogPage />} />

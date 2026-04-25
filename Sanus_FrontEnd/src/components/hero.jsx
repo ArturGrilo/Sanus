@@ -22,7 +22,6 @@ export default function Hero() {
       const nextIndex = (words.indexOf(currentWord) + 1) % words.length;
       const nextWord = words[nextIndex];
 
-      // 🔹 animação de saída
       gsap.to(textRef.current, {
         y: -20,
         opacity: 0,
@@ -31,7 +30,6 @@ export default function Hero() {
         onComplete: () => {
           setCurrentWord(nextWord);
 
-          // 🔹 animação de entrada
           gsap.fromTo(
             textRef.current,
             { y: 20, opacity: 0 },
@@ -42,7 +40,7 @@ export default function Hero() {
     }, 2500);
 
     return () => clearInterval(interval);
-  });
+  }, [currentWord]);
 
   const scrollDown = () => {
     const hero = document.querySelector(".sanus-hero");

@@ -6,13 +6,15 @@ export default function SanusHero({
   title = "",
   subtitle = "",
   imageUrl = "",
-  height = "",       // Altura dinâmica
-  titleSize = "",      // Fonte do título dinâmica
-  subtitleSize = "", // Fonte do subtítulo dinâmica
+  height = "",
+  titleSize = "",
+  subtitleSize = "",
 }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    setLoaded(false);
+
     if (!imageUrl) {
       setLoaded(true);
       return;
@@ -21,9 +23,9 @@ export default function SanusHero({
     const img = new Image();
     img.src = imageUrl;
     img.onload = () => setLoaded(true);
+    img.onerror = () => setLoaded(true);
   }, [imageUrl]);
 
-  // Enquanto carrega a imagem → skeleton
   if (!loaded) return <BlogHeroSkeleton height={height} />;
 
   return (
@@ -31,7 +33,7 @@ export default function SanusHero({
       className="sanus-page-hero-generic"
       style={{
         backgroundImage: `url(${imageUrl})`,
-        height, // ← aplica altura dinâmica
+        height,
       }}
     >
       <div className="sanus-page-hero-overlay">

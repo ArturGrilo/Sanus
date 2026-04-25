@@ -1,5 +1,5 @@
-// ServicesPage.jsx
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 import Header from "./header";
 import Footer from "./footer";
@@ -19,27 +19,26 @@ export default function ServicesPage() {
 
   const API = import.meta.env.VITE_BACKEND_URL;
 
-  // ✅ FAQ (mesmo padrão do Recrutamento)
   const faqs = [
     {
       question: "Como escolher o serviço mais indicado para mim?",
       answer:
-        "Se tiver dor, limitação de movimento ou estiver em recuperação, a Fisioterapia é geralmente o ponto de partida. Se o objetivo for melhorar postura, força e controlo do movimento, o Pilates com Equipamentos é uma excelente opção. Se prefere cuidados no conforto da sua casa, os Serviços ao Domicílio permitem acompanhar o seu plano com segurança e personalização. Se tiver dúvidas, contacte-nos e ajudamos a orientar."
+        "Se tiver dor, limitação de movimento ou estiver em recuperação, a Fisioterapia é geralmente o ponto de partida. Se o objetivo for melhorar postura, força e controlo do movimento, o Pilates com Equipamentos é uma excelente opção. Se prefere cuidados no conforto da sua casa, os Serviços ao Domicílio permitem acompanhar o seu plano com segurança e personalização. Se tiver dúvidas, contacte-nos e ajudamos a orientar.",
     },
     {
       question: "Os tratamentos são personalizados?",
       answer:
-        "Sim. Cada plano é ajustado à sua condição clínica, objetivos e contexto de vida. A abordagem é baseada em evidência e a progressão é revista ao longo do acompanhamento."
+        "Sim. Cada plano é ajustado à sua condição clínica, objetivos e contexto de vida. A abordagem é baseada em evidência e a progressão é revista ao longo do acompanhamento.",
     },
     {
       question: "Quantas sessões são necessárias para ver resultados?",
       answer:
-        "Depende da condição, objetivos e regularidade. Algumas situações melhoram em poucas sessões; outras exigem um plano mais contínuo. Durante a avaliação definimos objetivos e um percurso realista, com reavaliações periódicas."
+        "Depende da condição, objetivos e regularidade. Algumas situações melhoram em poucas sessões; outras exigem um plano mais contínuo. Durante a avaliação definimos objetivos e um percurso realista, com reavaliações periódicas.",
     },
     {
-        question: "Trabalham com seguros ou acordos?",
-        answer:
-            "Sim, temos parcerias e acordos selecionados, que podem variar conforme o serviço e o seu plano. Para confirmarmos sem complicações, basta indicar o nome do seguro/plano (e o nº de apólice, se disponível). Em alternativa, pode consultar as parcerias na página principal do site."
+      question: "Trabalham com seguros ou acordos?",
+      answer:
+        "Sim, temos parcerias e acordos selecionados, que podem variar conforme o serviço e o seu plano. Para confirmarmos sem complicações, basta indicar o nome do seguro/plano (e o nº de apólice, se disponível). Em alternativa, pode consultar as parcerias na página principal do site.",
     },
   ];
 
@@ -61,101 +60,128 @@ export default function ServicesPage() {
     }
 
     fetchServices();
+
     return () => {
       mounted = false;
     };
   }, [API]);
 
   return (
-    <PageTransition>
-      <Header />
+    <>
+      <Helmet>
+        <title>Serviços de Fisioterapia no Barreiro | Sanus Vitae</title>
+        <meta
+          name="description"
+          content="Conheça os serviços da Sanus Vitae no Barreiro: fisioterapia, Pilates com equipamentos, serviços ao domicílio e acompanhamento personalizado orientado para resultados."
+        />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://sanus.pt/servicos" />
 
-      <SanusHero
-        title="Serviços"
-        subtitle="Cuidado personalizado, orientado para resultados."
-        imageUrl="./Clinica/servicos.png"
-        loading={loading}
-      />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="pt_PT" />
+        <meta property="og:site_name" content="Sanus Vitae" />
+        <meta property="og:title" content="Serviços de Fisioterapia no Barreiro | Sanus Vitae" />
+        <meta
+          property="og:description"
+          content="Fisioterapia, Pilates com equipamentos, serviços ao domicílio e cuidados personalizados no Barreiro."
+        />
+        <meta property="og:url" content="https://sanus.pt/servicos" />
+        <meta
+          property="og:image"
+          content="https://sanus.pt/Clinica/servicos.png"
+        />
+      </Helmet>
 
-      {/* INTRO (estilo recrutamento) */}
-      <section className="sanus-recrutamento-page sanus-services-page">
-        <div className="sanus-recrutamento-page-container">
-          <div className="feedback-comment-list" style={{ width: "100%", justifyContent: "center" }}>
-            <h3>
-              <span className="feedback-comment">Os nossos serviços,</span>
-              <span className="feedback-comment other-color"> pensados para si.</span>
-            </h3>
+      <PageTransition>
+        <Header />
+
+        <SanusHero
+          title="Serviços"
+          subtitle="Cuidado personalizado, orientado para resultados."
+          imageUrl="./Clinica/servicos.png"
+          loading={loading}
+        />
+
+        <section className="sanus-recrutamento-page sanus-services-page">
+          <div className="sanus-recrutamento-page-container">
+            <div className="feedback-comment-list" style={{ width: "100%", justifyContent: "center" }}>
+              <h2>
+                <span className="feedback-comment">Os nossos serviços,</span>
+                <span className="feedback-comment other-color"> pensados para si.</span>
+              </h2>
+            </div>
+
+            <p className="sv-lead">
+              Cada plano é adaptado à sua condição clínica, objetivos e contexto de vida — com uma
+              abordagem baseada na evidência e foco na sua evolução.
+            </p>
+          </div>
+        </section>
+
+        <section className="sv-services-page">
+          <div className="sanus-services-container">
+            {services.length === 0 ? (
+              <>
+                <ServiceCardSkeleton />
+                <ServiceCardSkeleton />
+                <ServiceCardSkeleton />
+              </>
+            ) : (
+              services.map((service, index) => (
+                <ServiceCard
+                  key={service.id || index}
+                  image={service.image}
+                  subtitle={service.subtitle}
+                  title={service.title}
+                  text={service.text}
+                  ctaText={service.ctaText}
+                  alt={service.alt}
+                  btnStyle={service.btnStyle}
+                  slug={service.slug}
+                />
+              ))
+            )}
           </div>
 
-          <p className="sv-lead">
-            Cada plano é adaptado à sua condição clínica, objetivos e contexto de vida — com uma
-            abordagem baseada na evidência e foco na sua evolução.
-          </p>
-        </div>
-      </section>
-
-      {/* GRID */}
-      <section className="sv-services-page">
-        <div className="sanus-services-container">
-            {services.length === 0 ? (
-            <>
-                <ServiceCardSkeleton />
-                <ServiceCardSkeleton />
-                <ServiceCardSkeleton />
-            </>
-            ) : (
-            services.map((service, index) => (
-            <ServiceCard
-                key={service.id || index}
-                image={service.image}
-                subtitle={service.subtitle}
-                title={service.title}
-                text={service.text}
-                ctaText={service.ctaText}
-                alt={service.alt}
-                btnStyle={service.btnStyle}
-                slug={service.slug}
+          <svg className="sv-services-waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path
+              fill="#ffffff"
+              fillOpacity="1"
+              d="M0,128L120,154.7C240,181,480,235,720,261.3C960,288,1200,288,1320,288L1440,288L1440,320L0,320Z"
             />
-            ))
-        )}
+          </svg>
+
+          <svg
+            className="sv-services-waves"
+            style={{ zIndex: 2 }}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1440 320"
+          >
+            <path
+              fill="var(--color-primary-dark)"
+              fillOpacity="1"
+              d="M0,128L120,154.7C240,181,480,235,720,261.3C960,288,1200,288,1320,288L1440,288L1440,320L0,320Z"
+            />
+          </svg>
+        </section>
+
+        <div
+          style={{ position: "relative", zIndex: 12, marginTop: "-2px" }}
+          className="sanus-services-page-cta-container"
+        >
+          <ContactCTA
+            title="Quer saber mais sobre os nossos serviços?"
+            buttonText="Entre em contacto"
+            buttonLink="/contactos"
+          />
         </div>
 
-        {/* Waves */}
-        <svg className="sv-services-waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-          <path
-            fill="#ffffff"
-            fillOpacity="1"
-            d="M0,128L120,154.7C240,181,480,235,720,261.3C960,288,1200,288,1320,288L1440,288L1440,320L0,320Z"
-          />
-        </svg>
+        <section style={{ marginBottom: "-80px", marginTop: "40px" }}>
+          <FAQSection title="Perguntas Frequentes" subtitle="Serviços" faqs={faqs} />
+        </section>
 
-        <svg
-          className="sv-services-waves"
-          style={{ zIndex: 2 }}
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 320"
-        >
-          <path
-            fill="var(--color-primary-dark)"
-            fillOpacity="1"
-            d="M0,128L120,154.7C240,181,480,235,720,261.3C960,288,1200,288,1320,288L1440,288L1440,320L0,320Z"
-          />
-        </svg>
-      </section>
-
-      {/* CTA */}
-      <div style={{ position: "relative", zIndex: 12, marginTop: "-2px"}} className="sanus-services-page-cta-container">
-        <ContactCTA
-          title="Quer saber mais sobre os nossos serviços?"
-          buttonText="Entre em contacto"
-          buttonLink="/contactos"
-        />
-      </div>
-      {/* ✅ FAQ (mesmo padrão do recrutamento) */}
-      <section style={{ marginBottom: "-80px", marginTop: "40px" }}>
-        <FAQSection title="Perguntas Frequentes" subtitle="Serviços" faqs={faqs} />
-      </section>
-      <Footer />
-    </PageTransition>
+        <Footer />
+      </PageTransition>
+    </>
   );
 }

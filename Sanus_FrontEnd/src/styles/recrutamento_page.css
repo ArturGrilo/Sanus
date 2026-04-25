@@ -31,7 +31,8 @@
   width: 100%;
 }
 
-.sanus-recrutamento-page .feedback-comment-list h3{
+.sanus-recrutamento-page .feedback-comment-list h3,
+.sanus-recrutamento-page .feedback-comment-list h2{
     display: flex;
     flex-direction: column;
 }
