@@ -4,9 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="google" content="notranslate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google Verification -->
     <meta name="google-site-verification" content="FsUFmJ-laVZBPbw0gScxxjupw4_k0hGHD16dburmKq8" />
 
-    <title>Clínica de Fisioterapia no Barreiro | Sanus Vitae</title>
+    <!-- SEO Base -->
+    <title>Sanus Vitae | Clínica de Fisioterapia no Barreiro</title>
     <meta
       name="description"
       content="Clínica de fisioterapia no Barreiro com acompanhamento personalizado, Pilates com equipamentos, serviços ao domicílio e uma abordagem centrada na pessoa."
@@ -14,22 +17,73 @@
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://sanus.pt/" />
 
+    <!-- Open Graph (Facebook, LinkedIn, etc) -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_PT" />
     <meta property="og:site_name" content="Sanus Vitae" />
-    <meta property="og:title" content="Clínica de Fisioterapia no Barreiro | Sanus Vitae" />
+    <meta property="og:title" content="Sanus Vitae | Clínica de Fisioterapia no Barreiro" />
     <meta
       property="og:description"
       content="Fisioterapia, Pilates com equipamentos e cuidados personalizados no Barreiro."
     />
     <meta property="og:url" content="https://sanus.pt/" />
-    <meta property="og:image" content="https://sanus.pt/Clinica/ClinicaSanusVitaeBarreiro_2.jpeg" />
+    <meta property="og:image" content="https://sanus.pt/Share/SanusVitaeLogo.png" />
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Sanus Vitae | Clínica de Fisioterapia no Barreiro" />
+    <meta
+      name="twitter:description"
+      content="Fisioterapia, Pilates com equipamentos e cuidados personalizados no Barreiro."
+    />
+    <meta name="twitter:image" content="https://sanus.pt/Share/SanusVitaeLogo.png" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/FavIcon/Sanus_favicon.png" />
+
+    <!-- Structured Data (CRÍTICO PARA SEO E IA) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "MedicalClinic",
+        "name": "Sanus Vitae",
+        "url": "https://sanus.pt",
+        "logo": "https://sanus.pt/FavIcon/Sanus_favicon.png",
+        "image": "https://sanus.pt/Share/SanusVitaeLogo.png",
+        "description": "Clínica de fisioterapia no Barreiro com acompanhamento personalizado, Pilates com equipamentos e serviços ao domicílio.",
+        
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Barreiro",
+          "addressCountry": "PT"
+        },
+
+        "areaServed": {
+          "@type": "City",
+          "name": "Barreiro"
+        },
+
+        "medicalSpecialty": [
+          "Fisioterapia",
+          "Reabilitação",
+          "Pilates clínico"
+        ],
+
+        "sameAs": [
+          "https://www.instagram.com/sanusvitae_fisio/",
+          "https://www.facebook.com/sanusvitae"
+        ]
+      }
+    </script>
+
   </head>
+
   <body>
     <div id="root"></div>
+
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   </body>
 </html>

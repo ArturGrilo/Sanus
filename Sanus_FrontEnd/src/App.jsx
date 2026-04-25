@@ -56,7 +56,7 @@ export default function App() {
     "@type": "MedicalClinic",
     name: "Sanus Vitae",
     url: "https://sanus.pt/",
-    image: "https://sanus.pt/Clinica/ClinicaSanusVitaeBarreiro_2.jpeg",
+    image: "https://sanus.pt/Share/SanusVitaeLogo.png",
     description:
       "Clínica de fisioterapia no Barreiro com acompanhamento personalizado, Pilates com equipamentos, serviços ao domicílio e uma abordagem centrada na pessoa.",
     address: {
@@ -91,7 +91,7 @@ export default function App() {
             element={
               <>
                 <Helmet>
-                  <title>Fisioterapia no Barreiro | Clínica Sanus Vitae</title>
+                  <title>Sanus Vitae | Clínica de Fisioterapia no Barreiro</title>
                   <meta
                     name="description"
                     content="Clínica de fisioterapia no Barreiro especializada em reabilitação, Pilates com equipamentos, serviços ao domicílio e cuidados personalizados."
@@ -108,7 +108,7 @@ export default function App() {
                   <meta property="og:site_name" content="Sanus Vitae" />
                   <meta
                     property="og:title"
-                    content="Fisioterapia no Barreiro | Clínica Sanus Vitae"
+                    content="Sanus Vitae | Clínica de Fisioterapia no Barreiro"
                   />
                   <meta
                     property="og:description"
@@ -117,13 +117,13 @@ export default function App() {
                   <meta property="og:url" content="https://sanus.pt/" />
                   <meta
                     property="og:image"
-                    content="https://sanus.pt/Clinica/ClinicaSanusVitaeBarreiro_2.jpeg"
+                    content="https://sanus.pt/Share/SanusVitaeLogo.png"
                   />
 
                   <meta name="twitter:card" content="summary_large_image" />
                   <meta
                     name="twitter:title"
-                    content="Fisioterapia no Barreiro | Clínica Sanus Vitae"
+                    content="Sanus Vitae | Clínica de Fisioterapia no Barreiro"
                   />
                   <meta
                     name="twitter:description"
@@ -131,7 +131,7 @@ export default function App() {
                   />
                   <meta
                     name="twitter:image"
-                    content="https://sanus.pt/Clinica/ClinicaSanusVitaeBarreiro_2.jpeg"
+                    content="https://sanus.pt/Share/SanusVitaeLogo.png"
                   />
 
                   <script type="application/ld+json">
