@@ -1,4 +1,12 @@
 User-agent: *
 Allow: /
 
+# Bloquear rotas internas/admin
+Disallow: /admin
+Disallow: /login
+
+# (opcional) bloquear APIs se quiseres
+Disallow: /api/
+
+# Sitemap
 Sitemap: https://sanus.pt/sitemap.xml
