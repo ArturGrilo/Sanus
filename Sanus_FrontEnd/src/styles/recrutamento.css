@@ -121,6 +121,23 @@
     }
 }
 
+.recruitment-waves-container{
+    position: relative;
+}
+
+.recruitment-waves-container .sanus-recruitment-wave{
+    z-index: 1;
+    position: relative;
+}
+
+.recruitment-waves-container .sanus-recruitment-wave-2{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 0;
+}
+
 @media (max-width: 850px) {
     .sanus-recrutamento {    
         margin-top: -100px;
