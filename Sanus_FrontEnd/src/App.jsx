@@ -24,7 +24,6 @@ import ServiceSpecialtyDetail from "./components/service_specialties_details";
 import ServicesPage from "./components/services_page";
 import AgendarPage from "./components/book_page";
 import CookieBanner from "./components/cookie_banner";
-import ClinicPage from "./components/clinic_page";
 
 import Login from "./admin/Login";
 import Dashboard from "./admin/Dashboard";
@@ -192,7 +191,6 @@ export default function App() {
             element={<ServiceSpecialtyDetail />}
           />
           <Route path="/agendar" element={<AgendarPage />} />
-          <Route path="/clinica" element={<ClinicPage />} />
 
           <Route path="/login" element={<Login />} />
           <Route element={<RequireAuth />}>

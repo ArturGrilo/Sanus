@@ -6,8 +6,11 @@ import BlogCard from "./blog_card";
 import BlogCardSkeleton from "./skeleton_blog_card";
 import SanusHero from "./sanus_hero";
 import PageTransition from "./page_transition";
+import { motion, useReducedMotion } from "framer-motion";
+import {staggerSoft, revealSoft, viewportOnce} from "../animations/motionPresets";
 
 export default function BlogPage() {
+  const shouldReduceMotion = useReducedMotion();
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -40,7 +43,13 @@ export default function BlogPage() {
       />          
       <section className="sanus-blog-page">
         <div className="sanus-blog-page-container">
-            <div className="sanus-blog-page-grid">
+            <motion.div
+              className="sanus-blog-page-grid"
+              variants={shouldReduceMotion ? undefined : staggerSoft}
+              initial={shouldReduceMotion ? false : "hidden"}
+              whileInView={shouldReduceMotion ? undefined : "visible"}
+              viewport={viewportOnce}
+            >
               {loading ? (
                 <>
                   {/* GRID SKELETON */}
@@ -54,9 +63,10 @@ export default function BlogPage() {
                 <p style={{ color: "var(--color-primary-dark)" }}>Nenhum artigo disponível.</p>
               ) : (
                 articles.map((article, index) => (
-                  <div
+                  <motion.div
                     key={article.id}
                     className={`sanus-post ${index < 2 ? "featured" : ""}`}
+                    variants={shouldReduceMotion ? undefined : revealSoft}
                   >
                     <BlogCard
                       image={article.imageUrl}
@@ -67,10 +77,10 @@ export default function BlogPage() {
                       date={article.updatedAt || article.createdAt}
                       tags={article.tags || []}
                     />
-                  </div>
+                  </motion.div>
                 ))
               )}
-            </div>
+            </motion.div>
         </div>
       </section>
       <div className="sanus-about-us-footer">

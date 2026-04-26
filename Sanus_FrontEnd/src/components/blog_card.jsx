@@ -1,8 +1,17 @@
 import { useNavigate } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  revealSoft,
+  revealImage,
+  revealText,
+  staggerSoft,
+  viewportOnce,
+} from "../animations/motionPresets";
 
 export default function BlogCard({ image, title, author, date, id, tags = [] }) {
   const navigate = useNavigate();
-  // 🗓️ Função para formatar a data
+  const shouldReduceMotion = useReducedMotion();
+
   const formatDate = (dateObj) => {
     if (!dateObj) return "";
 
@@ -41,24 +50,68 @@ export default function BlogCard({ image, title, author, date, id, tags = [] }) 
 
   const formattedDate = formatDate(date);
 
+  const handleNavigate = () => {
+    navigate(`/blog/${id}`);
+  };
+
+  const motionProps = shouldReduceMotion
+    ? {
+        initial: false,
+        animate: "visible",
+      }
+    : {
+        variants: revealSoft,
+        initial: "hidden",
+        whileInView: "visible",
+        viewport: viewportOnce,
+      };
+
   return (
-    <div className="sanus-blog-card" onClick={() => navigate(`/blog/${id}`)}>
-      <div className="sanus-blog-card-content">
+    <motion.div
+      className="sanus-blog-card"
+      onClick={handleNavigate}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          handleNavigate();
+        }
+      }}
+      {...motionProps}
+    >
+      <motion.div
+        className="sanus-blog-card-content"
+        variants={shouldReduceMotion ? undefined : staggerSoft}
+      >
         {image && (
-          <div className="sanus-blog-image-wrapper">
+          <motion.div
+            className="sanus-blog-image-wrapper"
+            variants={shouldReduceMotion ? undefined : revealImage}
+          >
             <img src={image} alt={title} className="sanus-blog-card-image" />
             <div className="sanus-blog-image-overlay" />
-          </div>
+          </motion.div>
         )}
 
-        <header className="sanus-blog-card-header">
-          <h4>{title}</h4>
+        <motion.header
+          className="sanus-blog-card-header"
+          variants={shouldReduceMotion ? undefined : staggerSoft}
+        >
+          <motion.h4 variants={shouldReduceMotion ? undefined : revealText}>
+            {title}
+          </motion.h4>
 
-          {author && (
-            <div className="sanus-blog-meta">
-              <p className="sanus-blog-author">
-                <strong>{author}</strong>
-              </p>
+          {(author || formattedDate) && (
+            <motion.div
+              className="sanus-blog-meta"
+              variants={shouldReduceMotion ? undefined : revealText}
+            >
+              {author && (
+                <p className="sanus-blog-author">
+                  <strong>{author}</strong>
+                </p>
+              )}
 
               {formattedDate && (
                 <p className="sanus-blog-date">
@@ -80,11 +133,14 @@ export default function BlogCard({ image, title, author, date, id, tags = [] }) 
                   {formattedDate}
                 </p>
               )}
-            </div>
+            </motion.div>
           )}
 
           {tags.length > 0 && (
-            <div className="sanus-blog-tags">
+            <motion.div
+              className="sanus-blog-tags"
+              variants={shouldReduceMotion ? undefined : revealText}
+            >
               {tags.map((t) => (
                 <span
                   key={t.id || t.name}
@@ -94,10 +150,10 @@ export default function BlogCard({ image, title, author, date, id, tags = [] }) 
                   {t.name}
                 </span>
               ))}
-            </div>
+            </motion.div>
           )}
-        </header>
-      </div>
-    </div>
+        </motion.header>
+      </motion.div>
+    </motion.div>
   );
 }
