@@ -6,6 +6,10 @@ import ClinicaSanusVitaeBarreiro4 from '../images/Footer/ClinicaSanusVitaeBarrei
 import { MapPin, Clock, Phone, Envelope, FacebookLogo, InstagramLogo } from "phosphor-react"
 import SanusVitaeLogo from '../images/Logo/SanusVitaeLogo_White.png';
 import { Link } from "react-router-dom";
+import LivroReclamacoes from '../images/Footer/LRE_Theme.Logo_White.png';
+
+// 👉 adiciona depois a tua imagem aqui
+// import LivroReclamacoes from '../images/Footer/livro-reclamacoes.png';
 
 export default function Footer() {
   const phoneNumber = "+351928410954";
@@ -17,37 +21,31 @@ export default function Footer() {
   const mapsUrl ="https://www.google.com/maps/search/?api=1&query=Rua+de+Dili+17A+2830-172+Santo+Andre+Barreiro";
   const facebookUrl = "https://www.facebook.com/sanusvitae";
   const instaUrl = "https://www.instagram.com/sanusvitae_fisio/"
+
+  const livroReclamacoesUrl = "https://www.livroreclamacoes.pt/inicio/";
+
   return (
     <section className="sanus-footer" id="localizacao">
         <svg className="sanus-footer-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="var(--color-primary-dark)" background="#000000" fillOpacity="1" d="M0,160L120,176C240,192,480,224,720,240C960,256,1200,256,1320,256L1440,256L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>
+
         <div className="sanus-footer-2">
             <div className="sanus-footer-container">
+
                 <div className="sanus-footer-logo-column">
                     <img src={SanusVitaeLogo} className="sanus-header-logo" alt="Sanus Vitae logo" />
                     <div className="sanus-footer-item">
-                        <a
-                            href={facebookUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Sanus Vitae no Facebook"
-                            className="location-link"
-                        >
+                        <a href={facebookUrl} target="_blank" rel="noopener noreferrer" className="location-link">
                             <FacebookLogo size={28} color="var(--color-bg)" weight="fill" />
                         </a>
-                        <a
-                            href={instaUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Sanus Vitae no Instagram"
-                            className="location-link"
-                        >
+                        <a href={instaUrl} target="_blank" rel="noopener noreferrer" className="location-link">
                             <InstagramLogo size={28} color="var(--color-bg)" weight="fill" />
                         </a>
                     </div>
                 </div>
 
                 <div className="sanus-footer-columns">
-                    {/* Coluna 1: Telemóvel e email */}
+
+                    {/* Coluna 1 */}
                     <div className="sanus-footer-info">
                         <div className="sanus-footer-item" style={{ justifyContent: "end" }}>
                             <Clock size={28} color="var(--color-bg)" weight="fill" />
@@ -59,7 +57,8 @@ export default function Footer() {
                             </div>
                         </div>
                     </div>
-                    {/* Coluna 2: Localização e horário */}
+
+                    {/* Coluna 2 */}
                     <div className="sanus-footer-info">
                         <a className="sanus-footer-item location-link"
                             href={mapsUrl}
@@ -72,54 +71,72 @@ export default function Footer() {
                                 <p className="sanus-general-text alt">2830-172 Santo André - Barreiro</p>
                             </div>
                         </a>
+
                         <div className="sanus-footer-item">
                             <Phone size={28} color="var(--color-bg)" weight="fill" />
                             <div className="sanus-footer-horaire">
-                                <a className="sanus-general-text alt location-link"
-                                href={phoneUrl}
-                                >(+351) 928 410 954</a>
-                                <a className="sanus-general-text alt location-link"
-                                href={phoneUrl2}>(+351) 212 160 237</a>
+                                <a className="sanus-general-text alt location-link" href={phoneUrl}>(+351) 928 410 954</a>
+                                <a className="sanus-general-text alt location-link" href={phoneUrl2}>(+351) 212 160 237</a>
                             </div>
                         </div>
+
                         <div className="sanus-footer-item">
                             <Envelope size={28} color="var(--color-bg)" weight="fill" />
-                            <a className="sanus-general-text alt location-link" href={emailUrl}>sanusvitae2021@gmail.com</a>
+                            <a className="sanus-general-text alt location-link" href={emailUrl}>
+                                sanusvitae2021@gmail.com
+                            </a>
                         </div>
                     </div>
 
-                    {/* Coluna 2: Imagens */}
+                    {/* Coluna imagens */}
                     <div className="sanus-location-images">
-                        <img src={ClinicaSanusVitaeBarreiro} className="sanus-location-image-1" alt="React logo" />
-                        <img src={ClinicaSanusVitaeBarreiro3} className="sanus-location-image-2" alt="React logo" />
-                        <img src={ClinicaSanusVitaeBarreiro2} className="sanus-location-image-3" alt="React logo" />
-                        <img src={ClinicaSanusVitaeBarreiro4} className="sanus-location-image-4" alt="React logo" />
+                        <img src={ClinicaSanusVitaeBarreiro} className="sanus-location-image-1" alt="Clinica" />
+                        <img src={ClinicaSanusVitaeBarreiro3} className="sanus-location-image-2" alt="Clinica" />
+                        <img src={ClinicaSanusVitaeBarreiro2} className="sanus-location-image-3" alt="Clinica" />
+                        <img src={ClinicaSanusVitaeBarreiro4} className="sanus-location-image-4" alt="Mapa" />
                     </div>
                 </div>
             </div>
+
             <div className="sanus-footer-policies">
                 <div className="sanus-footer-separator"></div>
                 <div className="sanus-footer-more-info">
                     <p>Sanus Vitae © 2025</p>
-                    <p> 
+                    <p>
                         <Link to="/politica-de-privacidade">Política de Privacidade</Link>
-                        {" | "} 
+                        {" | "}
                         <Link to="/politica-de-cookies">Política de Cookies</Link>
-                        {" | "} 
+                        {" | "}
                         <Link to="/termos-de-utilizacao">Termos de Utilização</Link>
                     </p>
+                    {/* ✅ NOVO: LIVRO DE RECLAMAÇÕES */}
+                        <div className="sanus-footer-reclamacoes">
+                            <a
+                                href={livroReclamacoesUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="sanus-footer-reclamacoes-link"
+                                aria-label="Livro de Reclamações"
+                            >
+                            <div className="sanus-footer-reclamacoes-box">
+                                <img
+                                    src={LivroReclamacoes}
+                                    alt="Livro de Reclamações"
+                                    className="sanus-footer-reclamacoes-img"
+                                />
+                            </div>
+                            </a>
+                        </div>
                 </div>
             </div>
+
         </div>
+
         <div className="sanus-footer-credit-container">
             <p className="sanus-footer-credit">
                 Desenvolvido por{" "}
-                <a
-                href="https://arturgrilo.netlify.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                >
-                Artur Grilo
+                <a href="https://arturgrilo.netlify.app/" target="_blank" rel="noopener noreferrer">
+                    Artur Grilo
                 </a>
             </p>
         </div>

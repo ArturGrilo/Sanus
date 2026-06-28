@@ -144,6 +144,7 @@
 .sanus-footer-more-info{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .sanus-footer-more-info p,
@@ -222,4 +223,30 @@
     padding: 15px 20px;
     justify-content: center;
   }
+} 
+
+.sanus-footer-reclamacoes {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.sanus-footer-reclamacoes-link {
+    text-decoration: none;
+}
+
+.sanus-footer-reclamacoes-box:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.sanus-footer-reclamacoes-img {
+    height: 30px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.sanus-footer-reclamacoes-box:hover .sanus-footer-reclamacoes-img {
+    transform: scale(1.05);
 }
