@@ -45,10 +45,9 @@ export default function BlogPage() {
         <div className="sanus-blog-page-container">
             <motion.div
               className="sanus-blog-page-grid"
-              variants={shouldReduceMotion ? undefined : staggerSoft}
-              initial={shouldReduceMotion ? false : "hidden"}
-              whileInView={shouldReduceMotion ? undefined : "visible"}
-              viewport={viewportOnce}
+              variants={staggerSoft}
+              initial="hidden"
+              animate="visible"
             >
               {loading ? (
                 <>
