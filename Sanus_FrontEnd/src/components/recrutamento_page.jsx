@@ -86,7 +86,7 @@ export default function RecrutamentoPage() {
       <SanusHero
         title="Recrutamento"
         subtitle="Cresce connosco."
-        imageUrl="/Clinica/sanus_clinica_exterior.jpeg"
+        imageUrl="/Clinica/recrutamento.jpg" 
       />
       {/* INTRO */}
       <section className="sanus-recrutamento-page">
