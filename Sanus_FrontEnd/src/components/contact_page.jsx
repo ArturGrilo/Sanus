@@ -8,7 +8,7 @@ import PageTransition from "./page_transition";
 import FAQSection from "./faq_section";
 import ContactMessageForm from "./contact_page_form";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { color, motion, useReducedMotion } from "framer-motion";
 import {
   revealSoft,
   revealText,
@@ -94,6 +94,7 @@ export default function ContactPage() {
                       weight="duotone"
                     />
                     <p className="sanus-contact-link">{clinicMobilePhone}</p>
+                    <p style={{ color: "gray", marginTop: "-10px" }}>custo de uma chamada de acordo com o seu tarifário móvel</p>
                   </motion.a>
 
                   <motion.a
@@ -107,6 +108,7 @@ export default function ContactPage() {
                       weight="duotone"
                     />
                     <p className="sanus-contact-link">{clinicPhone}</p>
+                    <p style={{ color: "gray", marginTop: "-10px" }}>custo de uma chamada fixa</p>
                   </motion.a>
 
                   <motion.a
@@ -184,12 +186,8 @@ export default function ContactPage() {
         <Location />
       </motion.div>
 
-      <motion.section
-        variants={shouldReduceMotion ? undefined : revealSoft}
-        {...motionSectionProps}
-      >
-        <FAQSection faqKey="contactos" />
-      </motion.section>
+      
+      <FAQSection faqKey="contactos" />
 
       <div className="sanus-about-us-footer">
         <Footer />

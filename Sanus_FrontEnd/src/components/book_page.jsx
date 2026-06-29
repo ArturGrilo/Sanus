@@ -169,7 +169,7 @@ export default function AgendarPage() {
                   />
                 </div>
                 <div>
-                  <div className="sv-agendar-card-title">Telefone</div>
+                  <div className="sv-agendar-card-title">Telemóvel</div>
                 </div>
               </div>
 
@@ -185,7 +185,7 @@ export default function AgendarPage() {
                 Ligar agora
               </a>
 
-              <div className="sv-agendar-meta">{CLINIC_PHONE_DISPLAY}</div>
+              <div className="sv-agendar-meta">{CLINIC_PHONE_DISPLAY} <br></br> custo de uma chamada de acordo com o seu tarifário móvel</div>
             </motion.div>
 
             <motion.div
@@ -274,7 +274,7 @@ export default function AgendarPage() {
       </motion.div>
 
       <motion.section
-        className="sv-agendar-faq"
+        className="sv-agendar-faq" 
         variants={shouldReduceMotion ? undefined : revealSoft}
         {...motionSectionProps}
       >

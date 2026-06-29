@@ -250,3 +250,14 @@
 .sanus-footer-reclamacoes-box:hover .sanus-footer-reclamacoes-img {
     transform: scale(1.05);
 }
+
+.legal-notice-text {
+  font-size: 12px;
+}
+
+/* Tamanho exclusivo para telemóveis (telas até 768px) */
+@media (max-width: 768px) {
+  .legal-notice-text {
+    font-size: 10px;
+  }
+}

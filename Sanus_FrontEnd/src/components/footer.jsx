@@ -76,7 +76,9 @@ export default function Footer() {
                             <Phone size={28} color="var(--color-bg)" weight="fill" />
                             <div className="sanus-footer-horaire">
                                 <a className="sanus-general-text alt location-link" href={phoneUrl}>(+351) 928 410 954</a>
+                                <p className="sanus-general-text alt legal-notice-text">custo de uma chamada de acordo com o seu tarifário móvel</p>
                                 <a className="sanus-general-text alt location-link" href={phoneUrl2}>(+351) 212 160 237</a>
+                                <p className="sanus-general-text alt legal-notice-text">Custo de uma chamada para a rede móvel nacional</p>
                             </div>
                         </div>
 
