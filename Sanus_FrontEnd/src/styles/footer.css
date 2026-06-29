@@ -252,12 +252,13 @@
 }
 
 .legal-notice-text {
-  font-size: 12px;
+    margin-top: -10px;
+    font-size: 12px !important;
 }
 
 /* Tamanho exclusivo para telemóveis (telas até 768px) */
 @media (max-width: 768px) {
   .legal-notice-text {
-    font-size: 10px;
+    font-size: 10px !important;
   }
 }
